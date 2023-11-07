@@ -62,6 +62,11 @@ class _HomeViewState extends State<HomeView> {
                             .first;
                         mostrarPopupSucesso(context,
                             'O login foi realizado com sucesso.\nUsuário: ${userData.username}\nEmail: ${userData.email}');
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const PokemonEgg(),
+                          ),
+                        );
                       } else {
                         mostrarPopUpErro(context,
                             'O usuário e/ou a senha digitados estão invalidos.');
