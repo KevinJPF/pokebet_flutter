@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokebet_login/global.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController controllerText;
@@ -27,7 +28,12 @@ class CustomTextField extends StatelessWidget {
           hintText: hintText,
           hintStyle: const TextStyle(color: Color.fromRGBO(25, 25, 25, 0.3)),
         ),
-        style: const TextStyle(color: Colors.black),
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: setFontSize(16),
+          fontFamily: 'Abel',
+          fontWeight: FontWeight.w600,
+        ),
         onChanged: (text) {
           // Remove espaços em branco
           if (!isPassword) {

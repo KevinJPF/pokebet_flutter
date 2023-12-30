@@ -1,8 +1,10 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_final_fields
 
 import 'package:flutter/material.dart';
 import 'package:pokebet_login/global.dart';
-import 'package:pokebet_login/views/login_view.dart';
+import 'package:pokebet_login/views/forgot_password.dart';
+import 'package:pokebet_login/views/pokemonEgg_view.dart';
+import 'package:pokebet_login/views/register_view.dart';
 import 'package:pokebet_login/widgets/background.dart';
 import 'package:pokebet_login/widgets/custom_button.dart';
 import 'package:pokebet_login/widgets/custom_text_field.dart';
@@ -10,18 +12,16 @@ import 'package:pokebet_login/widgets/custom_texts.dart';
 import 'package:pokebet_login/widgets/meowth_logo.dart';
 import 'package:pokebet_login/widgets/popup_message.dart';
 
-class RegisterView extends StatefulWidget {
-  const RegisterView({super.key});
+class LoginView extends StatefulWidget {
+  const LoginView({super.key});
 
   @override
-  State<RegisterView> createState() => _RegisterViewState();
+  State<LoginView> createState() => _LoginViewState();
 }
 
-class _RegisterViewState extends State<RegisterView> {
+class _LoginViewState extends State<LoginView> {
   TextEditingController _controllerUser = TextEditingController();
-  TextEditingController _controllerEmail = TextEditingController();
   TextEditingController _controllerPassword = TextEditingController();
-  TextEditingController _controllerConfirmPassword = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class _RegisterViewState extends State<RegisterView> {
       backgroundColor: Global.backgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Container(
+          child: SizedBox(
             height: availableHeight,
             child: Column(
               children: [
@@ -58,40 +58,39 @@ class _RegisterViewState extends State<RegisterView> {
                           ),
                           SizedBox(height: 16),
                           CustomTextField(
-                            controllerText: _controllerEmail,
-                            hintText: 'Email',
-                            isPassword: false,
-                          ),
-                          SizedBox(height: 16),
-                          CustomTextField(
                             controllerText: _controllerPassword,
                             hintText: 'Senha',
                             isPassword: true,
                           ),
-                          SizedBox(height: 16),
-                          CustomTextField(
-                            controllerText: _controllerConfirmPassword,
-                            hintText: 'Confirmar Senha',
-                            isPassword: true,
-                          ),
-                          Spacer(),
+                          SizedBox(height: 32),
                           CustomButton(
-                            buttonText: 'Cadastrar',
+                            buttonText: 'Entrar',
                             onPressed: () {
-                              customPopup(context, 'Sucesso',
-                                  'Usuário ${_controllerUser.text} cadastrado com sucesso!');
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => const PokemonEgg(),
+                                ),
+                              );
                             },
                           ),
                           SizedBox(height: setHeight(16)),
+                          HighlightLink('Esqueci minha senha', onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const ForgotPassword(),
+                              ),
+                            );
+                          }),
+                          Spacer(),
                           Column(
                             children: [
                               SimpleText(
-                                'Já tem uma conta?',
+                                'Não tem uma conta?',
                               ),
-                              HighlightLink('Entrar', onTap: () {
-                                Navigator.of(context).pushReplacement(
+                              HighlightLink('Cadastre-se', onTap: () {
+                                Navigator.of(context).push(
                                   MaterialPageRoute(
-                                    builder: (context) => const LoginView(),
+                                    builder: (context) => const RegisterView(),
                                   ),
                                 );
                               }),

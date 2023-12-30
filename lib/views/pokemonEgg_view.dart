@@ -1,9 +1,11 @@
 import 'dart:math';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:pokebet_login/components/background.dart';
-import 'package:pokebet_login/components/custom_button.dart';
+import 'package:pokebet_login/global.dart';
+import 'package:pokebet_login/widgets/background.dart';
+import 'package:pokebet_login/widgets/custom_button.dart';
 import 'package:http/http.dart' as http;
+import 'package:pokebet_login/widgets/top_bar.dart';
 
 class PokemonEgg extends StatefulWidget {
   const PokemonEgg({super.key});
@@ -19,85 +21,102 @@ class _PokemonEggState extends State<PokemonEgg> {
       'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/1.gif';
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              const Background(hasLogo: false),
-              Column(
-                children: [
-                  Spacer(),
-                  FutureBuilder<String>(
-                    future: getPokemonSpriteUrl(
-                        currentPokemonId), // Obtenha a URL do sprite com base no Pokémon
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        // Se a solicitação for concluída, exiba a imagem
-                        return Column(
-                          children: [
-                            Image.network(snapshot.data!),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            FutureBuilder<String>(
-                              future: getPokemonName(
-                                  currentPokemonId), // Obtenha a URL do sprite com base no Pokémon
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.done) {
-                                  // Se a solicitação for concluída, exiba a imagem
-                                  return Text(
-                                    snapshot.data!.toUpperCase(),
-                                    style: const TextStyle(
-                                      color: Color.fromRGBO(255, 255, 112, 1),
-                                      fontSize: 26,
-                                      fontFamily: 'Georgia',
-                                    ),
-                                  );
-                                } else if (snapshot.hasError) {
-                                  // Se ocorrer um erro, exiba uma mensagem de erro
-                                  return Text('Erro ao carregar a imagem.');
-                                } else {
-                                  // Enquanto a solicitação estiver em andamento, você pode exibir um indicador de carregamento, se desejar
-                                  return CircularProgressIndicator();
-                                }
-                              },
-                            ),
-                          ],
-                        );
-                      } else if (snapshot.hasError) {
-                        // Se ocorrer um erro, exiba uma mensagem de erro
-                        return Text('Erro ao carregar a imagem.');
-                      } else {
-                        // Enquanto a solicitação estiver em andamento, você pode exibir um indicador de carregamento, se desejar
-                        return CircularProgressIndicator();
-                      }
-                    },
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  CustomButton(
-                    buttonText: 'Generate Pokemon',
-                    onPressed: () {
-                      // Gere um novo ID de Pokémon aleatoriamente (ou da maneira desejada)
-                      Random random = Random();
-                      String newPokemonId = (random.nextInt(898) + 1)
-                          .toString(); // Gere IDs de 1 a 898
+    double screenHeight = MediaQuery.of(context).size.height;
+    double safeAreaHeight = MediaQuery.of(context).padding.top +
+        MediaQuery.of(context).padding.bottom;
 
-                      setState(() {
-                        currentPokemonId = newPokemonId;
-                      });
-                    },
+    double availableHeight = screenHeight - safeAreaHeight;
+
+    return Scaffold(
+      backgroundColor: Global.backgroundColor,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: SizedBox(
+            height: availableHeight,
+            child: Column(
+              children: [
+                Expanded(
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Background(hasLogo: false),
+                      Column(
+                        children: [
+                          TopBar(),
+                          Spacer(),
+                          FutureBuilder<String>(
+                            future: getPokemonSpriteUrl(
+                                currentPokemonId), // Obtenha a URL do sprite com base no Pokémon
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                // Se a solicitação for concluída, exiba a imagem
+                                return Column(
+                                  children: [
+                                    Image.network(snapshot.data!),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    FutureBuilder<String>(
+                                      future: getPokemonName(
+                                          currentPokemonId), // Obtenha a URL do sprite com base no Pokémon
+                                      builder: (context, snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.done) {
+                                          // Se a solicitação for concluída, exiba a imagem
+                                          return Text(
+                                            snapshot.data!.toUpperCase(),
+                                            style: const TextStyle(
+                                              color:
+                                                  Color.fromRGBO(255, 255, 112, 1),
+                                              fontSize: 26,
+                                              fontFamily: 'Georgia',
+                                            ),
+                                          );
+                                        } else if (snapshot.hasError) {
+                                          // Se ocorrer um erro, exiba uma mensagem de erro
+                                          return Text('Erro ao carregar a imagem.');
+                                        } else {
+                                          // Enquanto a solicitação estiver em andamento, você pode exibir um indicador de carregamento, se desejar
+                                          return CircularProgressIndicator();
+                                        }
+                                      },
+                                    ),
+                                  ],
+                                );
+                              } else if (snapshot.hasError) {
+                                // Se ocorrer um erro, exiba uma mensagem de erro
+                                return Text('Erro ao carregar a imagem.');
+                              } else {
+                                // Enquanto a solicitação estiver em andamento, você pode exibir um indicador de carregamento, se desejar
+                                return CircularProgressIndicator();
+                              }
+                            },
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          CustomButton(
+                            buttonText: 'Generate Pokemon',
+                            onPressed: () {
+                              // Gere um novo ID de Pokémon aleatoriamente (ou da maneira desejada)
+                              Random random = Random();
+                              String newPokemonId = (random.nextInt(898) + 1)
+                                  .toString(); // Gere IDs de 1 a 898
+                            
+                              setState(() {
+                                currentPokemonId = newPokemonId;
+                              });
+                            },
+                          ),
+                          Spacer(),
+                        ],
+                      )
+                    ],
                   ),
-                  Spacer(),
-                ],
-              )
-            ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
