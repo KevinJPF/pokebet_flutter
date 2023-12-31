@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Global {
   // Varáveis Globais
-  static bool isDarkTheme = false;
+  static bool isDarkTheme = true;
   static String userName = '';
 
   // Cores

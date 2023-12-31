@@ -78,10 +78,13 @@ class _RegisterViewState extends State<RegisterView> {
                           CustomButton(
                             buttonText: 'Cadastrar',
                             onPressed: () {
-                              CustomPopup(
-                                popupTitle: 'Sucesso',
-                                popupMessage:
-                                    'Usuário ${_controllerUser.text} cadastrado com sucesso!',
+                              showDialog(
+                                context: context,
+                                builder: (context) => CustomPopup(
+                                  popupTitle: 'Sucesso',
+                                  popupMessage:
+                                      'Usuário ${_controllerUser.text} cadastrado com sucesso!',
+                                ),
                               );
                             },
                           ),

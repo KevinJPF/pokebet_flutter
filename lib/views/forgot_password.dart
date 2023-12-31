@@ -64,10 +64,29 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           CustomButton(
                             buttonText: 'Confirmar',
                             onPressed: () {
-                              CustomPopup(
-                                popupTitle: 'Sucesso',
-                                popupMessage:
-                                    'Um email foi enviado para você, verifique o passo a passo para a recuperação da sua senha.',
+                              var titlePopup = '';
+                              var textPopup = '';
+                              if (_controllerEmail.text != '') {
+                                titlePopup = 'Sucesso';
+                                textPopup =
+                                    'Um email foi enviado para você, verifique o passo a passo para a recuperação da sua senha.';
+                              } else {
+                                titlePopup = 'Aviso';
+                                textPopup =
+                                    'Você precisa digitar um email válido para que a recuperação de email possa ser concluída.';
+                              }
+                              showDialog(
+                                context: context,
+                                builder: (context) => CustomPopup(
+                                  popupTitle: titlePopup,
+                                  popupMessage: textPopup,
+                                  onPressedFirstButton: () {
+                                    if (_controllerEmail.text != '') {
+                                      Navigator.of(context).pop();
+                                      Navigator.of(context).pop();
+                                    }
+                                  },
+                                ),
                               );
                             },
                           ),
