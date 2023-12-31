@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:pokebet_login/widgets/background.dart';
-import 'package:pokebet_login/widgets/custom_button.dart';
-import 'package:pokebet_login/widgets/custom_text_field.dart';
-import 'package:pokebet_login/widgets/custom_texts.dart';
-import 'package:pokebet_login/widgets/meowth_logo.dart';
-import 'package:pokebet_login/views/pokemonEgg_view.dart';
+import 'package:PokeBet/widgets/background.dart';
+import 'package:PokeBet/widgets/custom_button.dart';
+import 'package:PokeBet/widgets/custom_text_field.dart';
+import 'package:PokeBet/widgets/custom_texts.dart';
+import 'package:PokeBet/widgets/meowth_logo.dart';
+import 'package:PokeBet/views/first_pokemon.dart';
 
-import '../widgets/popup_message.dart';
+import '../widgets/custom_popup.dart';
 import 'register_view.dart';
 import '../models/userdata.dart';
 
@@ -55,24 +55,33 @@ class _HomeViewState extends State<HomeView> {
                           onPressed: () {
                             if (userList
                                 .where((element) =>
-                                    element.username == controllerUserName.text &&
+                                    element.username ==
+                                        controllerUserName.text &&
                                     element.password == controllerPassword.text)
                                 .isNotEmpty) {
                               final userData = userList
                                   .where((element) =>
-                                      element.username == controllerUserName.text &&
-                                      element.password == controllerPassword.text)
+                                      element.username ==
+                                          controllerUserName.text &&
+                                      element.password ==
+                                          controllerPassword.text)
                                   .first;
-                              customPopup(context, 'Sucesso',
-                                  'O login foi realizado com sucesso.\nUsuário: ${userData.username}\nEmail: ${userData.email}');
+                              CustomPopup(
+                                popupTitle: 'Sucesso',
+                                popupMessage:
+                                    'O login foi realizado com sucesso.\nUsuário: ${userData.username}\nEmail: ${userData.email}',
+                              );
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (context) => const PokemonEgg(),
+                                  builder: (context) => const FirstPokemon(),
                                 ),
                               );
                             } else {
-                              customPopup(context, 'Erro',
-                                  'O usuário e/ou a senha digitados estão invalidos.');
+                              CustomPopup(
+                                popupTitle: 'Erro',
+                                popupMessage:
+                                    'O usuário e/ou a senha digitados estão invalidos.',
+                              );
                             }
                           },
                           buttonText: "Entrar",
@@ -83,7 +92,7 @@ class _HomeViewState extends State<HomeView> {
                           onTap: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => const PokemonEgg(),
+                                builder: (context) => const FirstPokemon(),
                               ),
                             );
                           },
@@ -102,7 +111,7 @@ class _HomeViewState extends State<HomeView> {
                         //     //         builder: (context) => const RegisterView(),
                         //     //       ),
                         //     //     );
-            
+
                         //     //     if (result != null && result is UserData) {
                         //     //       userList.add(result);
                         //     //     }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pokebet_login/global.dart';
+import 'package:PokeBet/global.dart';
 
 class CustomButton extends StatelessWidget {
   final VoidCallback onPressed;

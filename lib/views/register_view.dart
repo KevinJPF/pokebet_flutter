@@ -1,14 +1,14 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:pokebet_login/global.dart';
-import 'package:pokebet_login/views/login_view.dart';
-import 'package:pokebet_login/widgets/background.dart';
-import 'package:pokebet_login/widgets/custom_button.dart';
-import 'package:pokebet_login/widgets/custom_text_field.dart';
-import 'package:pokebet_login/widgets/custom_texts.dart';
-import 'package:pokebet_login/widgets/meowth_logo.dart';
-import 'package:pokebet_login/widgets/popup_message.dart';
+import 'package:PokeBet/global.dart';
+import 'package:PokeBet/views/login_view.dart';
+import 'package:PokeBet/widgets/background.dart';
+import 'package:PokeBet/widgets/custom_button.dart';
+import 'package:PokeBet/widgets/custom_text_field.dart';
+import 'package:PokeBet/widgets/custom_texts.dart';
+import 'package:PokeBet/widgets/meowth_logo.dart';
+import 'package:PokeBet/widgets/custom_popup.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -78,8 +78,11 @@ class _RegisterViewState extends State<RegisterView> {
                           CustomButton(
                             buttonText: 'Cadastrar',
                             onPressed: () {
-                              customPopup(context, 'Sucesso',
-                                  'Usuário ${_controllerUser.text} cadastrado com sucesso!');
+                              CustomPopup(
+                                popupTitle: 'Sucesso',
+                                popupMessage:
+                                    'Usuário ${_controllerUser.text} cadastrado com sucesso!',
+                              );
                             },
                           ),
                           SizedBox(height: setHeight(16)),
@@ -89,11 +92,7 @@ class _RegisterViewState extends State<RegisterView> {
                                 'Já tem uma conta?',
                               ),
                               HighlightLink('Entrar', onTap: () {
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                    builder: (context) => const LoginView(),
-                                  ),
-                                );
+                                Navigator.of(context).pop();
                               }),
                             ],
                           ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pokebet_login/global.dart';
+import 'package:PokeBet/global.dart';
 
 class TopBar extends StatelessWidget {
   final bool showBackButton;

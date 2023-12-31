@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pokebet_login/global.dart';
+import 'package:PokeBet/global.dart';
 
 class Background extends StatelessWidget {
   final bool hasLogo;

@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:pokebet_login/global.dart';
+import 'package:PokeBet/global.dart';
 
 class MeowthLogo extends StatelessWidget {
   const MeowthLogo({super.key});

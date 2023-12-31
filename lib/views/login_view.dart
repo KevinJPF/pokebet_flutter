@@ -1,16 +1,16 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_final_fields
 
 import 'package:flutter/material.dart';
-import 'package:pokebet_login/global.dart';
-import 'package:pokebet_login/views/forgot_password.dart';
-import 'package:pokebet_login/views/pokemonEgg_view.dart';
-import 'package:pokebet_login/views/register_view.dart';
-import 'package:pokebet_login/widgets/background.dart';
-import 'package:pokebet_login/widgets/custom_button.dart';
-import 'package:pokebet_login/widgets/custom_text_field.dart';
-import 'package:pokebet_login/widgets/custom_texts.dart';
-import 'package:pokebet_login/widgets/meowth_logo.dart';
-import 'package:pokebet_login/widgets/popup_message.dart';
+import 'package:PokeBet/global.dart';
+import 'package:PokeBet/views/forgot_password.dart';
+import 'package:PokeBet/views/first_pokemon.dart';
+import 'package:PokeBet/views/register_view.dart';
+import 'package:PokeBet/widgets/background.dart';
+import 'package:PokeBet/widgets/custom_button.dart';
+import 'package:PokeBet/widgets/custom_text_field.dart';
+import 'package:PokeBet/widgets/custom_texts.dart';
+import 'package:PokeBet/widgets/meowth_logo.dart';
+import 'package:PokeBet/widgets/custom_popup.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -66,11 +66,23 @@ class _LoginViewState extends State<LoginView> {
                           CustomButton(
                             buttonText: 'Entrar',
                             onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => const PokemonEgg(),
-                                ),
-                              );
+                              if (_controllerUser.text != '') {
+                                Global.userName = _controllerUser.text;
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => const FirstPokemon(),
+                                  ),
+                                );
+                              } else {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => CustomPopup(
+                                    popupTitle: 'Erro',
+                                    popupMessage:
+                                        'Verifique se digitou os dados corretamente e tente novamente.',
+                                  ),
+                                );
+                              }
                             },
                           ),
                           SizedBox(height: setHeight(16)),

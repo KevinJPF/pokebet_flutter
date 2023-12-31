@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:pokebet_login/global.dart';
-import 'package:pokebet_login/widgets/background.dart';
-import 'package:pokebet_login/widgets/meowth_logo.dart';
+import 'package:PokeBet/global.dart';
+import 'package:PokeBet/widgets/background.dart';
+import 'package:PokeBet/widgets/meowth_logo.dart';
 
 class TelaLimpa extends StatefulWidget {
   const TelaLimpa({super.key});
