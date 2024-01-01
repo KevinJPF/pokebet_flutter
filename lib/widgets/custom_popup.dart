@@ -32,7 +32,7 @@ class CustomPopup extends StatelessWidget {
             Navigator.of(context).pop();
           },
           child: Text(firstButtonText ?? 'Fechar',
-              style: TextStyle(color: Global.highlightTextColor)),
+              style: TextStyle(color: Global.highlightColor)),
         ),
         if (secondButtonText != null) ...[
           TextButton(
@@ -40,7 +40,7 @@ class CustomPopup extends StatelessWidget {
               Navigator.of(context).pop();
             },
             child: Text(secondButtonText ?? 'Confirmar',
-                style: TextStyle(color: Global.highlightTextColor)),
+                style: TextStyle(color: Global.highlightColor)),
           ),
         ],
       ],

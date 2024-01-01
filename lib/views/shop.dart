@@ -5,15 +5,16 @@ import 'package:PokeBet/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:PokeBet/global.dart';
 import 'package:PokeBet/widgets/background.dart';
+import 'package:PokeBet/widgets/meowth_logo.dart';
 
-class TelaLimpa extends StatefulWidget {
-  const TelaLimpa({super.key});
+class Shop extends StatefulWidget {
+  const Shop({super.key});
 
   @override
-  State<TelaLimpa> createState() => _TelaLimpaState();
+  State<Shop> createState() => _ShopState();
 }
 
-class _TelaLimpaState extends State<TelaLimpa> {
+class _ShopState extends State<Shop> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -36,7 +37,7 @@ class _TelaLimpaState extends State<TelaLimpa> {
                     Background(hasLogo: false),
                     Column(
                       children: [
-                        TopBar(showBackButton: false, pageTitle: ''),
+                        TopBar(showBackButton: false, pageTitle: 'Loja'),
                       ],
                     ),
                     Container(

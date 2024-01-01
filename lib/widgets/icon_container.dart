@@ -22,75 +22,78 @@ class IconContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: Container(
-            height: setHeight(50),
-            margin: EdgeInsets.symmetric(horizontal: setWidth(32)),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Row(
-              children: [
-                Column(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        width: setWidth(70),
-                        decoration: BoxDecoration(
-                          color: Global.iconContainerIconBackColor,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(
-                                8.0), // Raio do canto superior esquerdo
-                            bottomLeft: Radius.circular(
-                                8.0), // Raio do canto inferior esquerdo
-                          ),
-                        ),
-                        child: Container(
-                          padding: EdgeInsets.all(setWidth(5)),
-                          child: Builder(
-                            builder: (context) {
-                              if (svgName != null) {
-                                return SvgPicture.asset(
-                                  'assets/svgs/$svgName.svg',
-                                  fit: BoxFit.contain,
-                                );
-                              } else {
-                                return Icon(
-                                  icon,
-                                  size: setHeight(40),
-                                );
-                              }
-                            },
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: setWidth(16)),
-                  alignment: Alignment.center,
-                  // color: Colors.pink,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+    return GestureDetector(
+      child: Row(
+        children: [
+          Expanded(
+            child: Container(
+              height: setHeight(50),
+              margin: EdgeInsets.symmetric(horizontal: setWidth(32)),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                children: [
+                  Column(
                     children: [
-                      SimpleTextWhiteBackground(mainText),
-                      Visibility(
-                        visible: secondaryText != '',
-                        child: SimpleTextWhiteBackground(secondaryText),
+                      Expanded(
+                        child: Container(
+                          width: setWidth(70),
+                          decoration: BoxDecoration(
+                            color: Global.iconContainerIconBackColor,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(
+                                  8.0), // Raio do canto superior esquerdo
+                              bottomLeft: Radius.circular(
+                                  8.0), // Raio do canto inferior esquerdo
+                            ),
+                          ),
+                          child: Container(
+                            padding: EdgeInsets.all(setWidth(5)),
+                            child: Builder(
+                              builder: (context) {
+                                if (svgName != null) {
+                                  return SvgPicture.asset(
+                                    'assets/svgs/$svgName.svg',
+                                    fit: BoxFit.contain,
+                                  );
+                                } else {
+                                  return Icon(
+                                    icon,
+                                    size: setHeight(40),
+                                  );
+                                }
+                              },
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                ),
-              ],
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: setWidth(16)),
+                    alignment: Alignment.center,
+                    // color: Colors.pink,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SimpleTextWhiteBackground(mainText),
+                        Visibility(
+                          visible: secondaryText != '',
+                          child: SimpleTextWhiteBackground(secondaryText),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
+      onTap: () {},
     );
   }
 }

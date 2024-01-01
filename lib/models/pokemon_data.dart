@@ -30,7 +30,7 @@ class Stats {
   double speedIV = 0;
 }
 
-Future<PokemonData?> GetPokemonData(int id) async {
+Future<PokemonData?> GetPokemonData(int id, {int shinyChances = 100}) async {
   PokemonData newPokemon = PokemonData();
   newPokemon.pokemonID = id;
 
@@ -44,7 +44,8 @@ Future<PokemonData?> GetPokemonData(int id) async {
     final pokemonData = json.decode(responsePokemon.body);
     final pokemonSpeciesData = json.decode(responsePokemonSpecies.body);
 
-    newPokemon.isShiny = (Random().nextInt(100)) == 70;
+    var baseNumber = (Random().nextInt(shinyChances));
+    newPokemon.isShiny = (Random().nextInt(shinyChances)) == baseNumber;
 
     // Obter a URL do sprite do Pokémon (geralmente, é a primeira na lista)
     newPokemon.spriteUrl = pokemonData['sprites']['other']['official-artwork']

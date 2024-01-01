@@ -67,7 +67,7 @@ class HighlightLink extends StatelessWidget {
         style: TextStyle(
           color: hidePasswordText
               ? Global.showPasswordColor
-              : Global.highlightTextColor,
+              : Global.highlightColor,
           fontSize: setFontSize(16),
           fontFamily: 'Abel',
           fontWeight: FontWeight.w600,

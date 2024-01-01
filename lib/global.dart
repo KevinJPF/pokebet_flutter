@@ -1,12 +1,18 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:PokeBet/models/pokemon_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Global {
   // Varáveis Globais
   static bool isDarkTheme = true;
+
+  // User data
   static String userName = '';
+  static int userLevel = 1;
+  static int userXP = 0;
+  static List<PokemonData> userPokemons = [];
 
   // Cores
   static Color _calculateColor(String hexDark, String hexLight,
@@ -19,7 +25,7 @@ class Global {
   static Color get backgroundColor => _calculateColor('#170034', '#E0E4F2');
   static Color get frameColor => _calculateColor('#000000', '#959595', opacity: 0.3);
   static Color get whiteColor => _calculateColor('#FFFFFF', '#FFFFFF');
-  static Color get highlightTextColor => _calculateColor('#FFFF6F', '#7148cf');
+  static Color get highlightColor => _calculateColor('#FFFF6F', '#7148cf');
   static Color get showPasswordColor => _calculateColor('#7148cf', '#7148cf');
   static Color get buttonColor => _calculateColor('#390080', '#FFFFFF');
   static Color get buttonTextColor => _calculateColor('#FFFF6F', '#170034');

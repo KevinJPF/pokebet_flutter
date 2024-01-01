@@ -36,7 +36,7 @@ class TypeIcon extends StatelessWidget {
             borderRadius: BorderRadius.circular(200), // Border radius
           ),
           child: SvgPicture.asset(
-            'assets/svgs/${type.toLowerCase()}.svg',
+            'assets/svgs/types/${type.toLowerCase()}.svg',
             fit: BoxFit.contain,
           ),
         ),

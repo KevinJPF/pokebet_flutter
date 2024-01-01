@@ -13,10 +13,15 @@ import 'package:PokeBet/widgets/background.dart';
 class PokemonProfile extends StatefulWidget {
   final PokemonData pokemonData;
   final bool? showBackButton;
+  final String? buttonText;
+  final VoidCallback? buttonOnPressed;
+
   const PokemonProfile({
     super.key,
     required this.pokemonData,
     this.showBackButton,
+    this.buttonText,
+    this.buttonOnPressed,
   });
 
   @override
@@ -74,7 +79,7 @@ class _PokemonProfileState extends State<PokemonProfile> {
                           ),
                           SimpleText(
                             '#${_pokemonData.pokemonID} - ${_pokemonData.name}${_pokemonData.isShiny ? ' ⋆' : ''}',
-                            fontColor: Global.highlightTextColor,
+                            fontColor: Global.highlightColor,
                             fontSize: 28,
                           ),
                           SizedBox(height: setHeight(16)),
@@ -114,17 +119,15 @@ class _PokemonProfileState extends State<PokemonProfile> {
                           Spacer(),
                           SimpleText(
                               'Capturado em: ${_pokemonData.captureDate.toString().substring(0, 16)}'),
-                          SizedBox(height: setHeight(16)),
-                          CustomButton(
-                            buttonText: 'Avançar',
-                            onPressed: () {
-                              print(_pokemonData.name);
-
-                              setState(() {
-                                // currentPokemonId = newPokemonId;
-                              });
-                            },
-                          ),
+                          if (widget.buttonText != null) ...[
+                            SizedBox(height: setHeight(16)),
+                            CustomButton(
+                              buttonText: widget.buttonText ?? '',
+                              onPressed: widget.buttonOnPressed ?? () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
                           SizedBox(
                             height: setHeight(32),
                           ),

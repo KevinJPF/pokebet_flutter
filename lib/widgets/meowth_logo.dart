@@ -25,7 +25,7 @@ class MeowthLogo extends StatelessWidget {
           child: Text(
             "PokeBet",
             style: TextStyle(
-              color: Global.highlightTextColor,
+              color: Global.highlightColor,
               fontSize: 24,
               fontFamily: 'Chakra',
               fontWeight: FontWeight.bold,

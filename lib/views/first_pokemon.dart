@@ -3,6 +3,7 @@
 import 'dart:math';
 import 'dart:convert';
 import 'package:PokeBet/models/pokemon_data.dart';
+import 'package:PokeBet/views/player_profile.dart';
 import 'package:PokeBet/views/pokemon_profile.dart';
 import 'package:PokeBet/widgets/custom_texts.dart';
 import 'package:PokeBet/widgets/pokemon_type.dart';
@@ -28,6 +29,11 @@ class _FirstPokemonState extends State<FirstPokemon> {
   PokemonData? secondPokemon = null;
   PokemonData? thirdPokemon = null;
   PokemonData? selectedPokemon = null;
+  List<String> oakSpeak = [
+    'Ah, olá ${Global.userName}! Como vai?',
+    'Vejo que conseguiu chegar ao laboratório sem problemas. Pronto para iniciar sua grande jornada Pokémon?',
+    'Me dê alguns segundos para que eu possa encontrar onde eu deixei os três Pokémons que selecionei especialmente para você.',
+  ];
 
   @override
   void initState() {
@@ -188,10 +194,14 @@ class _FirstPokemonState extends State<FirstPokemon> {
                                       fontSize: 28,
                                     ),
                                     SizedBox(height: setHeight(16)),
-                                    SimpleText(
-                                      'Ah, olá ${Global.userName}! Como vai?\n'
-                                      'Vejo que conseguiu chegar ao laboratório sem problemas. Pronto para iniciar sua grande jornada Pokémon? '
-                                      'Me dê alguns segundos para que eu possa encontrar onde eu deixei os três Pokémons que selecionei especialmente para você.',
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: SimpleText(
+                                            oakSpeak[0],
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
@@ -211,7 +221,7 @@ class _FirstPokemonState extends State<FirstPokemon> {
                             ),
                             SimpleText(
                               '#${selectedPokemon!.pokemonID} - ${selectedPokemon!.name}${selectedPokemon!.isShiny ? ' ⋆' : ''}',
-                              fontColor: Global.highlightTextColor,
+                              fontColor: Global.highlightColor,
                               fontSize: 28,
                             ),
                             SizedBox(height: setHeight(16)),
@@ -228,11 +238,12 @@ class _FirstPokemonState extends State<FirstPokemon> {
                           ],
                           Spacer(),
                           Builder(builder: (context) {
-                            if (thirdPokemon != null) {
+                            if (thirdPokemon != null || oakSpeak.length > 1) {
                               return CustomButton(
                                 buttonText: 'Avançar',
                                 onPressed: () {
-                                  if (selectedPokemon != null) {
+                                  if (selectedPokemon != null &&
+                                      oakSpeak.isEmpty) {
                                     showDialog(
                                       context: context,
                                       builder: (context) => CustomPopup(
@@ -242,6 +253,8 @@ class _FirstPokemonState extends State<FirstPokemon> {
                                         firstButtonText: 'Fechar',
                                         secondButtonText: 'Confirmar',
                                         onPressedSecondButton: () {
+                                          Global.userPokemons
+                                              .add(selectedPokemon!);
                                           Navigator.of(context).pop();
                                           Navigator.of(context).pop();
                                           Navigator.of(context).push(
@@ -250,6 +263,16 @@ class _FirstPokemonState extends State<FirstPokemon> {
                                                   PokemonProfile(
                                                 pokemonData: selectedPokemon!,
                                                 showBackButton: false,
+                                                buttonText: 'Avançar',
+                                                buttonOnPressed: () {
+                                                  Navigator.of(context)
+                                                      .pushReplacement(
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          PlayerProfile(),
+                                                    ),
+                                                  );
+                                                },
                                               ),
                                             ),
                                           );
@@ -268,7 +291,8 @@ class _FirstPokemonState extends State<FirstPokemon> {
                                         ),
                                       );
                                     } else {
-                                      showPokeballs = true;
+                                      oakSpeak.removeAt(0);
+                                      showPokeballs = oakSpeak.isEmpty;
                                       setState(() {});
                                     }
                                   }

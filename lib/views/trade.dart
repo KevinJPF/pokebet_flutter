@@ -6,14 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:PokeBet/global.dart';
 import 'package:PokeBet/widgets/background.dart';
 
-class TelaLimpa extends StatefulWidget {
-  const TelaLimpa({super.key});
+class Trade extends StatefulWidget {
+  const Trade({super.key});
 
   @override
-  State<TelaLimpa> createState() => _TelaLimpaState();
+  State<Trade> createState() => _TradeState();
 }
 
-class _TelaLimpaState extends State<TelaLimpa> {
+class _TradeState extends State<Trade> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -36,7 +36,7 @@ class _TelaLimpaState extends State<TelaLimpa> {
                     Background(hasLogo: false),
                     Column(
                       children: [
-                        TopBar(showBackButton: false, pageTitle: ''),
+                        TopBar(showBackButton: false, pageTitle: 'Trocar'),
                       ],
                     ),
                     Container(
