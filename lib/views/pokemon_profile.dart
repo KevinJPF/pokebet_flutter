@@ -115,7 +115,13 @@ class _PokemonProfileState extends State<PokemonProfile> {
                             svgName: 'Velocidade',
                             secondaryText: _pokemonData.stats.speed.toString(),
                           ),
-                          SizedBox(height: setHeight(16)),
+                          SizedBox(height: setHeight(8)),
+                          Container(
+                            alignment: Alignment.centerRight,
+                            margin: EdgeInsets.only(right: setWidth(32)),
+                            child: SimpleText(
+                                'Total: ${_pokemonData.stats.speed + _pokemonData.stats.defense + _pokemonData.stats.attack}'),
+                          ),
                           Spacer(),
                           SimpleText(
                               'Capturado em: ${_pokemonData.captureDate.toString().substring(0, 16)}'),
@@ -123,9 +129,10 @@ class _PokemonProfileState extends State<PokemonProfile> {
                             SizedBox(height: setHeight(16)),
                             CustomButton(
                               buttonText: widget.buttonText ?? '',
-                              onPressed: widget.buttonOnPressed ?? () {
-                                Navigator.of(context).pop();
-                              },
+                              onPressed: widget.buttonOnPressed ??
+                                  () {
+                                    Navigator.of(context).pop();
+                                  },
                             ),
                           ],
                           SizedBox(

@@ -13,8 +13,8 @@ class AppWidget extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         pageTransitionsTheme: PageTransitionsTheme(builders: {
-          TargetPlatform.android: NoTransitionsOnWeb(),
-          TargetPlatform.iOS: NoTransitionsOnWeb(),
+          TargetPlatform.android: FadeTransitionOnWeb(),
+          TargetPlatform.iOS: FadeTransitionOnWeb(),
         }),
       ),
       home: ScreenUtilInit(
@@ -33,5 +33,32 @@ class NoTransitionsOnWeb extends PageTransitionsBuilder {
     Widget child,
   ) {
     return child;
+  }
+}
+
+class FadeTransitionOnWeb extends PageTransitionsBuilder {
+  @override
+  Widget buildTransitions<T>(
+    PageRoute<T> route,
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+    // Ajuste a duração do fade conforme necessário
+    const fadeDuration = Duration(milliseconds: 150);
+
+    return FadeTransition(
+      opacity: Tween<double>(
+        begin: 0.0,
+        end: 1.0,
+      ).animate(
+        CurvedAnimation(
+          parent: animation,
+          curve: Curves.easeInOut,
+        ),
+      ),
+      child: child,
+    );
   }
 }
