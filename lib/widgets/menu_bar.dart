@@ -103,6 +103,7 @@ class MontaItem extends StatelessWidget {
                 child: SvgPicture.asset(
                   'assets/svgs/$svgName.svg',
                   fit: BoxFit.contain,
+                  color: Global.simpleTextColor,
                 ),
               ),
             ),

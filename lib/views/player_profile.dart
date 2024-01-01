@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:PokeBet/views/pokemon_list.dart';
 import 'package:PokeBet/widgets/custom_texts.dart';
 import 'package:PokeBet/widgets/icon_container.dart';
 import 'package:PokeBet/widgets/menu_bar.dart';
@@ -84,6 +85,13 @@ class _PlayerProfileState extends State<PlayerProfile> {
                               icon: Icons.remove_circle_outlined,
                               mainText: 'Pokemons',
                               svgName: 'Pokeball',
+                              onClick: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => PokemonList(listOfPokemon: Global.userPokemons),
+                                  ),
+                                );
+                              },
                             ),
                             SizedBox(height: setHeight(8)),
                             IconContainer(

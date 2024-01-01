@@ -104,7 +104,7 @@ class _FirstPokemonState extends State<FirstPokemon> {
                       Background(hasLogo: false),
                       Column(
                         children: [
-                          TopBar(),
+                          TopBar(showBackButton: false),
                           Builder(builder: (context) {
                             if (thirdPokemon != null && showPokeballs) {
                               return Column(

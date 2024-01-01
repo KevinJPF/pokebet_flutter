@@ -2,7 +2,6 @@
 
 import 'package:PokeBet/global.dart';
 import 'package:PokeBet/widgets/custom_texts.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -11,6 +10,10 @@ class IconContainer extends StatelessWidget {
   final String mainText;
   final String secondaryText;
   final String? svgName;
+  final String? imageName;
+  final int? spriteIndex;
+  final bool showRightIcon;
+  final VoidCallback? onClick;
 
   const IconContainer({
     super.key,
@@ -18,11 +21,15 @@ class IconContainer extends StatelessWidget {
     required this.mainText,
     this.secondaryText = '',
     this.svgName,
+    this.showRightIcon = false,
+    this.imageName,
+    this.spriteIndex, this.onClick,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: onClick ?? () {},
       child: Row(
         children: [
           Expanded(
@@ -50,13 +57,26 @@ class IconContainer extends StatelessWidget {
                             ),
                           ),
                           child: Container(
-                            padding: EdgeInsets.all(setWidth(5)),
+                            padding: EdgeInsets.all(setWidth(spriteIndex == null ? 5 : 0)),
                             child: Builder(
                               builder: (context) {
                                 if (svgName != null) {
                                   return SvgPicture.asset(
                                     'assets/svgs/$svgName.svg',
                                     fit: BoxFit.contain,
+                                  );
+                                } else if (imageName != null) {
+                                  return Image.asset(
+                                    'assets/imgs/icons/$imageName.jpg',
+                                    fit: BoxFit.contain,
+                                  );
+                                } else if (spriteIndex != null) {
+                                  return Container(
+                                    // color: Colors.pink,
+                                    child: Image.network(
+                                      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$spriteIndex.png',
+                                      fit: BoxFit.contain,
+                                    ),
                                   );
                                 } else {
                                   return Icon(
@@ -73,7 +93,6 @@ class IconContainer extends StatelessWidget {
                   ),
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: setWidth(16)),
-                    alignment: Alignment.center,
                     // color: Colors.pink,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -87,13 +106,30 @@ class IconContainer extends StatelessWidget {
                       ],
                     ),
                   ),
+                  Spacer(),
+                  Visibility(
+                    visible: showRightIcon,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: setWidth(16)),
+                      // color: Colors.pink,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.circle_notifications_outlined,
+                            color: Global.iconContainerIconBackColor,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
           ),
         ],
       ),
-      onTap: () {},
     );
   }
 }

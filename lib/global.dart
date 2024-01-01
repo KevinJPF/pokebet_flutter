@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Global {
   // Varáveis Globais
-  static bool isDarkTheme = true;
+  static bool isDarkTheme = false;
 
   // User data
   static String userName = '';
@@ -31,7 +31,7 @@ class Global {
   static Color get buttonTextColor => _calculateColor('#FFFF6F', '#170034');
   static Color get simpleTextColor => _calculateColor('#FFFFFF', '#3F525D');
   static Color get simpleTextWhiteBackgroundColor => _calculateColor('#3F525D', '#3F525D');
-  static Color get iconContainerIconBackColor => _calculateColor('#390080', '#390080');
+  static Color get iconContainerIconBackColor => _calculateColor('#390080', '#3F525D');
 }
 
 class Types {

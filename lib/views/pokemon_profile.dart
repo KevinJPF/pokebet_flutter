@@ -82,7 +82,7 @@ class _PokemonProfileState extends State<PokemonProfile> {
                             fontColor: Global.highlightColor,
                             fontSize: 28,
                           ),
-                          SizedBox(height: setHeight(16)),
+                          SizedBox(height: setHeight(8)),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

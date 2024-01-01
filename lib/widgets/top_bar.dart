@@ -4,8 +4,9 @@ import 'package:PokeBet/global.dart';
 
 class TopBar extends StatelessWidget {
   final bool showBackButton;
+  final bool showOptionsButton;
   final String pageTitle;
-  const TopBar({super.key, this.showBackButton = true, this.pageTitle = ''});
+  const TopBar({super.key, this.showBackButton = true,  this.showOptionsButton = false, this.pageTitle = ''});
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +32,12 @@ class TopBar extends StatelessWidget {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: Colors.white,
+                              color: Global.simpleTextColor,
                               width: 2.0,
                             ),
                             color: Colors.transparent,
                           ),
-                          child: Icon(Icons.arrow_back_rounded)),
+                          child: Icon(Icons.arrow_back_rounded, color: Global.simpleTextColor,)),
                       onTap: () {
                         Navigator.of(context).pop();
                       },
@@ -48,6 +49,27 @@ class TopBar extends StatelessWidget {
                   pageTitle,
                   fontSize: 28,
                 )),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Visibility(
+                    visible: showOptionsButton,
+                    child: GestureDetector(
+                      child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Global.simpleTextColor,
+                              width: 2.0,
+                            ),
+                            color: Colors.transparent,
+                          ),
+                          child: Icon(Icons.keyboard_control_rounded, color: Global.simpleTextColor,)),
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
