@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:PokeBet/global.dart';
-import 'package:PokeBet/views/forgot_password.dart';
-import 'package:PokeBet/views/first_pokemon.dart';
-import 'package:PokeBet/views/register_view.dart';
+import 'package:PokeBet/views/login/forgot_password.dart';
+import 'package:PokeBet/views/login/first_pokemon.dart';
+import 'package:PokeBet/views/login/register_view.dart';
 import 'package:PokeBet/widgets/background.dart';
 import 'package:PokeBet/widgets/custom_button.dart';
 import 'package:PokeBet/widgets/custom_text_field.dart';
@@ -32,7 +32,7 @@ class _LoginViewState extends State<LoginView> {
     double availableHeight = screenHeight - safeAreaHeight;
 
     return Scaffold(
-      backgroundColor: Global.backgroundColor,
+      backgroundColor: Global.pokebetColors.backgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: SizedBox(
@@ -49,7 +49,11 @@ class _LoginViewState extends State<LoginView> {
                           Container(
                             margin: EdgeInsets.only(
                                 top: setHeight(60), bottom: setHeight(16)),
-                            child: MeowthLogo(),
+                            child: MeowthLogo(
+                              onTap: () {
+                                setState(() {});
+                              },
+                            ),
                           ),
                           CustomTextField(
                             controllerText: _controllerUser,
@@ -65,14 +69,15 @@ class _LoginViewState extends State<LoginView> {
                           SizedBox(height: 32),
                           CustomButton(
                             buttonText: 'Entrar',
-                            onPressed: () {
+                            onPressed: () async {
                               if (_controllerUser.text != '') {
                                 Global.userName = _controllerUser.text;
-                                Navigator.of(context).push(
+                                await Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) => const FirstPokemon(),
                                   ),
                                 );
+                                setState(() {});
                               } else {
                                 showDialog(
                                   context: context,
@@ -86,12 +91,13 @@ class _LoginViewState extends State<LoginView> {
                             },
                           ),
                           SizedBox(height: setHeight(16)),
-                          HighlightLink('Esqueci minha senha', onTap: () {
-                            Navigator.of(context).push(
+                          HighlightLink('Esqueci minha senha', onTap: () async {
+                            await Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) => const ForgotPassword(),
                               ),
                             );
+                            setState(() {});
                           }),
                           Spacer(),
                           Column(
@@ -99,12 +105,13 @@ class _LoginViewState extends State<LoginView> {
                               SimpleText(
                                 'Não tem uma conta?',
                               ),
-                              HighlightLink('Cadastre-se', onTap: () {
-                                Navigator.of(context).push(
+                              HighlightLink('Cadastre-se', onTap: () async {
+                                await Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) => const RegisterView(),
                                   ),
                                 );
+                                setState(() {});
                               }),
                             ],
                           ),

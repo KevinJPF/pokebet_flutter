@@ -4,11 +4,11 @@ import 'package:PokeBet/widgets/custom_button.dart';
 import 'package:PokeBet/widgets/custom_text_field.dart';
 import 'package:PokeBet/widgets/custom_texts.dart';
 import 'package:PokeBet/widgets/meowth_logo.dart';
-import 'package:PokeBet/views/first_pokemon.dart';
+import 'package:PokeBet/views/login/first_pokemon.dart';
 
 import '../widgets/custom_popup.dart';
-import 'register_view.dart';
-import '../models/userdata.dart';
+import 'login/register_view.dart';
+import '../models/user_data.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -38,7 +38,6 @@ class _HomeViewState extends State<HomeView> {
                     const Background(hasLogo: true),
                     Column(
                       children: [
-                        const MeowthLogo(),
                         CustomTextField(
                           controllerText: controllerUserName,
                           hintText: 'Usuário',

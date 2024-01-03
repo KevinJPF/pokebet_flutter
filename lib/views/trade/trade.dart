@@ -5,16 +5,15 @@ import 'package:PokeBet/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:PokeBet/global.dart';
 import 'package:PokeBet/widgets/background.dart';
-import 'package:PokeBet/widgets/meowth_logo.dart';
 
-class Capture extends StatefulWidget {
-  const Capture({super.key});
+class Trade extends StatefulWidget {
+  const Trade({super.key});
 
   @override
-  State<Capture> createState() => _CaptureState();
+  State<Trade> createState() => _TradeState();
 }
 
-class _CaptureState extends State<Capture> {
+class _TradeState extends State<Trade> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -24,7 +23,7 @@ class _CaptureState extends State<Capture> {
     double availableHeight = screenHeight - safeAreaHeight;
 
     return Scaffold(
-      backgroundColor: Global.backgroundColor,
+      backgroundColor: Global.pokebetColors.backgroundColor,
       body: SafeArea(
         child: Container(
           height: availableHeight,
@@ -37,7 +36,7 @@ class _CaptureState extends State<Capture> {
                     Background(hasLogo: false),
                     Column(
                       children: [
-                        TopBar(showBackButton: false, pageTitle: 'Capturar'),
+                        TopBar(showBackButton: false, pageTitle: 'Trocar'),
                       ],
                     ),
                     Container(

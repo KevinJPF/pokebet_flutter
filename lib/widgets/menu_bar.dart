@@ -1,9 +1,9 @@
 import 'package:PokeBet/global.dart';
-import 'package:PokeBet/views/capture.dart';
-import 'package:PokeBet/views/player_profile.dart';
-import 'package:PokeBet/views/shop.dart';
-import 'package:PokeBet/views/tournament.dart';
-import 'package:PokeBet/views/trade.dart';
+import 'package:PokeBet/views/capture/capture.dart';
+import 'package:PokeBet/views/profile/player_profile.dart';
+import 'package:PokeBet/views/shop/shop.dart';
+import 'package:PokeBet/views/tournament/tournament.dart';
+import 'package:PokeBet/views/trade/trade.dart';
 import 'package:PokeBet/widgets/custom_texts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -90,6 +90,7 @@ class MontaItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onTap: onTap,
       child: Container(
         // color: Colors.blue,
         child: Column(
@@ -103,7 +104,7 @@ class MontaItem extends StatelessWidget {
                 child: SvgPicture.asset(
                   'assets/svgs/$svgName.svg',
                   fit: BoxFit.contain,
-                  color: Global.simpleTextColor,
+                  color: Global.pokebetColors.simpleTextColor,
                 ),
               ),
             ),
@@ -111,7 +112,6 @@ class MontaItem extends StatelessWidget {
           ],
         ),
       ),
-      onTap: onTap,
     );
   }
 }

@@ -23,7 +23,7 @@ class _TournamentsState extends State<Tournaments> {
     double availableHeight = screenHeight - safeAreaHeight;
 
     return Scaffold(
-      backgroundColor: Global.backgroundColor,
+      backgroundColor: Global.pokebetColors.backgroundColor,
       body: SafeArea(
         child: Container(
           height: availableHeight,

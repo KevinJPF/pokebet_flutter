@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:PokeBet/global.dart';
-import 'package:PokeBet/views/login_view.dart';
+import 'package:PokeBet/views/login/login_view.dart';
 import 'package:PokeBet/widgets/background.dart';
 import 'package:PokeBet/widgets/custom_button.dart';
 import 'package:PokeBet/widgets/custom_text_field.dart';
@@ -32,7 +32,7 @@ class _RegisterViewState extends State<RegisterView> {
     double availableHeight = screenHeight - safeAreaHeight;
 
     return Scaffold(
-      backgroundColor: Global.backgroundColor,
+      backgroundColor: Global.pokebetColors.backgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -49,7 +49,11 @@ class _RegisterViewState extends State<RegisterView> {
                           Container(
                             margin: EdgeInsets.only(
                                 top: setHeight(60), bottom: setHeight(16)),
-                            child: MeowthLogo(),
+                            child: MeowthLogo(
+                              onTap: () {
+                                setState(() {});
+                              },
+                            ),
                           ),
                           CustomTextField(
                             controllerText: _controllerUser,

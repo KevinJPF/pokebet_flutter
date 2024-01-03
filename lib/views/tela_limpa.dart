@@ -6,14 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:PokeBet/global.dart';
 import 'package:PokeBet/widgets/background.dart';
 
-class Trade extends StatefulWidget {
-  const Trade({super.key});
+class TelaLimpa extends StatefulWidget {
+  const TelaLimpa({super.key});
 
   @override
-  State<Trade> createState() => _TradeState();
+  State<TelaLimpa> createState() => _TelaLimpaState();
 }
 
-class _TradeState extends State<Trade> {
+class _TelaLimpaState extends State<TelaLimpa> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -23,7 +23,7 @@ class _TradeState extends State<Trade> {
     double availableHeight = screenHeight - safeAreaHeight;
 
     return Scaffold(
-      backgroundColor: Global.backgroundColor,
+      backgroundColor: Global.pokebetColors.backgroundColor,
       body: SafeArea(
         child: Container(
           height: availableHeight,
@@ -36,7 +36,7 @@ class _TradeState extends State<Trade> {
                     Background(hasLogo: false),
                     Column(
                       children: [
-                        TopBar(showBackButton: false, pageTitle: 'Trocar'),
+                        TopBar(showBackButton: false, pageTitle: ''),
                       ],
                     ),
                     Container(

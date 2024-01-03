@@ -11,7 +11,7 @@ class Background extends StatelessWidget {
       margin: EdgeInsets.only(
           top: hasLogo ? 150 : 16, bottom: 16, right: 16, left: 16),
       decoration: BoxDecoration(
-        color: Global.frameColor,
+        color: Global.pokebetColors.frameColor,
         borderRadius:
             BorderRadius.circular(30), // Valor do border radius.
       ),

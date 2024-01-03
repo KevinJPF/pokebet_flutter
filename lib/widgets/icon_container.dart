@@ -2,6 +2,7 @@
 
 import 'package:PokeBet/global.dart';
 import 'package:PokeBet/widgets/custom_texts.dart';
+import 'package:PokeBet/widgets/pokemon_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -11,6 +12,9 @@ class IconContainer extends StatelessWidget {
   final String secondaryText;
   final String? svgName;
   final String? imageName;
+  final String? rightText;
+  final String? rightFirstType;
+  final String? rightSecondType;
   final int? spriteIndex;
   final bool showRightIcon;
   final VoidCallback? onClick;
@@ -23,7 +27,11 @@ class IconContainer extends StatelessWidget {
     this.svgName,
     this.showRightIcon = false,
     this.imageName,
-    this.spriteIndex, this.onClick,
+    this.spriteIndex,
+    this.onClick,
+    this.rightText,
+    this.rightFirstType,
+    this.rightSecondType,
   });
 
   @override
@@ -48,7 +56,7 @@ class IconContainer extends StatelessWidget {
                         child: Container(
                           width: setWidth(70),
                           decoration: BoxDecoration(
-                            color: Global.iconContainerIconBackColor,
+                            color: Global.pokebetColors.iconContainerIconBackColor,
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(
                                   8.0), // Raio do canto superior esquerdo
@@ -57,7 +65,8 @@ class IconContainer extends StatelessWidget {
                             ),
                           ),
                           child: Container(
-                            padding: EdgeInsets.all(setWidth(spriteIndex == null ? 5 : 0)),
+                            padding: EdgeInsets.all(
+                                setWidth(spriteIndex == null ? 5 : 0)),
                             child: Builder(
                               builder: (context) {
                                 if (svgName != null) {
@@ -67,7 +76,7 @@ class IconContainer extends StatelessWidget {
                                   );
                                 } else if (imageName != null) {
                                   return Image.asset(
-                                    'assets/imgs/icons/$imageName.jpg',
+                                    'assets/imgs/icons/$imageName.png',
                                     fit: BoxFit.contain,
                                   );
                                 } else if (spriteIndex != null) {
@@ -92,36 +101,61 @@ class IconContainer extends StatelessWidget {
                     ],
                   ),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: setWidth(16)),
+                    padding: EdgeInsets.only(left: setWidth(16)),
                     // color: Colors.pink,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SimpleTextWhiteBackground(mainText),
+                        Container(
+                          child: Container(
+                            // color: Colors.blue,
+                            child: SimpleTextWhiteBackground(
+                                mainText.length > 20
+                                    ? mainText.substring(0, 19) + '...'
+                                    : mainText),
+                          ),
+                        ),
                         Visibility(
                           visible: secondaryText != '',
-                          child: SimpleTextWhiteBackground(secondaryText),
+                          child: Container(
+                              // color: Colors.blue,
+                              child: SimpleTextWhiteBackground(secondaryText)),
                         ),
                       ],
                     ),
                   ),
                   Spacer(),
-                  Visibility(
-                    visible: showRightIcon,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: setWidth(16)),
-                      // color: Colors.pink,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: setWidth(16)),
+                    // color: Colors.pink,
+                    child: Row(
+                      children: [
+                        if (rightText != null) ...[
+                          SimpleTextWhiteBackground(rightText!),
+                          SizedBox(width: setWidth(8)),
+                        ],
+                        if (showRightIcon)
                           Icon(
                             Icons.circle_notifications_outlined,
-                            color: Global.iconContainerIconBackColor,
-                          )
-                        ],
-                      ),
+                            color: Global.pokebetColors.iconContainerIconBackColor,
+                          ),
+                        if (rightFirstType != null)
+                          Stack(
+                            children: [
+                              if (rightSecondType != null)
+                                TypeIcon(rightSecondType!,
+                                    showTypeName: false, iconSize: 40),
+                              ClipPath(
+                                clipper: rightSecondType != null
+                                    ? DiagonalClipper()
+                                    : null,
+                                child: TypeIcon(rightFirstType!,
+                                    showTypeName: false, iconSize: 40),
+                              ),
+                            ],
+                          ),
+                      ],
                     ),
                   ),
                 ],
@@ -131,5 +165,23 @@ class IconContainer extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class DiagonalClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path()
+      ..lineTo(size.width, 0)
+      ..lineTo(size.width, 0)
+      ..lineTo(0, size.height)
+      ..close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    return false;
   }
 }

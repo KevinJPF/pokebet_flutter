@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:PokeBet/views/pokemon_list.dart';
 import 'package:PokeBet/widgets/custom_texts.dart';
 import 'package:PokeBet/widgets/icon_container.dart';
 import 'package:PokeBet/widgets/menu_bar.dart';
@@ -8,16 +7,15 @@ import 'package:PokeBet/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:PokeBet/global.dart';
 import 'package:PokeBet/widgets/background.dart';
-import 'package:PokeBet/widgets/meowth_logo.dart';
 
-class PlayerProfile extends StatefulWidget {
-  const PlayerProfile({super.key});
+class PlayerStats extends StatefulWidget {
+  const PlayerStats({super.key});
 
   @override
-  State<PlayerProfile> createState() => _PlayerProfileState();
+  State<PlayerStats> createState() => _PlayerStatsState();
 }
 
-class _PlayerProfileState extends State<PlayerProfile> {
+class _PlayerStatsState extends State<PlayerStats> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -27,7 +25,7 @@ class _PlayerProfileState extends State<PlayerProfile> {
     double availableHeight = screenHeight - safeAreaHeight;
 
     return Scaffold(
-      backgroundColor: Global.backgroundColor,
+      backgroundColor: Global.pokebetColors.backgroundColor,
       body: SafeArea(
         child: Container(
           height: availableHeight,
@@ -40,13 +38,12 @@ class _PlayerProfileState extends State<PlayerProfile> {
                     Background(hasLogo: false),
                     Column(
                       children: [
-                        TopBar(showBackButton: false, pageTitle: 'Perfil'),
+                        TopBar(showBackButton: true, pageTitle: 'Estatísticas'),
                       ],
                     ),
                     Container(
                       alignment: Alignment.topCenter,
                       padding: EdgeInsets.only(top: 80, bottom: 40),
-                      // color: Colors.pink,
                       child: SingleChildScrollView(
                         padding: EdgeInsets.zero,
                         child: Column(
@@ -58,9 +55,9 @@ class _PlayerProfileState extends State<PlayerProfile> {
                               height: setWidth(200),
                               decoration: BoxDecoration(
                                 border: Border.all(
-                                    color: Global.highlightColor,
+                                    color: Global.pokebetColors.highlightColor,
                                     width: setWidth(3)),
-                                color: Global.backgroundColor, // Cor de fundo
+                                color: Global.pokebetColors.backgroundColor, // Cor de fundo
                                 borderRadius: BorderRadius.circular(200),
                               ),
                               child: ClipOval(
@@ -74,7 +71,7 @@ class _PlayerProfileState extends State<PlayerProfile> {
                             SizedBox(height: setHeight(16)),
                             SimpleText(
                               Global.userName,
-                              fontColor: Global.highlightColor,
+                              fontColor: Global.pokebetColors.highlightColor,
                               fontSize: setFontSize(32),
                             ),
                             SimpleText(
@@ -83,33 +80,39 @@ class _PlayerProfileState extends State<PlayerProfile> {
                             SizedBox(height: setHeight(16)),
                             IconContainer(
                               icon: Icons.remove_circle_outlined,
-                              mainText: 'Pokemons',
-                              svgName: 'Pokeball',
+                              mainText: '0/200',
+                              secondaryText: 'Experiência de Treinador',
+                              imageName: 'exp',
+                              onClick: () {
+                              },
+                            ),
+                            SizedBox(height: setHeight(8)),
+                            IconContainer(
+                              icon: Icons.backpack_rounded,
+                              mainText: '${Global.userPokemons.length}',
+                              secondaryText: 'Pokemons Capturados',
+                              imageName: 'pokeball',
+                            ),
+                            SizedBox(height: setHeight(8)),
+                            IconContainer(
+                              icon: Icons.auto_graph_rounded,
+                              mainText: '0/0',
+                              secondaryText: 'Pokebets Vencidos',
+                              imageName: 'versus',
                               onClick: () {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
-                                    builder: (context) => PokemonList(listOfPokemon: Global.userPokemons),
+                                    builder: (context) => PlayerStats(),
                                   ),
                                 );
                               },
                             ),
                             SizedBox(height: setHeight(8)),
                             IconContainer(
-                              icon: Icons.backpack_rounded,
-                              mainText: 'Itens',
-                              svgName: 'Backpack',
-                            ),
-                            SizedBox(height: setHeight(8)),
-                            IconContainer(
-                              icon: Icons.auto_graph_rounded,
-                              mainText: 'Estatísticas',
-                              svgName: 'Player_Stats',
-                            ),
-                            SizedBox(height: setHeight(8)),
-                            IconContainer(
                               icon: Icons.settings,
-                              mainText: 'Configurações',
-                              svgName: 'Config',
+                              mainText: '0/0',
+                              secondaryText: 'Torneios Vencidos',
+                              imageName: 'trophy',
                             ),
                           ],
                         ),
@@ -118,7 +121,7 @@ class _PlayerProfileState extends State<PlayerProfile> {
                   ],
                 ),
               ),
-              BottomMenuBar(),
+              // BottomMenuBar(),
             ],
           ),
         ),

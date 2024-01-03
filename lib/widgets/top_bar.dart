@@ -32,12 +32,12 @@ class TopBar extends StatelessWidget {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: Global.simpleTextColor,
+                              color: Global.pokebetColors.simpleTextColor,
                               width: 2.0,
                             ),
                             color: Colors.transparent,
                           ),
-                          child: Icon(Icons.arrow_back_rounded, color: Global.simpleTextColor,)),
+                          child: Icon(Icons.arrow_back_rounded, color: Global.pokebetColors.simpleTextColor,)),
                       onTap: () {
                         Navigator.of(context).pop();
                       },
@@ -58,12 +58,12 @@ class TopBar extends StatelessWidget {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: Global.simpleTextColor,
+                              color: Global.pokebetColors.simpleTextColor,
                               width: 2.0,
                             ),
                             color: Colors.transparent,
                           ),
-                          child: Icon(Icons.keyboard_control_rounded, color: Global.simpleTextColor,)),
+                          child: Icon(Icons.keyboard_control_rounded, color: Global.pokebetColors.simpleTextColor,)),
                       onTap: () {
                         Navigator.of(context).pop();
                       },

@@ -20,10 +20,10 @@ class CustomButton extends StatelessWidget {
           Size(MediaQuery.of(context).size.width - 80, 50),
         ),
         backgroundColor: MaterialStatePropertyAll(
-          Global.buttonColor,
+          Global.pokebetColors.buttonColor,
         ),
         foregroundColor: MaterialStatePropertyAll(
-          Global.buttonTextColor,
+          Global.pokebetColors.buttonTextColor,
         ),
         shape: MaterialStateProperty.all(
           RoundedRectangleBorder(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:PokeBet/views/login_view.dart';
+import 'package:PokeBet/views/login/login_view.dart';
 
 main() {
   runApp(AppWidget());

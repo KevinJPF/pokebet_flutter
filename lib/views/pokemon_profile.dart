@@ -52,7 +52,7 @@ class _PokemonProfileState extends State<PokemonProfile> {
     double availableHeight = screenHeight - safeAreaHeight;
 
     return Scaffold(
-      backgroundColor: Global.backgroundColor,
+      backgroundColor: Global.pokebetColors.backgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -79,7 +79,7 @@ class _PokemonProfileState extends State<PokemonProfile> {
                           ),
                           SimpleText(
                             '#${_pokemonData.pokemonID} - ${_pokemonData.name}${_pokemonData.isShiny ? ' ⋆' : ''}',
-                            fontColor: Global.highlightColor,
+                            fontColor: Global.pokebetColors.highlightColor,
                             fontSize: 28,
                           ),
                           SizedBox(height: setHeight(8)),

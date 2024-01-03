@@ -25,14 +25,14 @@ class CustomPopup extends StatelessWidget {
     return AlertDialog(
       title: SimpleText(popupTitle),
       content: SimpleText(popupMessage),
-      backgroundColor: Global.backgroundColor,
+      backgroundColor: Global.pokebetColors.backgroundColor,
       actions: [
         TextButton(
           onPressed: onPressedFirstButton ?? () {
             Navigator.of(context).pop();
           },
           child: Text(firstButtonText ?? 'Fechar',
-              style: TextStyle(color: Global.highlightColor)),
+              style: TextStyle(color: Global.pokebetColors.highlightColor)),
         ),
         if (secondButtonText != null) ...[
           TextButton(
@@ -40,7 +40,7 @@ class CustomPopup extends StatelessWidget {
               Navigator.of(context).pop();
             },
             child: Text(secondButtonText ?? 'Confirmar',
-                style: TextStyle(color: Global.highlightColor)),
+                style: TextStyle(color: Global.pokebetColors.highlightColor)),
           ),
         ],
       ],

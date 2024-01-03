@@ -17,7 +17,7 @@ class SimpleText extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-        color: fontColor ?? Global.simpleTextColor,
+        color: fontColor ?? Global.pokebetColors.simpleTextColor,
         fontSize: setFontSize(fontSize ?? 16),
         fontFamily: 'Abel',
         fontWeight: FontWeight.w600,
@@ -38,11 +38,12 @@ class SimpleTextWhiteBackground extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-        color: Global.simpleTextWhiteBackgroundColor,
+        color: Global.pokebetColors.simpleTextWhiteBackgroundColor,
         fontSize: setFontSize(16),
         fontFamily: 'Abel',
         fontWeight: FontWeight.w600,
       ),
+      textHeightBehavior: const TextHeightBehavior(applyHeightToFirstAscent: false, applyHeightToLastDescent: false),
     );
   }
 }
@@ -66,8 +67,8 @@ class HighlightLink extends StatelessWidget {
         linkText,
         style: TextStyle(
           color: hidePasswordText
-              ? Global.showPasswordColor
-              : Global.highlightColor,
+              ? Global.pokebetColors.showPasswordColor
+              : Global.pokebetColors.highlightColor,
           fontSize: setFontSize(16),
           fontFamily: 'Abel',
           fontWeight: FontWeight.w600,

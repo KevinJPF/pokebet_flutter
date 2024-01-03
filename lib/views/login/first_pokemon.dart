@@ -3,7 +3,7 @@
 import 'dart:math';
 import 'dart:convert';
 import 'package:PokeBet/models/pokemon_data.dart';
-import 'package:PokeBet/views/player_profile.dart';
+import 'package:PokeBet/views/profile/player_profile.dart';
 import 'package:PokeBet/views/pokemon_profile.dart';
 import 'package:PokeBet/widgets/custom_texts.dart';
 import 'package:PokeBet/widgets/pokemon_type.dart';
@@ -90,7 +90,7 @@ class _FirstPokemonState extends State<FirstPokemon> {
     double availableHeight = screenHeight - safeAreaHeight;
 
     return Scaffold(
-      backgroundColor: Global.backgroundColor,
+      backgroundColor: Global.pokebetColors.backgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: SizedBox(
@@ -221,7 +221,7 @@ class _FirstPokemonState extends State<FirstPokemon> {
                             ),
                             SimpleText(
                               '#${selectedPokemon!.pokemonID} - ${selectedPokemon!.name}${selectedPokemon!.isShiny ? ' ⋆' : ''}',
-                              fontColor: Global.highlightColor,
+                              fontColor: Global.pokebetColors.highlightColor,
                               fontSize: 28,
                             ),
                             SizedBox(height: setHeight(16)),
@@ -301,7 +301,7 @@ class _FirstPokemonState extends State<FirstPokemon> {
                             } else {
                               return Center(
                                 child: CircularProgressIndicator(
-                                  color: Global.buttonColor,
+                                  color: Global.pokebetColors.buttonColor,
                                 ),
                               );
                             }
