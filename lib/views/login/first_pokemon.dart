@@ -30,7 +30,7 @@ class _FirstPokemonState extends State<FirstPokemon> {
   PokemonData? thirdPokemon = null;
   PokemonData? selectedPokemon = null;
   List<String> oakSpeak = [
-    'Ah, olá ${Global.userName}! Como vai?',
+    'Ah, olá ${Global.userData!.name}! Como vai?',
     'Vejo que conseguiu chegar ao laboratório sem problemas. Pronto para iniciar sua grande jornada Pokémon?',
     'Me dê alguns segundos para que eu possa encontrar onde eu deixei os três Pokémons que selecionei especialmente para você.',
   ];

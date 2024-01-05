@@ -2,7 +2,6 @@
 
 import 'package:PokeBet/widgets/custom_texts.dart';
 import 'package:PokeBet/widgets/icon_container.dart';
-import 'package:PokeBet/widgets/menu_bar.dart';
 import 'package:PokeBet/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:PokeBet/global.dart';
@@ -70,7 +69,7 @@ class _PlayerStatsState extends State<PlayerStats> {
                             ),
                             SizedBox(height: setHeight(16)),
                             SimpleText(
-                              Global.userName,
+                              Global.userData!.name,
                               fontColor: Global.pokebetColors.highlightColor,
                               fontSize: setFontSize(32),
                             ),

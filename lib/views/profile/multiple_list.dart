@@ -72,8 +72,9 @@ class _MultipleListState extends State<MultipleList> {
                               child: IconContainer(
                                 icon: Icons.pets,
                                 spriteIndex: pokemon.pokemonID,
+                                isShiny: pokemon.isShiny,
                                 mainText:
-                                    '${pokemon!.name}${pokemon!.isShiny ? ' ⋆' : ''}',
+                                    '${pokemon.name}${pokemon.isShiny ? ' ⋆' : ''}',
                                 secondaryText:
                                     '${pokemon.firstType}${pokemon.secondType != '' ? "/${pokemon.secondType}" : ""}',
                                 rightFirstType: pokemon.firstType,

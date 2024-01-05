@@ -1,5 +1,7 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_final_fields
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_final_fields, use_build_context_synchronously
 
+import 'package:PokeBet/database/db_connection.dart';
+import 'package:PokeBet/models/database_models.dart';
 import 'package:flutter/material.dart';
 import 'package:PokeBet/global.dart';
 import 'package:PokeBet/views/login/forgot_password.dart';
@@ -22,6 +24,19 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   TextEditingController _controllerUser = TextEditingController();
   TextEditingController _controllerPassword = TextEditingController();
+  DatabaseConnection databaseConnection = DatabaseConnection();
+
+  @override
+  void initState() {
+    super.initState();
+    databaseConnection.openDb();
+  }
+
+  @override
+  void dispose() {
+    databaseConnection.closeDb();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,21 +85,38 @@ class _LoginViewState extends State<LoginView> {
                           CustomButton(
                             buttonText: 'Entrar',
                             onPressed: () async {
-                              if (_controllerUser.text != '') {
-                                Global.userName = _controllerUser.text;
-                                await Navigator.of(context).push(
+                              Map<String, dynamic>? userMap = (await DatabaseConnection()
+                                      .selectDatabaseData(
+                                databaseTable: 'users',
+                                where: 'name = ? and password = ?',
+                                whereArgs: [
+                                  _controllerUser.text,
+                                  _controllerPassword.text
+                                ],
+                              ))
+                                  .firstOrNull;
+                              if (userMap != null) {
+                                Global.userData = UserData.fromMap(userMap);
+                                await showDialog(
+                                  context: context,
+                                  builder: (context) => CustomPopup(
+                                    popupTitle: 'Sucesso',
+                                    popupMessage:
+                                        'O login foi realizado com sucesso.\nUsuário: ${Global.userData!.name}\nEmail: ${Global.userData!.email}',
+                                  ),
+                                );
+                                Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) => const FirstPokemon(),
                                   ),
                                 );
-                                setState(() {});
                               } else {
                                 showDialog(
                                   context: context,
                                   builder: (context) => CustomPopup(
-                                    popupTitle: 'Erro',
+                                    popupTitle: 'Atenção',
                                     popupMessage:
-                                        'Verifique se digitou os dados corretamente e tente novamente.',
+                                        'O usuário e/ou a senha digitados estão invalidos.',
                                   ),
                                 );
                               }

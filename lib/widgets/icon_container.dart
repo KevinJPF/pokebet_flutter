@@ -17,12 +17,14 @@ class IconContainer extends StatelessWidget {
   final String? rightSecondType;
   final int? spriteIndex;
   final bool showRightIcon;
+  final bool isShiny;
   final VoidCallback? onClick;
 
   const IconContainer({
     super.key,
     required this.icon,
     required this.mainText,
+    this.isShiny = false,
     this.secondaryText = '',
     this.svgName,
     this.showRightIcon = false,
@@ -83,7 +85,7 @@ class IconContainer extends StatelessWidget {
                                   return Container(
                                     // color: Colors.pink,
                                     child: Image.network(
-                                      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$spriteIndex.png',
+                                      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon${isShiny ? '/shiny' : ''}/$spriteIndex.png",
                                       fit: BoxFit.contain,
                                     ),
                                   );

@@ -1,8 +1,9 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace
 
+import 'package:PokeBet/database/db_connection.dart';
+import 'package:PokeBet/models/database_models.dart';
 import 'package:flutter/material.dart';
 import 'package:PokeBet/global.dart';
-import 'package:PokeBet/views/login/login_view.dart';
 import 'package:PokeBet/widgets/background.dart';
 import 'package:PokeBet/widgets/custom_button.dart';
 import 'package:PokeBet/widgets/custom_text_field.dart';
@@ -18,10 +19,11 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
-  TextEditingController _controllerUser = TextEditingController();
-  TextEditingController _controllerEmail = TextEditingController();
-  TextEditingController _controllerPassword = TextEditingController();
-  TextEditingController _controllerConfirmPassword = TextEditingController();
+  final TextEditingController _controllerUser = TextEditingController();
+  final TextEditingController _controllerEmail = TextEditingController();
+  final TextEditingController _controllerPassword = TextEditingController();
+  final TextEditingController _controllerConfirmPassword =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -81,15 +83,65 @@ class _RegisterViewState extends State<RegisterView> {
                           Spacer(),
                           CustomButton(
                             buttonText: 'Cadastrar',
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) => CustomPopup(
-                                  popupTitle: 'Sucesso',
-                                  popupMessage:
-                                      'Usuário ${_controllerUser.text} cadastrado com sucesso!',
-                                ),
-                              );
+                            onPressed: () async {
+                              final username = _controllerUser.text;
+                              final password = _controllerPassword.text;
+                              final confirmPassword =
+                                  _controllerConfirmPassword.text;
+                              final email = _controllerEmail.text;
+
+                              if (username.isNotEmpty &&
+                                  email.isNotEmpty &&
+                                  password.isNotEmpty &&
+                                  confirmPassword.isNotEmpty) {
+                                if (password == confirmPassword) {
+                                  UserData addUser = UserData(
+                                      name: username,
+                                      password: password,
+                                      email: email);
+                                  var userMap = addUser.toMap();
+
+                                  try {
+                                    DatabaseConnection().insertDatabaseData(
+                                        object: userMap,
+                                        databaseTable: 'users');
+                                  } catch (exception) {
+                                    throw ('Erro ao inserir dados no banco: $exception');
+                                  }
+
+                                  await showDialog(
+                                    context: context,
+                                    builder: (context) => CustomPopup(
+                                      popupTitle: 'Sucesso',
+                                      popupMessage:
+                                          'Usuário ${_controllerUser.text} cadastrado com sucesso!',
+                                      firstButtonText: 'Voltar',
+                                      onPressedFirstButton: () {
+                                        Navigator.of(context).pop();
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  );
+                                } else {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => CustomPopup(
+                                      popupTitle: 'Atenção',
+                                      popupMessage:
+                                          'As senhas digitadas não correspondem.',
+                                    ),
+                                  );
+                                }
+                              } else {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => CustomPopup(
+                                    popupTitle: 'Atenção',
+                                    popupMessage:
+                                        'Todos os campos devem ser preenchidos para cadastrar um usuário.',
+                                  ),
+                                );
+                              }
                             },
                           ),
                           SizedBox(height: setHeight(16)),

@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:PokeBet/models/database_models.dart';
 import 'package:PokeBet/models/pokemon_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,7 +10,7 @@ class Global {
   static bool isDarkTheme = true;
 
   // User data
-  static String userName = '';
+  static UserData? userData;
   static int userLevel = 1;
   static int userXP = 0;
   static List<PokemonData> userPokemons = [];
@@ -77,6 +78,7 @@ class PokebetColors {
 }
 
 Color _calculateColor(String hexDark, String hexLight,
+
       {double opacity = 1.0}) {
     return Global.isDarkTheme
         ? hexToColor(hexDark, opacity: opacity)

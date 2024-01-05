@@ -2,6 +2,7 @@
 
 import 'package:PokeBet/views/profile/player_stats.dart';
 import 'package:PokeBet/views/profile/multiple_list.dart';
+import 'package:PokeBet/views/profile/settings.dart';
 import 'package:PokeBet/widgets/custom_texts.dart';
 import 'package:PokeBet/widgets/icon_container.dart';
 import 'package:PokeBet/widgets/menu_bar.dart';
@@ -68,13 +69,13 @@ class _PlayerProfileState extends State<PlayerProfile> {
                                 child: Image.asset(
                                   'assets/imgs/profile.jpg',
                                   fit: BoxFit.cover,
-                                  // color: Global.frameColor,
+                                  // color: Global.pokebetColors.frameColor,
                                 ),
                               ),
                             ),
                             SizedBox(height: setHeight(16)),
                             SimpleText(
-                              Global.userName,
+                              Global.userData!.name,
                               fontColor: Global.pokebetColors.highlightColor,
                               fontSize: setFontSize(32),
                             ),
@@ -150,6 +151,14 @@ class _PlayerProfileState extends State<PlayerProfile> {
                               icon: Icons.settings,
                               mainText: 'Configurações',
                               svgName: 'Config',
+                              onClick: () async {await Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => Settings(),
+                                  ),
+                                );
+                                setState(() {
+                                  
+                                });},
                             ),
                           ],
                         ),

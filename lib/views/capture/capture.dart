@@ -21,6 +21,7 @@ class Capture extends StatefulWidget {
 }
 
 class _CaptureState extends State<Capture> {
+  bool searchingPokemon = false;
   PokemonData? foundPokemon = null;
   @override
   Widget build(BuildContext context) {
@@ -50,52 +51,60 @@ class _CaptureState extends State<Capture> {
                     Container(
                       alignment: Alignment.topCenter,
                       padding: EdgeInsets.only(top: 80, bottom: 40),
-                      child: SingleChildScrollView(
-                        padding: EdgeInsets.zero,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Spacer(),
+                          if (foundPokemon != null) ...[
+                            Container(
+                              height: MediaQuery.of(context).size.width * 0.6,
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              color: Colors.transparent,
+                              child: Image.network(
+                                foundPokemon!.spriteUrl,
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                            SimpleText(
+                              '${foundPokemon!.name}${foundPokemon!.isShiny ? ' ⋆' : ''}',
+                              fontColor: Global.pokebetColors.highlightColor,
+                              fontSize: 28,
+                            ),
+                            SizedBox(height: setHeight(16)),
+                            Spacer(),
                             CustomButton(
-                              buttonText: 'Procurar Pokemon',
+                              buttonText: 'Capturar Pokemon',
                               onPressed: () async {
+                                Global.userPokemons.add(foundPokemon!);
+                                print('Capturou um pokemon');
                                 foundPokemon = null;
-                                setState(() {});
-                                foundPokemon = await GetPokemonData(
-                                    Random().nextInt(1017) + 1);
-                                print('Gerou um pokemon');
+                                searchingPokemon = false;
                                 setState(() {});
                               },
                             ),
-                            if (foundPokemon != null) ...[
-                              Container(
-                                height: MediaQuery.of(context).size.width * 0.6,
-                                width: MediaQuery.of(context).size.width * 0.6,
-                                color: Colors.transparent,
-                                child: Image.network(
-                                  foundPokemon!.spriteUrl,
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                              SimpleText(
-                                '${foundPokemon!.name}${foundPokemon!.isShiny ? ' ⋆' : ''}',
-                                fontColor: Global.pokebetColors.highlightColor,
-                                fontSize: 28,
-                              ),
-                              SizedBox(height: setHeight(16)),
-                              CustomButton(
-                                buttonText: 'Capturar Pokemon',
-                                onPressed: () async {
-                                  Global.userPokemons.add(foundPokemon!);
-                                  print('Capturou um pokemon');
-                                  foundPokemon = null;
-                                  setState(() {});
-                                },
-                              ),
-                            ] else ...[
-                              Container(margin: EdgeInsets.all(setHeight(32)), child: CircularProgressIndicator()),
-                            ],
                           ],
-                        ),
+                          if (searchingPokemon && foundPokemon == null) ...[
+                            Container(
+                                margin: EdgeInsets.all(setHeight(32)),
+                                child: CircularProgressIndicator()),
+                          ] else if (foundPokemon == null) ...[
+                            SimpleText(
+                                'Pokemons estão por perto, procure-os...')
+                          ],
+                          SizedBox(height: setHeight(16)),
+                          CustomButton(
+                            buttonText: 'Procurar Pokemon',
+                            onPressed: () async {
+                              searchingPokemon = true;
+                              foundPokemon = null;
+                              setState(() {});
+                              foundPokemon = await GetPokemonData(
+                                  Random().nextInt(1017) + 1);
+                              print('Gerou um pokemon');
+                              setState(() {});
+                            },
+                          ),
+                        ],
                       ),
                     ),
                   ],
