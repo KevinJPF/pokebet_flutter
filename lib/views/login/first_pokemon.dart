@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'dart:math';
-import 'dart:convert';
+import 'package:PokeBet/models/database_models.dart';
 import 'package:PokeBet/models/pokemon_data.dart';
 import 'package:PokeBet/views/profile/player_profile.dart';
 import 'package:PokeBet/views/pokemon_profile.dart';
@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:PokeBet/global.dart';
 import 'package:PokeBet/widgets/background.dart';
 import 'package:PokeBet/widgets/custom_button.dart';
-import 'package:http/http.dart' as http;
 import 'package:PokeBet/widgets/top_bar.dart';
 
 class FirstPokemon extends StatefulWidget {
@@ -25,10 +24,11 @@ class FirstPokemon extends StatefulWidget {
 class _FirstPokemonState extends State<FirstPokemon> {
   final controllerText = TextEditingController();
   bool showPokeballs = false;
-  PokemonData? firstPokemon = null;
-  PokemonData? secondPokemon = null;
-  PokemonData? thirdPokemon = null;
-  PokemonData? selectedPokemon = null;
+  bool triedToExploit = false;
+  UserPokemon? firstPokemon;
+  UserPokemon? secondPokemon;
+  UserPokemon? thirdPokemon;
+  UserPokemon? selectedPokemon;
   List<String> oakSpeak = [
     'Ah, olá ${Global.userData!.name}! Como vai?',
     'Vejo que conseguiu chegar ao laboratório sem problemas. Pronto para iniciar sua grande jornada Pokémon?',
@@ -38,7 +38,6 @@ class _FirstPokemonState extends State<FirstPokemon> {
   @override
   void initState() {
     super.initState();
-
     generatePokemon(905, 200);
   }
 
@@ -48,37 +47,59 @@ class _FirstPokemonState extends State<FirstPokemon> {
   }
 
   generatePokemon(int pokemonQuantity, int maxStats) async {
-    int totalStats;
+    if (Global.userPokemons.isEmpty) {
+      int totalStats;
 
-    do {
-      firstPokemon =
-          await GetPokemonData(Random().nextInt(pokemonQuantity) + 1);
-      totalStats = firstPokemon!.stats.attack +
-          firstPokemon!.stats.defense +
-          firstPokemon!.stats.speed;
-    } while (firstPokemon!.evolutionChainPosition > 0 || totalStats > maxStats);
-    print('Gerou um pokemon');
+      do {
+        firstPokemon =
+            await GetPokemonData(Random().nextInt(pokemonQuantity) + 1);
+        totalStats = firstPokemon!.attack.toInt() +
+            firstPokemon!.defense.toInt() +
+            firstPokemon!.speed.toInt();
+      } while (
+          firstPokemon!.evolutionChainPosition > 0 || totalStats > maxStats);
 
-    do {
-      secondPokemon =
-          await GetPokemonData(Random().nextInt(pokemonQuantity) + 1);
-      totalStats = secondPokemon!.stats.attack +
-          secondPokemon!.stats.defense +
-          secondPokemon!.stats.speed;
-    } while (
-        secondPokemon!.evolutionChainPosition > 0 || totalStats > maxStats);
-    print('Gerou dois pokemon');
+      do {
+        secondPokemon =
+            await GetPokemonData(Random().nextInt(pokemonQuantity) + 1);
+        totalStats = secondPokemon!.attack.toInt() +
+            secondPokemon!.defense.toInt() +
+            secondPokemon!.speed.toInt();
+      } while (
+          secondPokemon!.evolutionChainPosition > 0 || totalStats > maxStats);
 
-    do {
-      thirdPokemon =
-          await GetPokemonData(Random().nextInt(pokemonQuantity) + 1);
-      totalStats = thirdPokemon!.stats.attack +
-          thirdPokemon!.stats.defense +
-          thirdPokemon!.stats.speed;
-    } while (thirdPokemon!.evolutionChainPosition > 0 || totalStats > maxStats);
-    print('Gerou tres pokemon');
+      do {
+        thirdPokemon =
+            await GetPokemonData(Random().nextInt(pokemonQuantity) + 1);
+        totalStats = thirdPokemon!.attack.toInt() +
+            thirdPokemon!.defense.toInt() +
+            thirdPokemon!.speed.toInt();
 
-    setState(() {});
+        setState(() {});
+      } while (
+          thirdPokemon!.evolutionChainPosition > 0 || totalStats > maxStats);
+
+      UserPokemon.InsertPokemonDatabase(firstPokemon!);
+      UserPokemon.InsertPokemonDatabase(secondPokemon!);
+      UserPokemon.InsertPokemonDatabase(thirdPokemon!);
+    } else {
+      firstPokemon = Global.userPokemons[0];
+      secondPokemon = Global.userPokemons[1];
+      thirdPokemon = Global.userPokemons[2];
+
+      triedToExploit = true;
+      showPokeballs = true;
+    }
+  }
+
+  registerFirstPokemonIntoDb() {
+    UserPokemon.DeleteAllUserPokemonDatabase(Global.userData!.id!);
+    Global.userPokemons.clear();
+    Global.userPokemons.add(selectedPokemon!);
+    UserPokemon.InsertPokemonDatabase(selectedPokemon!);
+    Global.userData!.firstLogin = 0;
+    Global.userData!.rememberMe = 1;
+    UserData.UpdateUserDatabase();
   }
 
   @override
@@ -107,6 +128,21 @@ class _FirstPokemonState extends State<FirstPokemon> {
                           TopBar(showBackButton: false),
                           Builder(builder: (context) {
                             if (thirdPokemon != null && showPokeballs) {
+                              if (triedToExploit) {
+                                triedToExploit = false;
+                                oakSpeak.clear();
+                                Future.delayed(Duration.zero, () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => CustomPopup(
+                                      popupTitle: "SAFADOOOOO",
+                                      popupMessage:
+                                          "Vai roubar não canalha, vai ter que ser um desses 3 aí mesmo kkkkkkkkkkkk",
+                                      firstButtonText: 'Fechar',
+                                    ),
+                                  );
+                                });
+                              }
                               return Column(
                                 children: [
                                   SimpleText('Aqui estão, escolha com calma.'),
@@ -215,12 +251,12 @@ class _FirstPokemonState extends State<FirstPokemon> {
                               width: MediaQuery.of(context).size.width * 0.6,
                               color: Colors.transparent,
                               child: Image.network(
-                                selectedPokemon!.spriteUrl,
+                                selectedPokemon!.officialImage,
                                 fit: BoxFit.contain,
                               ),
                             ),
                             SimpleText(
-                              '#${selectedPokemon!.pokemonID} - ${selectedPokemon!.name}${selectedPokemon!.isShiny ? ' ⋆' : ''}',
+                              '#${selectedPokemon!.pokedexNumber} - ${selectedPokemon!.name}${selectedPokemon!.shiny == 1 ? ' ⋆' : ''}',
                               fontColor: Global.pokebetColors.highlightColor,
                               fontSize: 28,
                             ),
@@ -229,9 +265,9 @@ class _FirstPokemonState extends State<FirstPokemon> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 TypeIcon(selectedPokemon!.firstType),
-                                if (selectedPokemon!.secondType != '') ...[
+                                if (selectedPokemon!.secondType != null) ...[
                                   SizedBox(width: setWidth(16)),
-                                  TypeIcon(selectedPokemon!.secondType),
+                                  TypeIcon(selectedPokemon!.secondType!),
                                 ]
                               ],
                             ),
@@ -252,9 +288,9 @@ class _FirstPokemonState extends State<FirstPokemon> {
                                             "Tem certeza que deseja começar sua jornada com ${selectedPokemon!.name}?",
                                         firstButtonText: 'Fechar',
                                         secondButtonText: 'Confirmar',
-                                        onPressedSecondButton: () {
-                                          Global.userPokemons
-                                              .add(selectedPokemon!);
+                                        onPressedSecondButton: () async {
+                                          registerFirstPokemonIntoDb();
+
                                           Navigator.of(context).pop();
                                           Navigator.of(context).pop();
                                           Navigator.of(context).push(
@@ -320,46 +356,5 @@ class _FirstPokemonState extends State<FirstPokemon> {
         ),
       ),
     );
-  }
-}
-
-Future<String> getPokemonSpriteUrl(String id) async {
-  final response =
-      await http.get(Uri.parse('https://pokeapi.co/api/v2/pokemon/$id'));
-
-  if (response.statusCode == 200) {
-    // A resposta foi bem-sucedida, analisar os dados JSON
-    final data = json.decode(response.body);
-    Random random = Random();
-    bool isShiny = (random.nextInt(10) + 1) == 5;
-
-    // Obter a URL do sprite do Pokémon (geralmente, é a primeira na lista)
-    final spriteUrl = data['sprites']['other']['official-artwork']
-        ['front_${isShiny ? "shiny" : "default"}'];
-
-    return spriteUrl;
-  } else {
-    // A solicitação não foi bem-sucedida
-    print('Request failed with status: ${response.statusCode}');
-    return "null";
-  }
-}
-
-Future<String> getPokemonName(String id) async {
-  final response =
-      await http.get(Uri.parse('https://pokeapi.co/api/v2/pokemon/$id'));
-
-  if (response.statusCode == 200) {
-    // A resposta foi bem-sucedida, analisar os dados JSON
-    final data = json.decode(response.body);
-
-    // Obter a URL do sprite do Pokémon (geralmente, é a primeira na lista)
-    final spriteUrl = data['name'];
-
-    return spriteUrl;
-  } else {
-    // A solicitação não foi bem-sucedida
-    print('Request failed with status: ${response.statusCode}');
-    return "null";
   }
 }

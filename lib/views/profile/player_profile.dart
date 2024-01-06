@@ -10,7 +10,6 @@ import 'package:PokeBet/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:PokeBet/global.dart';
 import 'package:PokeBet/widgets/background.dart';
-import 'package:PokeBet/widgets/meowth_logo.dart';
 
 class PlayerProfile extends StatefulWidget {
   const PlayerProfile({super.key});
@@ -80,7 +79,7 @@ class _PlayerProfileState extends State<PlayerProfile> {
                               fontSize: setFontSize(32),
                             ),
                             SimpleText(
-                              'Treinador Nv. ${Global.userLevel}',
+                              'Treinador Nv. ${Global.userData!.level}',
                             ),
                             SizedBox(height: setHeight(16)),
                             IconContainer(
@@ -101,31 +100,6 @@ class _PlayerProfileState extends State<PlayerProfile> {
                               mainText: 'Itens',
                               svgName: 'Backpack',
                               onClick: () {
-                                Global.userItems.clear();
-                                var pokebola = {
-                                  'name': 'Pokebola',
-                                  'image_name': 'poke-ball',
-                                  'quantity': 10,
-                                };
-                                var grandepokebola = {
-                                  'name': 'Grande Bola',
-                                  'image_name': 'great-ball',
-                                  'quantity': 5,
-                                };
-                                var ultrapokebola = {
-                                  'name': 'Ultra Bola',
-                                  'image_name': 'ultra-ball',
-                                  'quantity': 3,
-                                };
-                                var masterpokebola = {
-                                  'name': 'Bola Mestra',
-                                  'image_name': 'master-ball',
-                                  'quantity': 1,
-                                };
-                                Global.userItems.add(pokebola);
-                                Global.userItems.add(grandepokebola);
-                                Global.userItems.add(ultrapokebola);
-                                Global.userItems.add(masterpokebola);
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) => MultipleList(listName: 'Meus Itens',listOfItems: Global.userItems),

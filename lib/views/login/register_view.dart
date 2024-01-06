@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, use_build_context_synchronously
 
 import 'package:PokeBet/database/db_connection.dart';
 import 'package:PokeBet/models/database_models.dart';
@@ -95,33 +95,64 @@ class _RegisterViewState extends State<RegisterView> {
                                   password.isNotEmpty &&
                                   confirmPassword.isNotEmpty) {
                                 if (password == confirmPassword) {
-                                  UserData addUser = UserData(
+                                  if ((await DatabaseConnection()
+                                              .selectDatabaseData(
+                                        databaseTable: 'users',
+                                        where: 'name = ?',
+                                        whereArgs: [
+                                          _controllerUser.text,
+                                        ],
+                                      ))
+                                          .firstOrNull ==
+                                      null) {
+                                    UserData addUser = UserData(
                                       name: username,
                                       password: password,
-                                      email: email);
-                                  var userMap = addUser.toMap();
+                                      email: email,
+                                      money: 0,
+                                      level: 1,
+                                      experience: 0,
+                                      capturedPokemons: 1,
+                                      pokebetsParticipated: 0,
+                                      pokebetsWon: 0,
+                                      tournamentsParticipated: 0,
+                                      tournamentsWon: 0,
+                                      firstLogin: 1,
+                                      rememberMe: 0,
+                                    );
+                                    var userMap = addUser.toMap();
 
-                                  try {
-                                    DatabaseConnection().insertDatabaseData(
-                                        object: userMap,
-                                        databaseTable: 'users');
-                                  } catch (exception) {
-                                    throw ('Erro ao inserir dados no banco: $exception');
+                                    try {
+                                      DatabaseConnection().insertDatabaseData(
+                                          object: userMap,
+                                          databaseTable: 'users');
+                                    } catch (exception) {
+                                      throw ('Erro ao inserir dados no banco: $exception');
+                                    }
+
+                                    await showDialog(
+                                      context: context,
+                                      builder: (context) => CustomPopup(
+                                        popupTitle: 'Sucesso',
+                                        popupMessage:
+                                            'Usuário ${_controllerUser.text} cadastrado com sucesso!',
+                                        firstButtonText: 'Voltar',
+                                        onPressedFirstButton: () {
+                                          Navigator.of(context).pop();
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                    );
+                                  } else {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => CustomPopup(
+                                        popupTitle: 'Atenção',
+                                        popupMessage:
+                                            'Já existe um usuário com este nome.',
+                                      ),
+                                    );
                                   }
-
-                                  await showDialog(
-                                    context: context,
-                                    builder: (context) => CustomPopup(
-                                      popupTitle: 'Sucesso',
-                                      popupMessage:
-                                          'Usuário ${_controllerUser.text} cadastrado com sucesso!',
-                                      firstButtonText: 'Voltar',
-                                      onPressedFirstButton: () {
-                                        Navigator.of(context).pop();
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                  );
                                 } else {
                                   showDialog(
                                     context: context,

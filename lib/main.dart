@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:PokeBet/views/login/login_view.dart';
@@ -7,7 +9,7 @@ main() {
 }
 
 class AppWidget extends StatelessWidget {
-  Size designSize = const Size(375, 812);
+  final Size designSize = const Size(375, 812);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -45,9 +47,6 @@ class FadeTransitionOnWeb extends PageTransitionsBuilder {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    // Ajuste a duração do fade conforme necessário
-    const fadeDuration = Duration(milliseconds: 150);
-
     return FadeTransition(
       opacity: Tween<double>(
         begin: 0.0,

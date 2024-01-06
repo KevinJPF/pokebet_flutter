@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:PokeBet/models/pokemon_data.dart';
+import 'package:PokeBet/models/database_models.dart';
 import 'package:PokeBet/views/pokemon_profile.dart';
 import 'package:PokeBet/widgets/icon_container.dart';
 import 'package:PokeBet/widgets/top_bar.dart';
@@ -9,8 +9,8 @@ import 'package:PokeBet/global.dart';
 import 'package:PokeBet/widgets/background.dart';
 
 class MultipleList extends StatefulWidget {
-  final List<PokemonData>? listOfPokemon;
-  final List<Map<String, dynamic>>? listOfItems;
+  final List<UserPokemon>? listOfPokemon;
+  final List<UserItem>? listOfItems;
   final String listName;
   const MultipleList({super.key, this.listOfPokemon, this.listOfItems, required this.listName});
 
@@ -19,8 +19,8 @@ class MultipleList extends StatefulWidget {
 }
 
 class _MultipleListState extends State<MultipleList> {
-  List<PokemonData>? _listOfPokemon = [];
-  List<Map<String, dynamic>>? _listOfItems = [];
+  List<UserPokemon>? _listOfPokemon = [];
+  List<UserItem>? _listOfItems = [];
 
   @override
   void initState() {
@@ -64,19 +64,19 @@ class _MultipleListState extends State<MultipleList> {
                             : _listOfItems!.length,
                         itemBuilder: (context, index) {
                           if (_listOfPokemon != null) {
-                            PokemonData pokemon = _listOfPokemon![index];
+                            UserPokemon pokemon = _listOfPokemon![index];
 
                             return Container(
                               margin:
                                   EdgeInsets.symmetric(vertical: setHeight(4)),
                               child: IconContainer(
                                 icon: Icons.pets,
-                                spriteIndex: pokemon.pokemonID,
-                                isShiny: pokemon.isShiny,
+                                spriteIndex: pokemon.pokedexNumber,
+                                isShiny: pokemon.shiny == 1,
                                 mainText:
-                                    '${pokemon.name}${pokemon.isShiny ? ' ⋆' : ''}',
+                                    '${pokemon.name}${pokemon.shiny == 1 ? ' ⋆' : ''}',
                                 secondaryText:
-                                    '${pokemon.firstType}${pokemon.secondType != '' ? "/${pokemon.secondType}" : ""}',
+                                    '${pokemon.firstType}${pokemon.secondType != null ? "/${pokemon.secondType}" : ""}',
                                 rightFirstType: pokemon.firstType,
                                 rightSecondType: pokemon.secondType != ''
                                     ? pokemon.secondType
@@ -101,9 +101,9 @@ class _MultipleListState extends State<MultipleList> {
                                   EdgeInsets.symmetric(vertical: setHeight(4)),
                               child: IconContainer(
                                 icon: Icons.pets,
-                                imageName: item['image_name'],
-                                mainText: '${item['name']}',
-                                rightText: 'x${item['quantity']}',
+                                imageName: item.name.toLowerCase().replaceAll(' ', ''),
+                                mainText: '${item.name}',
+                                rightText: 'x${item.quantity}',
                               ),
                             );
                           }

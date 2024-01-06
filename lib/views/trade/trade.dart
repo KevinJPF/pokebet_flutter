@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:PokeBet/widgets/custom_texts.dart';
 import 'package:PokeBet/widgets/menu_bar.dart';
 import 'package:PokeBet/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +48,25 @@ class _TradeState extends State<Trade> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            
+                          Container(
+                            padding:
+                                EdgeInsets.symmetric(horizontal: setWidth(32)),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(35),
+                              child: Image.network(
+                                'https://staticg.sportskeeda.com/editor/2023/10/927c3-16975163222739.png',
+                                fit: BoxFit
+                                    .cover, // Certifique-se de ajustar o BoxFit conforme necessário
+                              ),
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            padding:
+                                EdgeInsets.symmetric(horizontal: setWidth(32)),
+                            child: SimpleText(
+                                'Serviço de trocas em construção!\nVolte em breve para trocar pokemons com seus amigos!'),
+                          ),
                           ],
                         ),
                       ),

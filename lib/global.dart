@@ -1,27 +1,117 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:PokeBet/database/db_connection.dart';
 import 'package:PokeBet/models/database_models.dart';
-import 'package:PokeBet/models/pokemon_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Global {
-  // Varáveis Globais
+  // Global Variables
   static bool isDarkTheme = true;
+  static PokebetColors pokebetColors = PokebetColors();
 
   // User data
   static UserData? userData;
-  static int userLevel = 1;
-  static int userXP = 0;
-  static List<PokemonData> userPokemons = [];
-  static List<Map<String, dynamic>> userItems = [];
-  static PokebetColors pokebetColors = PokebetColors();
+  static List<UserPokemon> userPokemons = [];
+  static List<UserItem> userItems = [];
 
+  // Global Functions
   static void toggleTheme() {
     isDarkTheme = !isDarkTheme;
     pokebetColors = PokebetColors();
   }
-  
+
+  static Future<bool> loadInitialData({
+    bool login = false,
+    String? userName,
+    String? userPassword,
+  }) async {
+    if (login) {
+      userData = await LoadDatabase.userData(
+          userName: userName, userPassword: userPassword);
+
+      if (userData != null) {
+        userPokemons = await LoadDatabase.userPokemonData();
+
+        userItems = await LoadDatabase.userItemData();
+
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      userData = await LoadDatabase.userData();
+
+      if (userData != null) {
+        userPokemons = await LoadDatabase.userPokemonData();
+
+        userItems = await LoadDatabase.userItemData();
+
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }
+
+  static clearGlobal() {
+    userData = null;
+    userPokemons = [];
+    userItems = [];
+  }
+}
+
+class LoadDatabase {
+  static Future<UserData?>? userData({
+    String? userName,
+    String? userPassword,
+  }) async {
+    Map<String, dynamic>? userMap;
+    if (userName != null && userPassword != null) {
+      userMap = (await DatabaseConnection().selectDatabaseData(
+        databaseTable: 'users',
+        where: 'name = ? and password = ?',
+        whereArgs: [userName, userPassword],
+      ))
+          .firstOrNull;
+    } else {
+      userMap = (await DatabaseConnection().selectDatabaseData(
+        databaseTable: 'users',
+        where: 'remember_me = ?',
+        whereArgs: ['1'],
+      ))
+          .firstOrNull;
+    }
+    if (userMap != null) {
+      return UserData.fromMap(userMap);
+    } else {
+      return null;
+    }
+  }
+
+  static Future<List<UserPokemon>> userPokemonData() async {
+    List<Map<String, dynamic>>? userPokemonsDb =
+        (await DatabaseConnection().selectDatabaseData(
+      databaseTable: 'user_pokemons',
+      where: 'user_id = ?',
+      whereArgs: [
+        Global.userData!.id.toString(),
+      ],
+    ));
+    return UserPokemon.fromMapList(userPokemonsDb);
+  }
+
+  static Future<List<UserItem>> userItemData() async {
+    List<Map<String, dynamic>>? userItemsDb =
+        (await DatabaseConnection().selectDatabaseData(
+      databaseTable: 'user_items',
+      where: 'user_id = ?',
+      whereArgs: [
+        Global.userData!.id.toString(),
+      ],
+    ));
+    return UserItem.fromMapList(userItemsDb);
+  }
 }
 
 class Types {
@@ -77,10 +167,8 @@ class PokebetColors {
   Color iconContainerIconBackColor = _calculateColor('#390080', '#3F525D');
 }
 
-Color _calculateColor(String hexDark, String hexLight,
-
-      {double opacity = 1.0}) {
-    return Global.isDarkTheme
-        ? hexToColor(hexDark, opacity: opacity)
-        : hexToColor(hexLight, opacity: opacity);
-  }
+Color _calculateColor(String hexDark, String hexLight, {double opacity = 1.0}) {
+  return Global.isDarkTheme
+      ? hexToColor(hexDark, opacity: opacity)
+      : hexToColor(hexLight, opacity: opacity);
+}

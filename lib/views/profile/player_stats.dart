@@ -74,12 +74,12 @@ class _PlayerStatsState extends State<PlayerStats> {
                               fontSize: setFontSize(32),
                             ),
                             SimpleText(
-                              'Treinador Nv. ${Global.userLevel}',
+                              'Treinador Nv. ${Global.userData!.level}',
                             ),
                             SizedBox(height: setHeight(16)),
                             IconContainer(
                               icon: Icons.remove_circle_outlined,
-                              mainText: '0/200',
+                              mainText: '${Global.userData!.experience}/${(Global.userData!.level + 1) * 100}',
                               secondaryText: 'Experiência de Treinador',
                               imageName: 'exp',
                               onClick: () {
@@ -95,7 +95,7 @@ class _PlayerStatsState extends State<PlayerStats> {
                             SizedBox(height: setHeight(8)),
                             IconContainer(
                               icon: Icons.auto_graph_rounded,
-                              mainText: '0/0',
+                              mainText: '${Global.userData!.pokebetsWon}/${Global.userData!.pokebetsParticipated}',
                               secondaryText: 'Pokebets Vencidos',
                               imageName: 'versus',
                               onClick: () {
@@ -109,7 +109,7 @@ class _PlayerStatsState extends State<PlayerStats> {
                             SizedBox(height: setHeight(8)),
                             IconContainer(
                               icon: Icons.settings,
-                              mainText: '0/0',
+                              mainText: '${Global.userData!.tournamentsWon}/${Global.userData!.tournamentsParticipated}',
                               secondaryText: 'Torneios Vencidos',
                               imageName: 'trophy',
                             ),

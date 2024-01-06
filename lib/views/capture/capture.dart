@@ -2,16 +2,15 @@
 
 import 'dart:math';
 
+import 'package:PokeBet/models/database_models.dart';
 import 'package:PokeBet/models/pokemon_data.dart';
 import 'package:PokeBet/widgets/custom_button.dart';
 import 'package:PokeBet/widgets/custom_texts.dart';
 import 'package:PokeBet/widgets/menu_bar.dart';
-import 'package:PokeBet/widgets/pokemon_type.dart';
 import 'package:PokeBet/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:PokeBet/global.dart';
 import 'package:PokeBet/widgets/background.dart';
-import 'package:PokeBet/widgets/meowth_logo.dart';
 
 class Capture extends StatefulWidget {
   const Capture({super.key});
@@ -22,7 +21,7 @@ class Capture extends StatefulWidget {
 
 class _CaptureState extends State<Capture> {
   bool searchingPokemon = false;
-  PokemonData? foundPokemon = null;
+  UserPokemon? foundPokemon = null;
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -61,12 +60,12 @@ class _CaptureState extends State<Capture> {
                               width: MediaQuery.of(context).size.width * 0.6,
                               color: Colors.transparent,
                               child: Image.network(
-                                foundPokemon!.spriteUrl,
+                                foundPokemon!.officialImage,
                                 fit: BoxFit.contain,
                               ),
                             ),
                             SimpleText(
-                              '${foundPokemon!.name}${foundPokemon!.isShiny ? ' ⋆' : ''}',
+                              '${foundPokemon!.name}${foundPokemon!.shiny == 1 ? ' ⋆' : ''}',
                               fontColor: Global.pokebetColors.highlightColor,
                               fontSize: 28,
                             ),
@@ -75,6 +74,7 @@ class _CaptureState extends State<Capture> {
                             CustomButton(
                               buttonText: 'Capturar Pokemon',
                               onPressed: () async {
+                                await UserPokemon.InsertPokemonDatabase(foundPokemon!);
                                 Global.userPokemons.add(foundPokemon!);
                                 print('Capturou um pokemon');
                                 foundPokemon = null;

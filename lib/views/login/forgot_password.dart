@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:PokeBet/global.dart';
-import 'package:PokeBet/views/login/login_view.dart';
 import 'package:PokeBet/widgets/background.dart';
 import 'package:PokeBet/widgets/custom_button.dart';
 import 'package:PokeBet/widgets/custom_text_field.dart';
@@ -18,10 +17,7 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
-  TextEditingController _controllerUser = TextEditingController();
-  TextEditingController _controllerEmail = TextEditingController();
-  TextEditingController _controllerPassword = TextEditingController();
-  TextEditingController _controllerConfirmPassword = TextEditingController();
+  final TextEditingController _controllerEmail = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

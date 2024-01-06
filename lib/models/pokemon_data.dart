@@ -1,20 +1,23 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:PokeBet/global.dart';
+import 'package:PokeBet/models/database_models.dart';
 import 'package:http/http.dart' as http;
 
 class PokemonData {
   int pokemonID = 0;
+  String officalImageUrl = '';
   String spriteUrl = '';
   String name = '';
   String firstType = '';
   String secondType = '';
   int captureRate = 0;
   int evolutionChainPosition = 0;
-  bool isBaby = false;
-  bool isLegendary = false;
-  bool isMythical = false;
-  bool hasGenderDifferences = false;
-  bool isShiny = false;
+  int isBaby = 0;
+  int isLegendary = 0;
+  int isMythical = 0;
+  int hasGenderDifferences = 0;
+  int isShiny = 0;
 
   DateTime captureDate = DateTime.now();
 
@@ -22,15 +25,15 @@ class PokemonData {
 }
 
 class Stats {
-  int attack = 0;
+  double attack = 0;
   double attackIV = 0;
-  int defense = 0;
+  double defense = 0;
   double defenseIV = 0;
-  int speed = 0;
+  double speed = 0;
   double speedIV = 0;
 }
 
-Future<PokemonData?> GetPokemonData(int id, {int shinyChances = 100}) async {
+Future<UserPokemon?> GetPokemonData(int id, {int shinyChances = 100}) async {
   PokemonData newPokemon = PokemonData();
   newPokemon.pokemonID = id;
 
@@ -45,11 +48,14 @@ Future<PokemonData?> GetPokemonData(int id, {int shinyChances = 100}) async {
     final pokemonSpeciesData = json.decode(responsePokemonSpecies.body);
 
     var baseNumber = (Random().nextInt(shinyChances));
-    newPokemon.isShiny = (Random().nextInt(shinyChances)) == baseNumber;
+    newPokemon.isShiny = (Random().nextInt(shinyChances)) == baseNumber ? 1 : 0;
 
     // Obter a URL do sprite do Pokémon (geralmente, é a primeira na lista)
-    newPokemon.spriteUrl = pokemonData['sprites']['other']['official-artwork']
-        ['front_${newPokemon.isShiny ? "shiny" : "default"}'];
+    newPokemon.officalImageUrl = pokemonData['sprites']['other']
+            ['official-artwork']
+        ['front_${newPokemon.isShiny == 1 ? "shiny" : "default"}'];
+    newPokemon.spriteUrl = pokemonData['sprites']
+        ['front_${newPokemon.isShiny == 1 ? "shiny" : "default"}'];
     newPokemon.name = pokemonData['name'].toString().toUpperCase();
     newPokemon.firstType =
         pokemonData['types'][0]['type']['name'].toString().toUpperCase();
@@ -87,13 +93,40 @@ Future<PokemonData?> GetPokemonData(int id, {int shinyChances = 100}) async {
             ? 0
             : await _evolutionChainPosition(
                 pokemonSpeciesData['evolves_from_species']['url']);
-    newPokemon.isBaby = (pokemonSpeciesData['is_baby']);
-    newPokemon.isLegendary = (pokemonSpeciesData['is_legendary']);
-    newPokemon.isMythical = (pokemonSpeciesData['is_mythical']);
+    newPokemon.isBaby = (pokemonSpeciesData['is_baby'] == 'true' ? 1 : 0);
+    newPokemon.isLegendary =
+        (pokemonSpeciesData['is_legendary'] == 'true' ? 1 : 0);
+    newPokemon.isMythical =
+        (pokemonSpeciesData['is_mythical'] == 'true' ? 1 : 0);
     newPokemon.hasGenderDifferences =
-        (pokemonSpeciesData['has_gender_differences']);
+        (pokemonSpeciesData['has_gender_differences'] == 'true' ? 1 : 0);
 
-    return newPokemon;
+    UserPokemon returnPokemon = UserPokemon(
+      name: newPokemon.name,
+      nickname: newPokemon.name,
+      firstType: newPokemon.firstType,
+      secondType: newPokemon.secondType != '' ? newPokemon.secondType : null,
+      evolutionChainPosition: newPokemon.evolutionChainPosition,
+      evolutionChainLimit: 0,
+      baby: newPokemon.isBaby,
+      legendary: newPokemon.isLegendary,
+      mythical: newPokemon.isMythical,
+      shiny: newPokemon.isShiny,
+      gender: 'male',
+      capturedAt: newPokemon.captureDate.toString(),
+      attack: newPokemon.stats.attack,
+      attackIv: newPokemon.stats.attackIV,
+      defense: newPokemon.stats.defense,
+      defenseIv: newPokemon.stats.defenseIV,
+      speed: newPokemon.stats.speed,
+      speedIv: newPokemon.stats.speedIV,
+      pokedexNumber: newPokemon.pokemonID,
+      userId: Global.userData!.id!,
+      officialImage: newPokemon.officalImageUrl,
+      spriteImage: newPokemon.spriteUrl,
+    );
+
+    return returnPokemon;
   } else {
     // A solicitação não foi bem-sucedida
     print('Request failed with status: ${responsePokemon.statusCode}');
@@ -108,10 +141,10 @@ double _calculateIV() {
   return newIV;
 }
 
-int _calculateStat(int firstBaseStat, int secondBaseStat, double statIV) {
+double _calculateStat(int firstBaseStat, int secondBaseStat, double statIV) {
   int higherStat =
       (firstBaseStat > secondBaseStat ? firstBaseStat : secondBaseStat);
-  int finalStat = (higherStat + ((higherStat * statIV) / 10)).round();
+  double finalStat = (higherStat + ((higherStat * statIV) / 10));
 
   return finalStat;
 }

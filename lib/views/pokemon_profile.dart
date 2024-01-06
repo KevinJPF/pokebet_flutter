@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:PokeBet/models/pokemon_data.dart';
+import 'package:PokeBet/models/database_models.dart';
 import 'package:PokeBet/widgets/custom_button.dart';
 import 'package:PokeBet/widgets/custom_texts.dart';
 import 'package:PokeBet/widgets/icon_container.dart';
@@ -11,7 +11,7 @@ import 'package:PokeBet/global.dart';
 import 'package:PokeBet/widgets/background.dart';
 
 class PokemonProfile extends StatefulWidget {
-  final PokemonData pokemonData;
+  final UserPokemon pokemonData;
   final bool? showBackButton;
   final String? buttonText;
   final VoidCallback? buttonOnPressed;
@@ -29,7 +29,7 @@ class PokemonProfile extends StatefulWidget {
 }
 
 class _PokemonProfileState extends State<PokemonProfile> {
-  var _pokemonData = PokemonData();
+  UserPokemon? _pokemonData;
 
   @override
   void initState() {
@@ -72,13 +72,13 @@ class _PokemonProfileState extends State<PokemonProfile> {
                             width: MediaQuery.of(context).size.width * 0.5,
                             color: Colors.transparent,
                             child: Image.network(
-                              _pokemonData.spriteUrl,
+                              _pokemonData!.officialImage,
                               fit: BoxFit.contain,
                               // width: MediaQuery.of(context).size.width * 0.6,
                             ),
                           ),
                           SimpleText(
-                            '#${_pokemonData.pokemonID} - ${_pokemonData.name}${_pokemonData.isShiny ? ' ⋆' : ''}',
+                            '#${_pokemonData!.pokedexNumber} - ${_pokemonData!.nickname}${_pokemonData!.shiny == 1 ? ' ⋆' : ''}',
                             fontColor: Global.pokebetColors.highlightColor,
                             fontSize: 28,
                           ),
@@ -86,10 +86,10 @@ class _PokemonProfileState extends State<PokemonProfile> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              TypeIcon(_pokemonData.firstType),
-                              if (_pokemonData.secondType != '') ...[
+                              TypeIcon(_pokemonData!.firstType),
+                              if (_pokemonData!.secondType != null) ...[
                                 SizedBox(width: setWidth(16)),
-                                TypeIcon(_pokemonData.secondType),
+                                TypeIcon(_pokemonData!.secondType!),
                               ]
                             ],
                           ),
@@ -98,7 +98,7 @@ class _PokemonProfileState extends State<PokemonProfile> {
                             icon: Icons.volcano_rounded,
                             mainText: 'Ataque',
                             svgName: 'Ataque',
-                            secondaryText: _pokemonData.stats.attack.toString(),
+                            secondaryText: _pokemonData!.attack.round().toString(),
                           ),
                           SizedBox(height: setHeight(8)),
                           IconContainer(
@@ -106,25 +106,25 @@ class _PokemonProfileState extends State<PokemonProfile> {
                             mainText: 'Defesa',
                             svgName: 'Defesa',
                             secondaryText:
-                                _pokemonData.stats.defense.toString(),
+                                _pokemonData!.defense.round().toString(),
                           ),
                           SizedBox(height: setHeight(8)),
                           IconContainer(
                             icon: Icons.run_circle_rounded,
                             mainText: 'Velocidade',
                             svgName: 'Velocidade',
-                            secondaryText: _pokemonData.stats.speed.toString(),
+                            secondaryText: _pokemonData!.speed.round().toString(),
                           ),
                           SizedBox(height: setHeight(8)),
                           Container(
                             alignment: Alignment.centerRight,
                             margin: EdgeInsets.only(right: setWidth(32)),
                             child: SimpleText(
-                                'Total: ${_pokemonData.stats.speed + _pokemonData.stats.defense + _pokemonData.stats.attack}'),
+                                'Total: ${(_pokemonData!.speed + _pokemonData!.defense + _pokemonData!.attack).round()}'),
                           ),
                           Spacer(),
                           SimpleText(
-                              'Capturado em: ${_pokemonData.captureDate.toString().substring(0, 16)}'),
+                              'Capturado em: ${_pokemonData!.capturedAt.toString().substring(0, 16)}'),
                           if (widget.buttonText != null) ...[
                             SizedBox(height: setHeight(16)),
                             CustomButton(

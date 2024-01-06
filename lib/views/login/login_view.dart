@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_final_fields, use_build_context_synchronously
 
 import 'package:PokeBet/database/db_connection.dart';
-import 'package:PokeBet/models/database_models.dart';
+import 'package:PokeBet/views/profile/player_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:PokeBet/global.dart';
 import 'package:PokeBet/views/login/forgot_password.dart';
@@ -25,6 +25,7 @@ class _LoginViewState extends State<LoginView> {
   TextEditingController _controllerUser = TextEditingController();
   TextEditingController _controllerPassword = TextEditingController();
   DatabaseConnection databaseConnection = DatabaseConnection();
+  Widget? initialScreen;
 
   @override
   void initState() {
@@ -36,6 +37,40 @@ class _LoginViewState extends State<LoginView> {
   void dispose() {
     databaseConnection.closeDb();
     super.dispose();
+  }
+
+  Future<bool> loginUser(String? userName, String? password) async {
+    Global.clearGlobal();
+
+    bool loginSuccesfull = await Global.loadInitialData(
+      login: userName != null,
+      userName: userName,
+      userPassword: password,
+    );
+
+    if (loginSuccesfull) {
+      if (Global.userData!.firstLogin == 1) {
+        initialScreen = FirstPokemon();
+      } else {
+        initialScreen = PlayerProfile();
+      }
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => initialScreen!,
+        ),
+      );
+      setState(() {});
+      return true;
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) => CustomPopup(
+          popupTitle: 'Atenção',
+          popupMessage: 'O usuário e/ou a senha digitados estão invalidos.',
+        ),
+      );
+      return false;
+    }
   }
 
   @override
@@ -85,41 +120,9 @@ class _LoginViewState extends State<LoginView> {
                           CustomButton(
                             buttonText: 'Entrar',
                             onPressed: () async {
-                              Map<String, dynamic>? userMap = (await DatabaseConnection()
-                                      .selectDatabaseData(
-                                databaseTable: 'users',
-                                where: 'name = ? and password = ?',
-                                whereArgs: [
-                                  _controllerUser.text,
-                                  _controllerPassword.text
-                                ],
-                              ))
-                                  .firstOrNull;
-                              if (userMap != null) {
-                                Global.userData = UserData.fromMap(userMap);
-                                await showDialog(
-                                  context: context,
-                                  builder: (context) => CustomPopup(
-                                    popupTitle: 'Sucesso',
-                                    popupMessage:
-                                        'O login foi realizado com sucesso.\nUsuário: ${Global.userData!.name}\nEmail: ${Global.userData!.email}',
-                                  ),
-                                );
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => const FirstPokemon(),
-                                  ),
-                                );
-                              } else {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) => CustomPopup(
-                                    popupTitle: 'Atenção',
-                                    popupMessage:
-                                        'O usuário e/ou a senha digitados estão invalidos.',
-                                  ),
-                                );
-                              }
+                              await loginUser(_controllerUser.text,
+                                  _controllerPassword.text);
+                              setState(() {});
                             },
                           ),
                           SizedBox(height: setHeight(16)),

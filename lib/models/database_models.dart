@@ -1,16 +1,39 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:PokeBet/database/db_connection.dart';
+import 'package:PokeBet/global.dart';
+
 class UserData {
   final int? id;
-  final String name;
-  final String password;
-  final String email;
+  String name;
+  String password;
+  String email;
+  int money;
+  int level;
+  int experience;
+  int capturedPokemons;
+  int pokebetsParticipated;
+  int pokebetsWon;
+  int tournamentsParticipated;
+  int tournamentsWon;
+  int firstLogin;
+  int rememberMe;
 
   UserData({
     this.id,
     required this.name,
     required this.password,
     required this.email,
+    required this.money,
+    required this.level,
+    required this.experience,
+    required this.capturedPokemons,
+    required this.pokebetsParticipated,
+    required this.pokebetsWon,
+    required this.tournamentsParticipated,
+    required this.tournamentsWon,
+    required this.firstLogin,
+    required this.rememberMe,
   });
 
   Map<String, dynamic> toMap() {
@@ -19,6 +42,16 @@ class UserData {
       'name': name,
       'password': password,
       'email': email,
+      'money': money,
+      'level': level,
+      'experience': experience,
+      'captured_pokemons': capturedPokemons,
+      'pokebets_participated': pokebetsParticipated,
+      'pokebets_won': pokebetsWon,
+      'tournaments_participated': tournamentsParticipated,
+      'tournaments_won': tournamentsWon,
+      'first_login': firstLogin,
+      'remember_me': rememberMe,
     };
   }
 
@@ -28,70 +61,59 @@ class UserData {
       name: map['name'],
       password: map['password'],
       email: map['email'],
+      money: map['money'],
+      level: map['level'],
+      experience: map['experience'],
+      capturedPokemons: map['captured_pokemons'],
+      pokebetsParticipated: map['pokebets_participated'],
+      pokebetsWon: map['pokebets_won'],
+      tournamentsParticipated: map['tournaments_participated'],
+      tournamentsWon: map['tournaments_won'],
+      firstLogin: map['first_login'],
+      rememberMe: map['remember_me'],
     );
   }
-}
 
-class Player {
-  final int? id;
-  final int level;
-  final int experience;
-  final int capturedPokemons;
-  final int pokebetsParticipated;
-  final int pokebetsWon;
-  final int tournamentsParticipated;
-  final int tournamentsWon;
-  final int userId;
+  static InsertUserDatabase(UserData newUser) {
+    DatabaseConnection().insertDatabaseData(
+        object: newUser.toMap(), databaseTable: 'users');
+  }
 
-  Player({
-    this.id,
-    required this.level,
-    required this.experience,
-    required this.capturedPokemons,
-    required this.pokebetsParticipated,
-    required this.pokebetsWon,
-    required this.tournamentsParticipated,
-    required this.tournamentsWon,
-    required this.userId,
-  });
+  static UpdateUserDatabase() {
+    DatabaseConnection().updateDatabaseData(
+        object: Global.userData!.toMap(), databaseTable: 'users');
+  }
 
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'level': level,
-      'experience': experience,
-      'captured_pokemons': capturedPokemons,
-      'pokebets_participated': pokebetsParticipated,
-      'pokebets_won': pokebetsWon,
-      'tournaments_participated': tournamentsParticipated,
-      'tournaments_won': tournamentsWon,
-      'user_id': userId,
-    };
+  static DeleteUserDatabase(int id) {
+    DatabaseConnection()
+        .deleteDatabaseData(objectId: id, databaseTable: 'users');
   }
 }
 
 class UserPokemon {
   final int? id;
-  final String name;
-  final String nickname;
-  final String firstType;
-  final String? secondType;
-  final int evolutionChainPosition;
+  String name;
+  String nickname;
+  String firstType;
+  String? secondType;
+  int evolutionChainPosition;
   final int evolutionChainLimit;
   final int baby;
   final int legendary;
   final int mythical;
   final int shiny;
   final String gender;
-  final String capturedAt;
-  final double attack;
+  String capturedAt;
+  double attack;
   final double attackIv;
-  final double defense;
+  double defense;
   final double defenseIv;
-  final double speed;
+  double speed;
   final double speedIv;
-  final int pokedexNumber;
-  final int playerId;
+  int pokedexNumber;
+  String officialImage;
+  String spriteImage;
+  final int userId;
 
   UserPokemon({
     this.id,
@@ -114,7 +136,9 @@ class UserPokemon {
     required this.speed,
     required this.speedIv,
     required this.pokedexNumber,
-    required this.playerId,
+    required this.userId,
+    required this.officialImage,
+    required this.spriteImage,
   });
 
   Map<String, dynamic> toMap() {
@@ -139,22 +163,76 @@ class UserPokemon {
       'speed': speed,
       'speed_iv': speedIv,
       'pokedex_number': pokedexNumber,
-      'player_id': playerId,
+      'user_id': userId,
+      'official_image': officialImage,
+      'sprite_image': spriteImage,
     };
+  }
+
+  static List<UserPokemon> fromMapList(List<Map<String, dynamic>> mapList) {
+    return mapList.map((map) => fromMap(map)).toList();
+  }
+
+  static UserPokemon fromMap(Map<String, dynamic> map) {
+    return UserPokemon(
+      id: map['id'],
+      name: map['name'],
+      nickname: map['nickname'],
+      firstType: map['first_type'],
+      secondType: map['second_type'],
+      evolutionChainPosition: map['evolution_chain_position'],
+      evolutionChainLimit: map['evolution_chain_limit'],
+      baby: map['baby'],
+      legendary: map['legendary'],
+      mythical: map['mythical'],
+      shiny: map['shiny'],
+      gender: map['gender'],
+      capturedAt: map['captured_at'],
+      attack: map['attack'],
+      attackIv: map['attack_iv'],
+      defense: map['defense'],
+      defenseIv: map['defense_iv'],
+      speed: map['speed'],
+      speedIv: map['speed_iv'],
+      pokedexNumber: map['pokedex_number'],
+      userId: map['user_id'],
+      officialImage: map['official_image'],
+      spriteImage: map['sprite_image'],
+    );
+  }
+
+  static InsertPokemonDatabase(UserPokemon newPokemon) {
+    DatabaseConnection().insertDatabaseData(
+        object: newPokemon.toMap(), databaseTable: 'user_pokemons');
+  }
+
+  static UpdatePokemonDatabase(UserPokemon updatedPokemon) {
+    DatabaseConnection().updateDatabaseData(
+        object: updatedPokemon.toMap(), databaseTable: 'user_pokemons');
+  }
+
+  static DeletePokemonDatabase(int id) {
+    DatabaseConnection()
+        .deleteDatabaseData(objectId: id, databaseTable: 'user_pokemons');
+  }
+
+  static DeleteAllUserPokemonDatabase(int userId) {
+    DatabaseConnection()
+        .deleteEverythingFromUser(userId: userId, databaseTable: 'user_pokemons');
   }
 }
 
 class UserItem {
   final int? id;
   final String name;
-  final int quantity;
-  final int playerId;
+  int quantity;
+  final int userId;
 
   UserItem({
     this.id,
     required this.name,
     required this.quantity,
-    required this.playerId,
+    required this.userId,
   });
 
   Map<String, dynamic> toMap() {
@@ -162,7 +240,40 @@ class UserItem {
       'id': id,
       'name': name,
       'quantity': quantity,
-      'player_id': playerId,
+      'user_id': userId,
     };
+  }
+
+  static UserItem fromMap(Map<String, dynamic> map) {
+    return UserItem(
+      id: map['id'],
+      name: map['name'],
+      quantity: map['quantity'],
+      userId: map['user_id'],
+    );
+  }
+
+  static List<UserItem> fromMapList(List<Map<String, dynamic>> mapList) {
+    return mapList.map((map) => fromMap(map)).toList();
+  }
+
+  static InsertItemDatabase(UserItem newItem) {
+    DatabaseConnection().insertDatabaseData(
+        object: newItem.toMap(), databaseTable: 'user_items');
+  }
+
+  static UpdateItemDatabase(UserItem updatedItem) {
+    DatabaseConnection().updateDatabaseData(
+        object: updatedItem.toMap(), databaseTable: 'user_items');
+  }
+
+  static DeleteItemDatabase(int id) {
+    DatabaseConnection()
+        .deleteDatabaseData(objectId: id, databaseTable: 'user_items');
+  }
+
+  static DeleteAllUserItemDatabase(int userId) {
+    DatabaseConnection()
+        .deleteEverythingFromUser(userId: userId, databaseTable: 'user_items');
   }
 }

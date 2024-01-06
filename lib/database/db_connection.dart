@@ -90,4 +90,16 @@ class DatabaseConnection {
       whereArgs: [objectId],
     );
   }
+  Future<int> deleteEverythingFromUser(
+      {required int userId, required String databaseTable}) async {
+    return await _database!.delete(
+      databaseTable,
+      where: 'user_id = ?',
+      whereArgs: [userId],
+    );
+  }
+
+  Future<void> deleteAllTableData(String tableName) async {
+    await _database!.delete(tableName);
+  }
 }
