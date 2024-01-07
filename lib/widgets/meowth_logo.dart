@@ -59,7 +59,7 @@ class _MeowthLogoState extends State<MeowthLogo>
                   height: setHeight(130),
                   width: setWidth(164),
                   child: Image.asset(
-                    'assets/imgs/meowth_${Global.isDarkTheme ? "dark" : "light"}.png',
+                    'assets/imgs/meowth_${Global.appOptions.theme}.png',
                     fit: BoxFit.cover,
                   ),
                 ),

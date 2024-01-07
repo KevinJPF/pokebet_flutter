@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Global {
   // Global Variables
-  static bool isDarkTheme = true;
+  static AppOptions appOptions = AppOptions(theme: 'dark');
   static PokebetColors pokebetColors = PokebetColors();
   static ValueNotifier<bool> isLogged = ValueNotifier(false);
   static bool canPopLogout = false;
@@ -18,9 +18,13 @@ class Global {
   static List<UserItem> userItems = [];
 
   // Global Functions
-  static void toggleTheme() {
-    isDarkTheme = !isDarkTheme;
+  static void toggleTheme({bool toggle = true}) {
+    if (toggle) {
+      Global.appOptions.theme =
+          Global.appOptions.theme == 'dark' ? 'light' : 'dark';
+    }
     pokebetColors = PokebetColors();
+    AppOptions.UpdateAppOptionsDatabase();
   }
 
   static Future<bool> loadInitialData({
@@ -54,6 +58,14 @@ class Global {
         return false;
       }
     }
+  }
+
+  loadAppConfig() async {
+    var appOptionsMap = (await DatabaseConnection()
+            .selectDatabaseData(databaseTable: 'app_options'))
+        .first;
+    Global.appOptions = AppOptions.fromMap(appOptionsMap);
+    toggleTheme(toggle: false);
   }
 
   static clearGlobal() {
@@ -104,6 +116,18 @@ class LoadDatabase {
   }
 
   static Future<List<UserItem>> userItemData() async {
+    List<Map<String, dynamic>>? userItemsDb =
+        (await DatabaseConnection().selectDatabaseData(
+      databaseTable: 'user_items',
+      where: 'user_id = ?',
+      whereArgs: [
+        Global.userData!.id.toString(),
+      ],
+    ));
+    return UserItem.fromMapList(userItemsDb);
+  }
+
+  static Future<List<UserItem>> appConfigurations() async {
     List<Map<String, dynamic>>? userItemsDb =
         (await DatabaseConnection().selectDatabaseData(
       databaseTable: 'user_items',
@@ -170,7 +194,7 @@ class PokebetColors {
 }
 
 Color _calculateColor(String hexDark, String hexLight, {double opacity = 1.0}) {
-  return Global.isDarkTheme
+  return Global.appOptions.theme == 'dark'
       ? hexToColor(hexDark, opacity: opacity)
       : hexToColor(hexLight, opacity: opacity);
 }

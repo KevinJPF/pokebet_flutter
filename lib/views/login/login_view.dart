@@ -40,8 +40,6 @@ class _LoginViewState extends State<LoginView> {
 
   Future<bool> loginUser({String? userName, String? password}) async {
     if (Global.userData == null) {
-      await DatabaseConnection().openDb();
-
       bool loginSuccesfull = await Global.loadInitialData(
         login: userName != null,
         userName: userName,

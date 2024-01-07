@@ -277,3 +277,32 @@ class UserItem {
         .deleteEverythingFromUser(userId: userId, databaseTable: 'user_items');
   }
 }
+
+class AppOptions {
+  final int? id;
+  String theme;
+
+  AppOptions({
+    this.id,
+    required this.theme,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'theme': theme,
+    };
+  }
+
+  static AppOptions fromMap(Map<String, dynamic> map) {
+    return AppOptions(
+      id: map['id'],
+      theme: map['theme'],
+    );
+  }
+
+  static UpdateAppOptionsDatabase() {
+    DatabaseConnection().updateDatabaseData(
+        object: Global.appOptions.toMap(), databaseTable: 'app_options');
+  }
+}

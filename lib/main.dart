@@ -1,27 +1,38 @@
 // ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors
 
+import 'package:PokeBet/database/db_connection.dart';
+import 'package:PokeBet/global.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:PokeBet/views/login/login_view.dart';
 
 main() {
-  runApp(AppWidget());
+  runApp(MyApp());
 }
 
-class AppWidget extends StatelessWidget {
+class MyApp extends StatelessWidget {
   final Size designSize = const Size(375, 812);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         pageTransitionsTheme: PageTransitionsTheme(builders: {
           TargetPlatform.android: FadeTransitionOnWeb(),
           TargetPlatform.iOS: FadeTransitionOnWeb(),
         }),
       ),
-      home: ScreenUtilInit(
-          designSize: designSize, child: Scaffold(body: LoginView())),
+      home: FutureBuilder(
+        future: initDatabaseAndAppConfig(),
+        builder: (context, snapshot) => ScreenUtilInit(
+            designSize: designSize, child: Scaffold(body: LoginView())),
+      ),
     );
+  }
+
+  Future<void> initDatabaseAndAppConfig() async {
+    await DatabaseConnection().openDb();
+    await Global().loadAppConfig();
   }
 }
 
