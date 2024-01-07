@@ -42,7 +42,10 @@ class _PlayerStatsState extends State<PlayerStats> {
                     ),
                     Container(
                       alignment: Alignment.topCenter,
-                      padding: EdgeInsets.only(top: 80, bottom: 40),
+                      padding: EdgeInsets.only(
+                        top: setHeight(80),
+                        bottom: setHeight(40),
+                      ),
                       child: SingleChildScrollView(
                         padding: EdgeInsets.zero,
                         child: Column(
@@ -56,7 +59,8 @@ class _PlayerStatsState extends State<PlayerStats> {
                                 border: Border.all(
                                     color: Global.pokebetColors.highlightColor,
                                     width: setWidth(3)),
-                                color: Global.pokebetColors.backgroundColor, // Cor de fundo
+                                color: Global.pokebetColors
+                                    .backgroundColor, // Cor de fundo
                                 borderRadius: BorderRadius.circular(200),
                               ),
                               child: ClipOval(
@@ -79,11 +83,11 @@ class _PlayerStatsState extends State<PlayerStats> {
                             SizedBox(height: setHeight(16)),
                             IconContainer(
                               icon: Icons.remove_circle_outlined,
-                              mainText: '${Global.userData!.experience}/${(Global.userData!.level + 1) * 100}',
+                              mainText:
+                                  '${Global.userData!.experience}/${(Global.userData!.level + 1) * 100}',
                               secondaryText: 'Experiência de Treinador',
                               imageName: 'exp',
-                              onClick: () {
-                              },
+                              onClick: () {},
                             ),
                             SizedBox(height: setHeight(8)),
                             IconContainer(
@@ -95,7 +99,8 @@ class _PlayerStatsState extends State<PlayerStats> {
                             SizedBox(height: setHeight(8)),
                             IconContainer(
                               icon: Icons.auto_graph_rounded,
-                              mainText: '${Global.userData!.pokebetsWon}/${Global.userData!.pokebetsParticipated}',
+                              mainText:
+                                  '${Global.userData!.pokebetsWon}/${Global.userData!.pokebetsParticipated}',
                               secondaryText: 'Pokebets Vencidos',
                               imageName: 'versus',
                               onClick: () {
@@ -109,7 +114,8 @@ class _PlayerStatsState extends State<PlayerStats> {
                             SizedBox(height: setHeight(8)),
                             IconContainer(
                               icon: Icons.settings,
-                              mainText: '${Global.userData!.tournamentsWon}/${Global.userData!.tournamentsParticipated}',
+                              mainText:
+                                  '${Global.userData!.tournamentsWon}/${Global.userData!.tournamentsParticipated}',
                               secondaryText: 'Torneios Vencidos',
                               imageName: 'trophy',
                             ),

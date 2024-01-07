@@ -29,22 +29,26 @@ class DatabaseConnection {
 
   // Função para abrir o banco de dados
   Future<void> openDb() async {
-    // Chama a função de cópia antes de abrir o banco de dados
-    await copyDatabase();
+    if (_database == null) {
+      // Chama a função de cópia antes de abrir o banco de dados
+      await copyDatabase();
 
-    // Abre o banco de dados
-    _database = await openDatabase(
-      join(await getDatabasesPath(), dbName), // Use o caminho novamente aqui
-      version: 1,
-      onCreate: (db, version) {
-        // Adicione aqui a lógica para criação de tabelas se necessário
-      },
-    );
+      // Abre o banco de dados
+      _database = await openDatabase(
+        join(await getDatabasesPath(), dbName), // Use o caminho novamente aqui
+        version: 1,
+        onCreate: (db, version) {
+          // Adicione aqui a lógica para criação de tabelas se necessário
+        },
+      );
+    }
   }
 
   // Método para fechar o banco de dados
   Future<void> closeDb() async {
-    await _database!.close();
+    if (_database!.isOpen) {
+      await _database!.close();
+    }
   }
 
   // Método para inserir um novo usuário no banco de dados
@@ -90,6 +94,7 @@ class DatabaseConnection {
       whereArgs: [objectId],
     );
   }
+
   Future<int> deleteEverythingFromUser(
       {required int userId, required String databaseTable}) async {
     return await _database!.delete(

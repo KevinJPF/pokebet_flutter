@@ -12,7 +12,11 @@ class MultipleList extends StatefulWidget {
   final List<UserPokemon>? listOfPokemon;
   final List<UserItem>? listOfItems;
   final String listName;
-  const MultipleList({super.key, this.listOfPokemon, this.listOfItems, required this.listName});
+  const MultipleList(
+      {super.key,
+      this.listOfPokemon,
+      this.listOfItems,
+      required this.listName});
 
   @override
   State<MultipleList> createState() => _MultipleListState();
@@ -57,7 +61,10 @@ class _MultipleListState extends State<MultipleList> {
                     ),
                     Container(
                       alignment: Alignment.topCenter,
-                      padding: EdgeInsets.only(top: 80, bottom: 40),
+                      padding: EdgeInsets.only(
+                        top: setHeight(80),
+                        bottom: setHeight(40),
+                      ),
                       child: ListView.builder(
                         itemCount: _listOfPokemon != null
                             ? _listOfPokemon!.length
@@ -101,8 +108,9 @@ class _MultipleListState extends State<MultipleList> {
                                   EdgeInsets.symmetric(vertical: setHeight(4)),
                               child: IconContainer(
                                 icon: Icons.pets,
-                                imageName: item.name.toLowerCase().replaceAll(' ', ''),
-                                mainText: '${item.name}',
+                                imageName:
+                                    item.name.toLowerCase().replaceAll(' ', ''),
+                                mainText: item.name,
                                 rightText: 'x${item.quantity}',
                               ),
                             );

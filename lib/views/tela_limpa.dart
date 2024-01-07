@@ -41,14 +41,15 @@ class _TelaLimpaState extends State<TelaLimpa> {
                     ),
                     Container(
                       alignment: Alignment.topCenter,
-                      padding: EdgeInsets.only(top: 80, bottom: 40),
+                      padding: EdgeInsets.only(
+                        top: setHeight(80),
+                        bottom: setHeight(40),
+                      ),
                       child: SingleChildScrollView(
                         padding: EdgeInsets.zero,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            
-                          ],
+                          children: [],
                         ),
                       ),
                     ),

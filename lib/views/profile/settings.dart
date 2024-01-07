@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:PokeBet/database/db_connection.dart';
+import 'package:PokeBet/models/database_models.dart';
 import 'package:PokeBet/widgets/custom_button.dart';
 import 'package:PokeBet/widgets/custom_popup.dart';
 import 'package:PokeBet/widgets/meowth_logo.dart';
@@ -39,7 +40,8 @@ class _SettingsState extends State<Settings> {
                     Background(hasLogo: false),
                     Column(
                       children: [
-                        TopBar(showBackButton: true, pageTitle: 'Configurações'),
+                        TopBar(
+                            showBackButton: true, pageTitle: 'Configurações'),
                       ],
                     ),
                     Container(
@@ -57,27 +59,79 @@ class _SettingsState extends State<Settings> {
                               },
                             ),
                             SizedBox(height: setHeight(16)),
-                            CustomButton(buttonText: 'Resetar Banco de Dados', onPressed: () {
-                              DatabaseConnection().deleteAllTableData('users');
-                              DatabaseConnection().deleteAllTableData('players');
-                              DatabaseConnection().deleteAllTableData('user_pokemons');
-                              DatabaseConnection().deleteAllTableData('user_items');
-
+                            CustomButton(
+                              buttonText: 'Resetar Banco de Dados',
+                              onPressed: () {
                                 showDialog(
                                   context: context,
                                   builder: (context) => CustomPopup(
-                                    popupTitle: "Banco de Dados resetado com sucesso",
+                                    popupTitle:
+                                        "Resetar TODOS os dados do banco de dados",
                                     popupMessage:
-                                        "Você será redirecionado para a tela de login.",
+                                        "Tem certeza que deseja apagar TODOS os dados do banco de dados?(todas as contas/itens/pokemons)",
+                                    firstButtonText: 'Cancelar',
+                                    onPressedFirstButton: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    secondButtonText: 'Resetar',
+                                    onPressedSecondButton: () {
+                                      DatabaseConnection()
+                                          .deleteAllTableData('users');
+                                      DatabaseConnection()
+                                          .deleteAllTableData('user_pokemons');
+                                      DatabaseConnection()
+                                          .deleteAllTableData('user_items');
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => CustomPopup(
+                                          popupTitle:
+                                              "Banco de Dados resetado com sucesso",
+                                          popupMessage:
+                                              "Você será redirecionado para a tela de login.",
+                                          firstButtonText: 'Fechar',
+                                          onPressedFirstButton: () {
+                                            Navigator.of(context).pop();
+                                            Navigator.of(context).pop();
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
+                            SizedBox(height: setHeight(16)),
+                            CustomButton(
+                              buttonText: 'Desconectar',
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => CustomPopup(
+                                    popupTitle:
+                                        "Desconectar da Conta '${Global.userData!.name}'",
+                                    popupMessage:
+                                        "Deseja se desconectar e retornar a tela de login?",
                                     firstButtonText: 'Fechar',
                                     onPressedFirstButton: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    secondButtonText: 'Desconectar',
+                                    onPressedSecondButton: () {
+                                      setState(() {
+                                        Global.canPopLogout = true;
+                                      });
+                                      Global.isLogged.value = false;
+                                      Global.userData!.rememberMe = 0;
+                                      UserData.UpdateUserDatabase();
                                       Navigator.of(context).pop();
                                       Navigator.of(context).pop();
                                       Navigator.of(context).pop();
                                     },
                                   ),
                                 );
-                            })
+                              },
+                            ),
                           ],
                         ),
                       ),

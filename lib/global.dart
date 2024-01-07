@@ -9,6 +9,8 @@ class Global {
   // Global Variables
   static bool isDarkTheme = true;
   static PokebetColors pokebetColors = PokebetColors();
+  static ValueNotifier<bool> isLogged = ValueNotifier(false);
+  static bool canPopLogout = false;
 
   // User data
   static UserData? userData;
