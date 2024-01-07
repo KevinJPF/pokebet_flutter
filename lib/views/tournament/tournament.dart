@@ -93,7 +93,7 @@ class _TournamentsState extends State<Tournaments> {
                     ],
                   ),
                 ),
-                BottomMenuBar(),
+                BottomMenuBar(selectedMenu: 'tournaments'),
               ],
             ),
           ),

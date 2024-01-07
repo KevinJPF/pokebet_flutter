@@ -140,7 +140,7 @@ class _ShopState extends State<Shop> {
                     ],
                   ),
                 ),
-                BottomMenuBar(),
+                BottomMenuBar(selectedMenu: 'shop'),
               ],
             ),
           ),

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:PokeBet/global.dart';
 import 'package:PokeBet/views/capture/capture.dart';
 import 'package:PokeBet/views/profile/player_profile.dart';
@@ -9,13 +11,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class BottomMenuBar extends StatelessWidget {
-  const BottomMenuBar({super.key});
+  final String selectedMenu;
+  const BottomMenuBar({super.key, required this.selectedMenu});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       // margin: EdgeInsets.symmetric(vertical: setHeight(16)),
-      padding: EdgeInsets.only(left: setWidth(16),right: setWidth(16),bottom: setHeight(16)),
+      padding: EdgeInsets.only(
+          left: setWidth(16), right: setWidth(16), bottom: setHeight(0)),
       // color: Colors.orange,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -23,6 +27,7 @@ class BottomMenuBar extends StatelessWidget {
           MontaItem(
               itemName: 'Loja',
               svgName: 'Shop',
+              highlight: selectedMenu == 'shop',
               onTap: () {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
@@ -33,6 +38,7 @@ class BottomMenuBar extends StatelessWidget {
           MontaItem(
               itemName: 'Capturar',
               svgName: 'Capture',
+              highlight: selectedMenu == 'capture',
               onTap: () {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
@@ -43,6 +49,7 @@ class BottomMenuBar extends StatelessWidget {
           MontaItem(
               itemName: 'Torneios',
               svgName: 'Tournaments',
+              highlight: selectedMenu == 'tournaments',
               onTap: () {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
@@ -53,6 +60,7 @@ class BottomMenuBar extends StatelessWidget {
           MontaItem(
               itemName: 'Trocar',
               svgName: 'Trade',
+              highlight: selectedMenu == 'trade',
               onTap: () {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
@@ -63,6 +71,7 @@ class BottomMenuBar extends StatelessWidget {
           MontaItem(
               itemName: 'Perfil',
               svgName: 'Profile',
+              highlight: selectedMenu == 'profile',
               onTap: () {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
@@ -80,11 +89,13 @@ class MontaItem extends StatelessWidget {
   final String itemName;
   final String svgName;
   final VoidCallback onTap;
+  final bool highlight;
   const MontaItem({
     super.key,
     required this.itemName,
     required this.svgName,
     required this.onTap,
+    required this.highlight,
   });
 
   @override
@@ -92,23 +103,31 @@ class MontaItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        margin: EdgeInsets.only(bottom: highlight ? 16 : 0),
         // color: Colors.blue,
         child: Column(
           children: [
             Container(
               alignment: Alignment.center,
               // color: Colors.pink,
-              child: SizedBox(
+              child: Container(
                 height: setHeight(50),
                 width: setWidth(60),
                 child: SvgPicture.asset(
                   'assets/svgs/$svgName.svg',
                   fit: BoxFit.contain,
-                  color: Global.pokebetColors.simpleTextColor,
+                  color: highlight
+                      ? Global.pokebetColors.highlightColor
+                      : Global.pokebetColors.simpleTextColor,
                 ),
               ),
             ),
-            SimpleText(itemName)
+            SimpleText(
+              itemName,
+              fontColor: highlight
+                  ? Global.pokebetColors.highlightColor
+                  : Global.pokebetColors.simpleTextColor,
+            )
           ],
         ),
       ),

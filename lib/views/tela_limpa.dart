@@ -56,7 +56,6 @@ class _TelaLimpaState extends State<TelaLimpa> {
                   ],
                 ),
               ),
-              BottomMenuBar(),
             ],
           ),
         ),

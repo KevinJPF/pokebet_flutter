@@ -93,7 +93,7 @@ class _TradeState extends State<Trade> {
                     ],
                   ),
                 ),
-                BottomMenuBar(),
+                BottomMenuBar(selectedMenu: 'trade'),
               ],
             ),
           ),

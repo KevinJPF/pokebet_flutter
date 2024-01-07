@@ -23,7 +23,7 @@ class Capture extends StatefulWidget {
 class _CaptureState extends State<Capture> {
   bool canPop = false;
   bool searchingPokemon = false;
-  UserPokemon? foundPokemon = null;
+  UserPokemon? foundPokemon;
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -63,74 +63,11 @@ class _CaptureState extends State<Capture> {
                           TopBar(showBackButton: false, pageTitle: 'Capturar'),
                         ],
                       ),
-                      Container(
-                        alignment: Alignment.topCenter,
-                        padding: EdgeInsets.only(
-                          top: setHeight(80),
-                          bottom: setHeight(40),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Spacer(),
-                            if (foundPokemon != null) ...[
-                              Container(
-                                height: MediaQuery.of(context).size.width * 0.6,
-                                width: MediaQuery.of(context).size.width * 0.6,
-                                color: Colors.transparent,
-                                child: Image.network(
-                                  foundPokemon!.officialImage,
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                              SimpleText(
-                                '${foundPokemon!.name}${foundPokemon!.shiny == 1 ? ' ⋆' : ''}',
-                                fontColor: Global.pokebetColors.highlightColor,
-                                fontSize: 28,
-                              ),
-                              SizedBox(height: setHeight(16)),
-                              Spacer(),
-                              CustomButton(
-                                buttonText: 'Capturar Pokemon',
-                                onPressed: () async {
-                                  await UserPokemon.InsertPokemonDatabase(
-                                      foundPokemon!);
-                                  Global.userPokemons.add(foundPokemon!);
-                                  print('Capturou um pokemon');
-                                  foundPokemon = null;
-                                  searchingPokemon = false;
-                                  setState(() {});
-                                },
-                              ),
-                            ],
-                            if (searchingPokemon && foundPokemon == null) ...[
-                              Container(
-                                  margin: EdgeInsets.all(setHeight(32)),
-                                  child: CircularProgressIndicator()),
-                            ] else if (foundPokemon == null) ...[
-                              SimpleText(
-                                  'Pokemons estão por perto, procure-os...')
-                            ],
-                            SizedBox(height: setHeight(16)),
-                            CustomButton(
-                              buttonText: 'Procurar Pokemon',
-                              onPressed: () async {
-                                searchingPokemon = true;
-                                foundPokemon = null;
-                                setState(() {});
-                                foundPokemon = await GetPokemonData(
-                                    Random().nextInt(1017) + 1);
-                                print('Gerou um pokemon');
-                                setState(() {});
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
+                      CustomButton(buttonText: 'Procurar Pokemon', onPressed: () {}),
                     ],
                   ),
                 ),
-                BottomMenuBar(),
+                BottomMenuBar(selectedMenu: 'capture'),
               ],
             ),
           ),

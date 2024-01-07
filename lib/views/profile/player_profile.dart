@@ -176,7 +176,7 @@ class _PlayerProfileState extends State<PlayerProfile> {
                     ],
                   ),
                 ),
-                BottomMenuBar(),
+                BottomMenuBar(selectedMenu: 'profile'),
               ],
             ),
           ),
