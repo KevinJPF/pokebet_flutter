@@ -44,7 +44,7 @@ class _SearchPokemonState extends State<SearchPokemon> {
                     Background(hasLogo: false),
                     Column(
                       children: [
-                        TopBar(showBackButton: false, pageTitle: 'Capturar'),
+                        TopBar(showBackButton: true, pageTitle: 'Procurar Pokemon'),
                       ],
                     ),
                     Container(

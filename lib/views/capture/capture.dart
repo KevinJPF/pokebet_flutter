@@ -4,9 +4,11 @@ import 'dart:math';
 
 import 'package:PokeBet/models/database_models.dart';
 import 'package:PokeBet/models/pokemon_data.dart';
+import 'package:PokeBet/views/capture/search_pokemon.dart';
 import 'package:PokeBet/views/profile/player_profile.dart';
 import 'package:PokeBet/widgets/custom_button.dart';
 import 'package:PokeBet/widgets/custom_texts.dart';
+import 'package:PokeBet/widgets/icon_container.dart';
 import 'package:PokeBet/widgets/menu_bar.dart';
 import 'package:PokeBet/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
@@ -61,9 +63,64 @@ class _CaptureState extends State<Capture> {
                       Column(
                         children: [
                           TopBar(showBackButton: false, pageTitle: 'Capturar'),
+                          IconContainer(
+                            icon: Icons.remove_circle_outlined,
+                            mainText: 'Campos Verdes',
+                            assetImageName: 'plains',
+                            onClick: () async {
+                              await Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => SearchPokemon(),
+                                ),
+                              );
+                              setState(() {});
+                            },
+                          ),
+                          SizedBox(height: setHeight(8)),
+                          IconContainer(
+                            icon: Icons.remove_circle_outlined,
+                            mainText: 'Floresta Abeto',
+                            assetImageName: 'forest',
+                            onClick: () async {
+                              await Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => SearchPokemon(),
+                                ),
+                              );
+                              setState(() {});
+                            },
+                          ),
+                          SizedBox(height: setHeight(8)),
+                          IconContainer(
+                            icon: Icons.remove_circle_outlined,
+                            mainText: 'Caverna Obscura',
+                            assetImageName: 'cavern',
+                            onClick: () async {
+                              await Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => SearchPokemon(),
+                                ),
+                              );
+                              setState(() {});
+                            },
+                          ),
+                          SizedBox(height: setHeight(8)),
+                          IconContainer(
+                            icon: Icons.remove_circle_outlined,
+                            mainText: 'Lago de Pesca',
+                            assetImageName: 'lake',
+                            onClick: () async {
+                              await Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => SearchPokemon(),
+                                ),
+                              );
+                              setState(() {});
+                            },
+                          ),
+                          SizedBox(height: setHeight(8)),
                         ],
                       ),
-                      CustomButton(buttonText: 'Procurar Pokemon', onPressed: () {}),
                     ],
                   ),
                 ),

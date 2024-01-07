@@ -11,7 +11,8 @@ class IconContainer extends StatelessWidget {
   final String mainText;
   final String secondaryText;
   final String? svgName;
-  final String? imageName;
+  final String? iconPNGName;
+  final String? assetImageName;
   final String? rightText;
   final String? rightFirstType;
   final String? rightSecondType;
@@ -28,7 +29,8 @@ class IconContainer extends StatelessWidget {
     this.secondaryText = '',
     this.svgName,
     this.showRightIcon = false,
-    this.imageName,
+    this.iconPNGName,
+    this.assetImageName,
     this.spriteIndex,
     this.onClick,
     this.rightText,
@@ -58,7 +60,8 @@ class IconContainer extends StatelessWidget {
                         child: Container(
                           width: setWidth(70),
                           decoration: BoxDecoration(
-                            color: Global.pokebetColors.iconContainerIconBackColor,
+                            color:
+                                Global.pokebetColors.iconContainerIconBackColor,
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(
                                   8.0), // Raio do canto superior esquerdo
@@ -67,8 +70,14 @@ class IconContainer extends StatelessWidget {
                             ),
                           ),
                           child: Container(
-                            padding: EdgeInsets.all(
-                                setWidth(spriteIndex == null ? 5 : 0)),
+                            padding: EdgeInsets.symmetric(
+                              vertical: setWidth(spriteIndex == null ? 5 : 0),
+                              horizontal: setWidth(spriteIndex == null
+                                  ? assetImageName == null
+                                      ? 7
+                                      : 17
+                                  : 0),
+                            ),
                             child: Builder(
                               builder: (context) {
                                 if (svgName != null) {
@@ -76,10 +85,32 @@ class IconContainer extends StatelessWidget {
                                     'assets/svgs/$svgName.svg',
                                     fit: BoxFit.contain,
                                   );
-                                } else if (imageName != null) {
+                                } else if (iconPNGName != null) {
                                   return Image.asset(
-                                    'assets/imgs/icons/$imageName.png',
+                                    'assets/imgs/icons/$iconPNGName.png',
                                     fit: BoxFit.contain,
+                                  );
+                                } else if (assetImageName != null) {
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(100),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.8),
+                                          spreadRadius: 0,
+                                          blurRadius: 6,
+                                          offset: Offset(0, 0),
+                                        ),
+                                      ],
+                                    ),
+                                    child: ClipOval(
+                                      child: Image.asset(
+                                        'assets/imgs/mini_images/$assetImageName.jpg',
+                                        fit: BoxFit.cover,
+                                        // color: Colors.black,
+                                      ),
+                                    ),
                                   );
                                 } else if (spriteIndex != null) {
                                   return Container(
@@ -140,7 +171,8 @@ class IconContainer extends StatelessWidget {
                         if (showRightIcon)
                           Icon(
                             Icons.circle_notifications_outlined,
-                            color: Global.pokebetColors.iconContainerIconBackColor,
+                            color:
+                                Global.pokebetColors.iconContainerIconBackColor,
                           ),
                         if (rightFirstType != null)
                           Stack(

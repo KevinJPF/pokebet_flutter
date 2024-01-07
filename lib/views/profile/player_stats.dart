@@ -86,7 +86,7 @@ class _PlayerStatsState extends State<PlayerStats> {
                               mainText:
                                   '${Global.userData!.experience}/${(Global.userData!.level + 1) * 100}',
                               secondaryText: 'Experiência de Treinador',
-                              imageName: 'exp',
+                              iconPNGName: 'exp',
                               onClick: () {},
                             ),
                             SizedBox(height: setHeight(8)),
@@ -94,7 +94,7 @@ class _PlayerStatsState extends State<PlayerStats> {
                               icon: Icons.backpack_rounded,
                               mainText: '${Global.userPokemons.length}',
                               secondaryText: 'Pokemons Capturados',
-                              imageName: 'pokeball',
+                              iconPNGName: 'pokeball',
                             ),
                             SizedBox(height: setHeight(8)),
                             IconContainer(
@@ -102,7 +102,7 @@ class _PlayerStatsState extends State<PlayerStats> {
                               mainText:
                                   '${Global.userData!.pokebetsWon}/${Global.userData!.pokebetsParticipated}',
                               secondaryText: 'Pokebets Vencidos',
-                              imageName: 'versus',
+                              iconPNGName: 'versus',
                               onClick: () {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
@@ -117,7 +117,7 @@ class _PlayerStatsState extends State<PlayerStats> {
                               mainText:
                                   '${Global.userData!.tournamentsWon}/${Global.userData!.tournamentsParticipated}',
                               secondaryText: 'Torneios Vencidos',
-                              imageName: 'trophy',
+                              iconPNGName: 'trophy',
                             ),
                           ],
                         ),

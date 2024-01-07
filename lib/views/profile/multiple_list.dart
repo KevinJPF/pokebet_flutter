@@ -108,7 +108,7 @@ class _MultipleListState extends State<MultipleList> {
                                   EdgeInsets.symmetric(vertical: setHeight(4)),
                               child: IconContainer(
                                 icon: Icons.pets,
-                                imageName:
+                                iconPNGName:
                                     item.name.toLowerCase().replaceAll(' ', ''),
                                 mainText: item.name,
                                 rightText: 'x${item.quantity}',
