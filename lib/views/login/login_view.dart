@@ -38,6 +38,11 @@ class _LoginViewState extends State<LoginView> {
     super.dispose();
   }
 
+  limpaCampos() {
+    _controllerUser.text = '';
+    _controllerPassword.text = '';
+  }
+
   Future<bool> loginUser({String? userName, String? password}) async {
     if (Global.userData == null) {
       bool loginSuccesfull = await Global.loadInitialData(
@@ -56,6 +61,7 @@ class _LoginViewState extends State<LoginView> {
         }
         Global.isLogged.value = true;
         Global.canPopLogout = false;
+        limpaCampos();
         await Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => initialScreen!,
@@ -143,6 +149,7 @@ class _LoginViewState extends State<LoginView> {
                                   SizedBox(height: setHeight(16)),
                                   HighlightLink('Esqueci minha senha',
                                       onTap: () async {
+                                    limpaCampos();
                                     await Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (context) =>
@@ -159,6 +166,7 @@ class _LoginViewState extends State<LoginView> {
                                       ),
                                       HighlightLink('Cadastre-se',
                                           onTap: () async {
+                                        limpaCampos();
                                         await Navigator.of(context).push(
                                           MaterialPageRoute(
                                             builder: (context) =>
