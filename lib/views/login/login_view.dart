@@ -55,6 +55,7 @@ class _LoginViewState extends State<LoginView> {
           initialScreen = PlayerProfile();
         }
         Global.isLogged.value = true;
+        Global.canPopLogout = false;
         await Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => initialScreen!,
