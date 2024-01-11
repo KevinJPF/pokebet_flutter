@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'dart:math';
-
 import 'package:PokeBet/models/database_models.dart';
 import 'package:PokeBet/models/pokemon_data.dart';
 import 'package:PokeBet/widgets/custom_button.dart';
@@ -12,7 +10,27 @@ import 'package:PokeBet/global.dart';
 import 'package:PokeBet/widgets/background.dart';
 
 class SearchPokemon extends StatefulWidget {
-  const SearchPokemon({super.key});
+  final bool filtrarResultados;
+  final int shinyChances;
+  final bool canBeLegendary;
+  final int maxStats;
+  final List<String>? commonTypes;
+  final List<String>? rareTypes;
+  final int pokemonMinimumQuantity;
+  final int pokemonMaximumQuantity;
+  final int evolutionChainLimit;
+  const SearchPokemon({
+    super.key,
+    this.filtrarResultados = false,
+    this.shinyChances = 100,
+    this.canBeLegendary = false,
+    this.maxStats = 999,
+    this.commonTypes,
+    this.rareTypes,
+    this.pokemonMinimumQuantity = 0,
+    this.pokemonMaximumQuantity = 1017,
+    this.evolutionChainLimit = 3,
+  });
 
   @override
   State<SearchPokemon> createState() => _SearchPokemonState();
@@ -44,7 +62,9 @@ class _SearchPokemonState extends State<SearchPokemon> {
                     Background(hasLogo: false),
                     Column(
                       children: [
-                        TopBar(showBackButton: true, pageTitle: 'Procurar Pokemon'),
+                        TopBar(
+                            showBackButton: true,
+                            pageTitle: 'Procurar Pokemon'),
                       ],
                     ),
                     Container(
@@ -102,8 +122,19 @@ class _SearchPokemonState extends State<SearchPokemon> {
                               searchingPokemon = true;
                               foundPokemon = null;
                               setState(() {});
-                              foundPokemon = await GetPokemonData(
-                                  Random().nextInt(1017) + 1);
+                              foundPokemon = await FilterPokemon(
+                                filtrarResultados: widget.filtrarResultados,
+                                shinyChances: widget.shinyChances,
+                                canBeLegendary: widget.canBeLegendary,
+                                maxStats: widget.maxStats,
+                                commonTypes: widget.commonTypes,
+                                rareTypes: widget.rareTypes,
+                                pokemonMinimumQuantity:
+                                    widget.pokemonMinimumQuantity,
+                                pokemonMaximumQuantity:
+                                    widget.pokemonMaximumQuantity,
+                                evolutionChainLimit: widget.evolutionChainLimit,
+                              );
                               print('Gerou um pokemon');
                               setState(() {});
                             },

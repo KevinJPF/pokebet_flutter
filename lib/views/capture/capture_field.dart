@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:PokeBet/views/capture/search_pokemon.dart';
 import 'package:PokeBet/widgets/custom_button.dart';
 import 'package:PokeBet/widgets/custom_texts.dart';
 import 'package:PokeBet/widgets/pokemon_type.dart';
@@ -68,17 +69,17 @@ class _CaptureFieldState extends State<CaptureField> {
                                 child: Container(
                                   margin: EdgeInsets.symmetric(
                                       horizontal: setWidth(32)),
-                                      decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(35),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.25),
-                                          spreadRadius: 0,
-                                          blurRadius: 4,
-                                          offset: Offset(0, 0),
-                                        ),
-                                      ],
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(35),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.25),
+                                        spreadRadius: 0,
+                                        blurRadius: 4,
+                                        offset: Offset(0, 0),
                                       ),
+                                    ],
+                                  ),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(35),
                                     child: Image.asset(
@@ -149,7 +150,22 @@ class _CaptureFieldState extends State<CaptureField> {
                           SizedBox(height: setHeight(16)),
                           CustomButton(
                             buttonText: 'Procurar Pokemon',
-                            onPressed: () async {},
+                            onPressed: () async {
+                              await Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => SearchPokemon(
+                                    filtrarResultados: true,
+                                    shinyChances: 100,
+                                    canBeLegendary: false,
+                                    maxStats: 250,
+                                    commonTypes: widget.commonTypes,
+                                    rareTypes: widget.rareTypes,
+                                    evolutionChainLimit: 0,
+                                  ),
+                                ),
+                              );
+                              setState(() {});
+                            },
                           ),
                         ],
                       ),

@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:math';
 import 'package:PokeBet/models/database_models.dart';
 import 'package:PokeBet/models/pokemon_data.dart';
 import 'package:PokeBet/views/profile/player_profile.dart';
@@ -48,36 +47,34 @@ class _FirstPokemonState extends State<FirstPokemon> {
 
   generatePokemon(int pokemonQuantity, int maxStats) async {
     if (Global.userPokemons.isEmpty) {
-      int totalStats;
+      firstPokemon = await FilterPokemon(
+        filtrarResultados: true,
+        canBeLegendary: false,
+        maxStats: 200,
+        shinyChances: 80,
+        evolutionChainLimit: 0,
+      );
 
       do {
-        firstPokemon =
-            await GetPokemonData(Random().nextInt(pokemonQuantity) + 1);
-        totalStats = firstPokemon!.attack.toInt() +
-            firstPokemon!.defense.toInt() +
-            firstPokemon!.speed.toInt();
-      } while (
-          firstPokemon!.evolutionChainPosition > 0 || totalStats > maxStats);
+        secondPokemon = await FilterPokemon(
+          filtrarResultados: true,
+          canBeLegendary: false,
+          maxStats: 200,
+          shinyChances: 80,
+          evolutionChainLimit: 0,
+        );
+      } while (secondPokemon == firstPokemon);
 
       do {
-        secondPokemon =
-            await GetPokemonData(Random().nextInt(pokemonQuantity) + 1);
-        totalStats = secondPokemon!.attack.toInt() +
-            secondPokemon!.defense.toInt() +
-            secondPokemon!.speed.toInt();
-      } while (
-          secondPokemon!.evolutionChainPosition > 0 || totalStats > maxStats);
-
-      do {
-        thirdPokemon =
-            await GetPokemonData(Random().nextInt(pokemonQuantity) + 1);
-        totalStats = thirdPokemon!.attack.toInt() +
-            thirdPokemon!.defense.toInt() +
-            thirdPokemon!.speed.toInt();
-
-        setState(() {});
-      } while (
-          thirdPokemon!.evolutionChainPosition > 0 || totalStats > maxStats);
+        thirdPokemon = await FilterPokemon(
+          filtrarResultados: true,
+          canBeLegendary: false,
+          maxStats: 200,
+          shinyChances: 80,
+          evolutionChainLimit: 0,
+        );
+      } while (thirdPokemon == secondPokemon || thirdPokemon == firstPokemon);
+      setState(() {});
 
       UserPokemon.InsertPokemonDatabase(firstPokemon!);
       UserPokemon.InsertPokemonDatabase(secondPokemon!);
