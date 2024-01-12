@@ -67,7 +67,7 @@ Future<UserPokemon?> FilterPokemon({
       if (filtrarResultados) {
         String type = sortTypes(commonTypes!, rareTypes!);
         if (pokemonData.stats.totalStats <= maxStats &&
-            (pokemonData.firstType == type || pokemonData.secondType == type)) {
+            (pokemonData.firstType.toLowerCase() == type || pokemonData.secondType.toLowerCase() == type)) {
           pokemonDataPass = true;
         }
       } else {
