@@ -106,7 +106,7 @@ class IconContainer extends StatelessWidget {
                                     ),
                                     child: ClipOval(
                                       child: Image.asset(
-                                        'assets/imgs/mini_images/$assetImageName.jpg',
+                                        'assets/imgs/capture_places/$assetImageName.jpg',
                                         fit: BoxFit.cover,
                                         // color: Colors.black,
                                       ),

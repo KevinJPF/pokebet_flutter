@@ -83,8 +83,8 @@ class _CaptureFieldState extends State<CaptureField> {
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(35),
                                     child: Image.asset(
-                                      'assets/imgs/${widget.fieldImageName}.jpg',
-                                      fit: BoxFit.fitWidth,
+                                      'assets/imgs/capture_places/${widget.fieldImageName}.jpg',
+                                      fit: BoxFit.cover,
                                       height: setHeight(150),
                                       // width: setHeight(300),
                                     ),
@@ -157,7 +157,7 @@ class _CaptureFieldState extends State<CaptureField> {
                                     filtrarResultados: true,
                                     shinyChances: 100,
                                     canBeLegendary: false,
-                                    maxStats: 250,
+                                    maxStats: 200,
                                     commonTypes: widget.commonTypes,
                                     rareTypes: widget.rareTypes,
                                     evolutionChainLimit: 0,

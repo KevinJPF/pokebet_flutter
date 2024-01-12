@@ -109,8 +109,11 @@ class _SearchPokemonState extends State<SearchPokemon> {
                           ],
                           if (searchingPokemon && foundPokemon == null) ...[
                             Container(
+                              // color: Colors.pink,
                                 margin: EdgeInsets.all(setHeight(32)),
-                                child: CircularProgressIndicator()),
+                                child: Image.asset('assets/imgs/search.gif')),
+                                SimpleText('Procurando um Pokemon pelas redondezas...'),
+                                Spacer(),
                           ] else if (foundPokemon == null) ...[
                             SimpleText(
                                 'Pokemons estão por perto, procure-os...')

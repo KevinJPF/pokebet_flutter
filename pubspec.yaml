@@ -74,7 +74,7 @@ flutter:
   assets:
     - assets/imgs/
     - assets/imgs/icons/
-    - assets/imgs/mini_images/
+    - assets/imgs/capture_places/
     - assets/svgs/
     - assets/svgs/types/
     - assets/database/pokebet.db
