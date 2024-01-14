@@ -16,7 +16,7 @@ class IconContainer extends StatelessWidget {
   final String? rightText;
   final String? rightFirstType;
   final String? rightSecondType;
-  final int? spriteIndex;
+  final String? spriteUrl;
   final bool showRightIcon;
   final bool isShiny;
   final VoidCallback? onClick;
@@ -31,7 +31,7 @@ class IconContainer extends StatelessWidget {
     this.showRightIcon = false,
     this.iconPNGName,
     this.assetImageName,
-    this.spriteIndex,
+    this.spriteUrl,
     this.onClick,
     this.rightText,
     this.rightFirstType,
@@ -71,8 +71,8 @@ class IconContainer extends StatelessWidget {
                           ),
                           child: Container(
                             padding: EdgeInsets.symmetric(
-                              vertical: setWidth(spriteIndex == null ? 5 : 0),
-                              horizontal: setWidth(spriteIndex == null
+                              vertical: setWidth(spriteUrl == null ? 5 : 0),
+                              horizontal: setWidth(spriteUrl == null
                                   ? assetImageName == null
                                       ? 7
                                       : 17
@@ -112,11 +112,11 @@ class IconContainer extends StatelessWidget {
                                       ),
                                     ),
                                   );
-                                } else if (spriteIndex != null) {
+                                } else if (spriteUrl != null) {
                                   return Container(
                                     // color: Colors.pink,
                                     child: Image.network(
-                                      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon${isShiny ? '/shiny' : ''}/$spriteIndex.png",
+                                      spriteUrl!,
                                       fit: BoxFit.contain,
                                     ),
                                   );

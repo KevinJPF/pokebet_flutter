@@ -65,9 +65,11 @@ Future<UserPokemon?> FilterPokemon({
       print('Buscou Pokemon Data;');
 
       if (filtrarResultados) {
-        List<String> sortedTypes = ((Random().nextInt(100) + 1) <= 70) ? commonTypes! : rareTypes!;
+        List<String> sortedTypes =
+            ((Random().nextInt(100) + 1) <= 70) ? commonTypes! : rareTypes!;
         if (pokemonData.stats.totalStats <= maxStats &&
-            (sortedTypes.contains(pokemonData.firstType.toLowerCase()) || sortedTypes.contains(pokemonData.secondType.toLowerCase()))) {
+            (sortedTypes.contains(pokemonData.firstType.toLowerCase()) ||
+                sortedTypes.contains(pokemonData.secondType.toLowerCase()))) {
           pokemonDataPass = true;
         }
       } else {
@@ -75,15 +77,15 @@ Future<UserPokemon?> FilterPokemon({
       }
     } while (!pokemonDataPass);
 
-    var pokemonSpeciesData =
+    pokemonSpeciesData =
         await getPokemonSpeciesData(pokemonData.pokemonID, generatedShiny);
-      print('Buscou Pokemon Species;');
+    print('Buscou Pokemon Species;');
 
     if (filtrarResultados) {
       if (pokemonSpeciesData.evolutionChainPosition <= evolutionChainLimit) {
         if (!canBeLegendary) {
           pokemonSpeciesPass = pokemonSpeciesData.isLegendary == 0 &&
-              pokemonSpeciesData.isMythical == 0;
+              pokemonSpeciesData.isMythical == 0 ? true : false;
         } else {
           pokemonSpeciesPass = true;
         }
@@ -164,90 +166,87 @@ Future<int> _evolutionChainPosition(String urlPokemon) async {
 }
 
 Future<PokemonData> getPokemonData(int id, int generatedShiny) async {
-  PokemonData pokemonData = PokemonData();
+  PokemonData pokemonDataReturn = PokemonData();
 
   final responsePokemonData =
       await http.get(Uri.parse('https://pokeapi.co/api/v2/pokemon/$id'));
 
   if (responsePokemonData.statusCode == 200) {
     // A resposta foi bem-sucedida, analisar os dados JSON
-    pokemonData.pokemonID = id;
+    pokemonDataReturn.pokemonID = id;
     final pokemonDataResponse = json.decode(responsePokemonData.body);
 
     // Obter a URL do sprite do Pokémon (geralmente, é a primeira na lista)
-    pokemonData.officalImageUrl = pokemonDataResponse['sprites']['other']
+    pokemonDataReturn.officalImageUrl = pokemonDataResponse['sprites']['other']
             ['official-artwork']
         ['front_${generatedShiny == 1 ? "shiny" : "default"}'];
-    pokemonData.spriteUrl = pokemonDataResponse['sprites']
+    pokemonDataReturn.spriteUrl = pokemonDataResponse['sprites']
         ['front_${generatedShiny == 1 ? "shiny" : "default"}'];
-    pokemonData.name = pokemonDataResponse['name'].toString().toUpperCase();
-    pokemonData.firstType = pokemonDataResponse['types'][0]['type']['name']
+    pokemonDataReturn.name = pokemonDataResponse['name'].toString().toUpperCase();
+    pokemonDataReturn.firstType = pokemonDataResponse['types'][0]['type']['name']
         .toString()
         .toUpperCase();
-    pokemonData.secondType = pokemonDataResponse['types'].length == 1
+    pokemonDataReturn.secondType = pokemonDataResponse['types'].length == 1
         ? ''
         : pokemonDataResponse['types'][1]['type']['name']
             .toString()
             .toUpperCase();
 
     // Calculate pokemon attack
-    pokemonData.stats.attackIV = _calculateIV();
-    pokemonData.stats.attack = _calculateStat(
+    pokemonDataReturn.stats.attackIV = _calculateIV();
+    pokemonDataReturn.stats.attack = _calculateStat(
       (pokemonDataResponse['stats'][1]['base_stat']),
       (pokemonDataResponse['stats'][3]['base_stat']),
-      pokemonData.stats.attackIV,
+      pokemonDataReturn.stats.attackIV,
     );
 
     // Calculate pokemon defense
-    pokemonData.stats.defenseIV = _calculateIV();
-    pokemonData.stats.defense = _calculateStat(
+    pokemonDataReturn.stats.defenseIV = _calculateIV();
+    pokemonDataReturn.stats.defense = _calculateStat(
       (pokemonDataResponse['stats'][2]['base_stat']),
       (pokemonDataResponse['stats'][4]['base_stat']),
-      pokemonData.stats.defenseIV,
+      pokemonDataReturn.stats.defenseIV,
     );
 
     // Calculate pokemon speed
-    pokemonData.stats.speedIV = _calculateIV();
-    pokemonData.stats.speed = _calculateStat(
+    pokemonDataReturn.stats.speedIV = _calculateIV();
+    pokemonDataReturn.stats.speed = _calculateStat(
       (pokemonDataResponse['stats'][5]['base_stat']),
       (pokemonDataResponse['stats'][5]['base_stat']),
-      pokemonData.stats.speedIV,
+      pokemonDataReturn.stats.speedIV,
     );
 
-    pokemonData.stats.totalStats = pokemonData.stats.attack +
-        pokemonData.stats.defense +
-        pokemonData.stats.speed;
+    pokemonDataReturn.stats.totalStats = pokemonDataReturn.stats.attack +
+        pokemonDataReturn.stats.defense +
+        pokemonDataReturn.stats.speed;
   }
-  return pokemonData;
+  return pokemonDataReturn;
 }
 
 Future<PokemonSpeciesData> getPokemonSpeciesData(
     int id, int generatedShiny) async {
-  PokemonSpeciesData pokemonSpeciesData = PokemonSpeciesData();
+  PokemonSpeciesData pokemonSpeciesDataReturn = PokemonSpeciesData();
   final responsePokemonSpecies = await http
       .get(Uri.parse('https://pokeapi.co/api/v2/pokemon-species/$id'));
 
   if (responsePokemonSpecies.statusCode == 200) {
     final pokemonSpeciesDataResponse = json.decode(responsePokemonSpecies.body);
 
-    pokemonSpeciesData.isShiny = generatedShiny;
-    pokemonSpeciesData.captureRate =
+    pokemonSpeciesDataReturn.isShiny = generatedShiny;
+    pokemonSpeciesDataReturn.captureRate =
         (pokemonSpeciesDataResponse['capture_rate']);
-    pokemonSpeciesData.evolutionChainPosition =
+    pokemonSpeciesDataReturn.evolutionChainPosition =
         pokemonSpeciesDataResponse['evolves_from_species'] == null
             ? 0
             : await _evolutionChainPosition(
                 pokemonSpeciesDataResponse['evolves_from_species']['url']);
-    pokemonSpeciesData.isBaby =
-        (pokemonSpeciesDataResponse['is_baby'] ? 1 : 0);
-    pokemonSpeciesData.isLegendary =
+    pokemonSpeciesDataReturn.isBaby = (pokemonSpeciesDataResponse['is_baby'] ? 1 : 0);
+    pokemonSpeciesDataReturn.isLegendary =
         (pokemonSpeciesDataResponse['is_legendary'] ? 1 : 0);
-    pokemonSpeciesData.isMythical =
+    pokemonSpeciesDataReturn.isMythical =
         (pokemonSpeciesDataResponse['is_mythical'] ? 1 : 0);
-    pokemonSpeciesData.hasGenderDifferences =
-        (pokemonSpeciesDataResponse['has_gender_differences']
-            ? 1
-            : 0);
+    pokemonSpeciesDataReturn.hasGenderDifferences =
+        (pokemonSpeciesDataResponse['has_gender_differences'] ? 1 : 0);
   }
-  return pokemonSpeciesData;
+  return pokemonSpeciesDataReturn;
 }

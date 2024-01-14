@@ -165,7 +165,7 @@ class _ShopState extends State<Shop> {
                                     margin: EdgeInsets.only(
                                         left: setWidth(48), top: setHeight(26)),
                                     padding:
-                                        EdgeInsets.only(left: setWidth(24)),
+                                        EdgeInsets.only(left: setWidth(26), top: setHeight(0.8)),
                                     height: setHeight(30),
                                     width: MediaQuery.of(context).size.width *
                                         0.25,
@@ -184,7 +184,7 @@ class _ShopState extends State<Shop> {
                                     child: SimpleText(
                                       Global.userData!.money.toString(),
                                       fontColor:
-                                          Global.pokebetColors.backgroundColor,
+                                          Global.pokebetColors.simpleTextWhiteBackgroundColor,
                                       fontSize: 20,
                                     ),
                                   ),

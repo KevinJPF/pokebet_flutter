@@ -78,7 +78,7 @@ class _MultipleListState extends State<MultipleList> {
                                   EdgeInsets.symmetric(vertical: setHeight(4)),
                               child: IconContainer(
                                 icon: Icons.pets,
-                                spriteIndex: pokemon.pokedexNumber,
+                                spriteUrl: pokemon.spriteImage,
                                 isShiny: pokemon.shiny == 1,
                                 mainText:
                                     '${pokemon.name}${pokemon.shiny == 1 ? ' ⋆' : ''}',
