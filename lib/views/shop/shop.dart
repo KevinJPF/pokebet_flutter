@@ -5,6 +5,7 @@ import 'package:PokeBet/views/profile/player_profile.dart';
 import 'package:PokeBet/widgets/custom_button.dart';
 import 'package:PokeBet/widgets/custom_popup.dart';
 import 'package:PokeBet/widgets/custom_texts.dart';
+import 'package:PokeBet/widgets/icon_container.dart';
 import 'package:PokeBet/widgets/menu_bar.dart';
 import 'package:PokeBet/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
@@ -54,11 +55,13 @@ class _ShopState extends State<Shop> {
                     alignment: Alignment.center,
                     children: [
                       Background(hasLogo: false),
+                      // TopBar
                       Column(
                         children: [
                           TopBar(showBackButton: false, pageTitle: 'Loja'),
                         ],
                       ),
+                      // Content
                       Container(
                         alignment: Alignment.topCenter,
                         padding: EdgeInsets.only(
@@ -68,24 +71,37 @@ class _ShopState extends State<Shop> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: setWidth(32)),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(35),
-                                child: Image.network(
-                                  'https://www.hxchector.com/wp-content/uploads/pokemon-lets-go-pikachu-eevee-pokemart1.jpg',
-                                  fit: BoxFit
-                                      .cover, // Certifique-se de ajustar o BoxFit conforme necessário
-                                ),
-                              ),
+                            SizedBox(height: setHeight(8)),
+                            IconContainer(
+                              icon: Icons.abc,
+                              iconPNGName: 'pokebola',
+                              mainText: 'Pokebola',
+                              showRightIcon: true,
+                              rightText: '200',
                             ),
-                            Container(
-                              alignment: Alignment.centerLeft,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: setWidth(32)),
-                              child: SimpleText(
-                                  'Loja em construção!\nVolte em breve para aproveitar nossos itens!'),
+                            SizedBox(height: setHeight(8)),
+                            IconContainer(
+                              icon: Icons.abc,
+                              iconPNGName: 'grandebola',
+                              mainText: 'Grande Bola',
+                              showRightIcon: true,
+                              rightText: '1200',
+                            ),
+                            SizedBox(height: setHeight(8)),
+                            IconContainer(
+                              icon: Icons.abc,
+                              iconPNGName: 'ultrabola',
+                              mainText: 'Ultra Bola',
+                              showRightIcon: true,
+                              rightText: '2000',
+                            ),
+                            SizedBox(height: setHeight(8)),
+                            IconContainer(
+                              icon: Icons.abc,
+                              iconPNGName: 'masterbola',
+                              mainText: 'Bola Mestra',
+                              showRightIcon: true,
+                              rightText: '10000',
                             ),
                             Spacer(),
                             if (Global.userItems.isEmpty) ...[
@@ -136,6 +152,56 @@ class _ShopState extends State<Shop> {
                             ],
                           ],
                         ),
+                      ),
+                      // Show Pokecoins in top left screen
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              Stack(
+                                alignment: Alignment.centerLeft,
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                        left: setWidth(48), top: setHeight(26)),
+                                    padding:
+                                        EdgeInsets.only(left: setWidth(24)),
+                                    height: setHeight(30),
+                                    width: MediaQuery.of(context).size.width *
+                                        0.25,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(100),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.8),
+                                          spreadRadius: 0,
+                                          blurRadius: 6,
+                                          offset: Offset(0, 0),
+                                        ),
+                                      ],
+                                    ),
+                                    child: SimpleText(
+                                      Global.userData!.money.toString(),
+                                      fontColor:
+                                          Global.pokebetColors.backgroundColor,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(
+                                        left: setWidth(32), top: setHeight(26)),
+                                    height: setHeight(42),
+                                    width: setWidth(42),
+                                    // color: Colors.blue,
+                                    child:
+                                        Image.asset('assets/imgs/pokecoin.png'),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ],
                   ),

@@ -65,9 +65,9 @@ Future<UserPokemon?> FilterPokemon({
       print('Buscou Pokemon Data;');
 
       if (filtrarResultados) {
-        String type = sortTypes(commonTypes!, rareTypes!);
+        List<String> sortedTypes = ((Random().nextInt(100) + 1) <= 70) ? commonTypes! : rareTypes!;
         if (pokemonData.stats.totalStats <= maxStats &&
-            (pokemonData.firstType.toLowerCase() == type || pokemonData.secondType.toLowerCase() == type)) {
+            (sortedTypes.contains(pokemonData.firstType.toLowerCase()) || sortedTypes.contains(pokemonData.secondType.toLowerCase()))) {
           pokemonDataPass = true;
         }
       } else {
@@ -239,13 +239,13 @@ Future<PokemonSpeciesData> getPokemonSpeciesData(
             : await _evolutionChainPosition(
                 pokemonSpeciesDataResponse['evolves_from_species']['url']);
     pokemonSpeciesData.isBaby =
-        (pokemonSpeciesDataResponse['is_baby'] == 'true' ? 1 : 0);
+        (pokemonSpeciesDataResponse['is_baby'] ? 1 : 0);
     pokemonSpeciesData.isLegendary =
-        (pokemonSpeciesDataResponse['is_legendary'] == 'true' ? 1 : 0);
+        (pokemonSpeciesDataResponse['is_legendary'] ? 1 : 0);
     pokemonSpeciesData.isMythical =
-        (pokemonSpeciesDataResponse['is_mythical'] == 'true' ? 1 : 0);
+        (pokemonSpeciesDataResponse['is_mythical'] ? 1 : 0);
     pokemonSpeciesData.hasGenderDifferences =
-        (pokemonSpeciesDataResponse['has_gender_differences'] == 'true'
+        (pokemonSpeciesDataResponse['has_gender_differences']
             ? 1
             : 0);
   }

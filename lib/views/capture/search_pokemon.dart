@@ -101,6 +101,9 @@ class _SearchPokemonState extends State<SearchPokemon> {
                                     foundPokemon!);
                                 Global.userPokemons.add(foundPokemon!);
                                 print('Capturou um pokemon');
+                                Global.userData!.money += 25;
+                                Global.userData!.experience += 25;
+                                await UserData.UpdateUserDatabase();
                                 foundPokemon = null;
                                 searchingPokemon = false;
                                 setState(() {});
