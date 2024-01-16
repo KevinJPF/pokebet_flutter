@@ -154,6 +154,7 @@ class _CaptureFieldState extends State<CaptureField> {
                               await Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => SearchPokemon(
+                                    fieldImageName: widget.fieldImageName,
                                     filtrarResultados: true,
                                     shinyChances: 100,
                                     canBeLegendary: false,

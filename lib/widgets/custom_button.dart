@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:PokeBet/global.dart';
+import 'package:flutter_svg/svg.dart';
 
 class CustomButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String buttonText;
-  const CustomButton(
-      {super.key, required this.buttonText, required this.onPressed});
+  final SvgPicture? buttonImage;
+  const CustomButton({
+    super.key,
+    required this.buttonText,
+    required this.onPressed,
+    this.buttonImage,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +36,13 @@ class CustomButton extends StatelessWidget {
           ),
         ),
       ),
-      child: Text(
+      child: (buttonImage == null) ? Text(
         buttonText,
         style: TextStyle(
             fontSize: setFontSize(16),
             fontFamily: 'Abel',
             fontWeight: FontWeight.w600),
-      ),
+      ) : buttonImage,
     );
   }
 }

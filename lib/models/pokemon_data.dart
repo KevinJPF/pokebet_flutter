@@ -1,3 +1,6 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 import 'package:PokeBet/global.dart';
@@ -55,6 +58,8 @@ Future<UserPokemon?> FilterPokemon({
   int generatedShiny = (Random().nextInt(shinyChances)) == baseNumber ? 1 : 0;
   bool pokemonDataPass = false;
   bool pokemonSpeciesPass = false;
+  Global.isSearchingPokemon = true;
+  await Future.delayed(Duration(seconds: 2));
   do {
     do {
       pokemonDataPass = false;
@@ -85,7 +90,9 @@ Future<UserPokemon?> FilterPokemon({
       if (pokemonSpeciesData.evolutionChainPosition <= evolutionChainLimit) {
         if (!canBeLegendary) {
           pokemonSpeciesPass = pokemonSpeciesData.isLegendary == 0 &&
-              pokemonSpeciesData.isMythical == 0 ? true : false;
+                  pokemonSpeciesData.isMythical == 0
+              ? true
+              : false;
         } else {
           pokemonSpeciesPass = true;
         }
@@ -120,6 +127,7 @@ Future<UserPokemon?> FilterPokemon({
     officialImage: pokemonData.officalImageUrl,
     spriteImage: pokemonData.spriteUrl,
   );
+  Global.isSearchingPokemon = false;
   return returnPokemon;
 }
 
@@ -182,8 +190,10 @@ Future<PokemonData> getPokemonData(int id, int generatedShiny) async {
         ['front_${generatedShiny == 1 ? "shiny" : "default"}'];
     pokemonDataReturn.spriteUrl = pokemonDataResponse['sprites']
         ['front_${generatedShiny == 1 ? "shiny" : "default"}'];
-    pokemonDataReturn.name = pokemonDataResponse['name'].toString().toUpperCase();
-    pokemonDataReturn.firstType = pokemonDataResponse['types'][0]['type']['name']
+    pokemonDataReturn.name =
+        pokemonDataResponse['name'].toString().toUpperCase();
+    pokemonDataReturn.firstType = pokemonDataResponse['types'][0]['type']
+            ['name']
         .toString()
         .toUpperCase();
     pokemonDataReturn.secondType = pokemonDataResponse['types'].length == 1
@@ -240,7 +250,8 @@ Future<PokemonSpeciesData> getPokemonSpeciesData(
             ? 0
             : await _evolutionChainPosition(
                 pokemonSpeciesDataResponse['evolves_from_species']['url']);
-    pokemonSpeciesDataReturn.isBaby = (pokemonSpeciesDataResponse['is_baby'] ? 1 : 0);
+    pokemonSpeciesDataReturn.isBaby =
+        (pokemonSpeciesDataResponse['is_baby'] ? 1 : 0);
     pokemonSpeciesDataReturn.isLegendary =
         (pokemonSpeciesDataResponse['is_legendary'] ? 1 : 0);
     pokemonSpeciesDataReturn.isMythical =

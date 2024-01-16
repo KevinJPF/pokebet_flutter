@@ -8,8 +8,10 @@ import 'package:PokeBet/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:PokeBet/global.dart';
 import 'package:PokeBet/widgets/background.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class SearchPokemon extends StatefulWidget {
+  final String fieldImageName;
   final bool filtrarResultados;
   final int shinyChances;
   final bool canBeLegendary;
@@ -21,6 +23,7 @@ class SearchPokemon extends StatefulWidget {
   final int evolutionChainLimit;
   const SearchPokemon({
     super.key,
+    required this.fieldImageName,
     this.filtrarResultados = false,
     this.shinyChances = 100,
     this.canBeLegendary = false,
@@ -38,7 +41,6 @@ class SearchPokemon extends StatefulWidget {
 
 class _SearchPokemonState extends State<SearchPokemon> {
   bool canPop = false;
-  bool searchingPokemon = false;
   UserPokemon? foundPokemon;
   @override
   Widget build(BuildContext context) {
@@ -94,57 +96,123 @@ class _SearchPokemonState extends State<SearchPokemon> {
                             ),
                             SizedBox(height: setHeight(16)),
                             Spacer(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(left: setWidth(32)),
+                                  height: setHeight(100),
+                                  width: setHeight(100),
+                                  child: CustomButton(
+                                    buttonImage: SvgPicture.asset(
+                                      'assets/svgs/run.svg',
+                                      color: Global.pokebetColors.whiteColor,
+                                    ),
+                                    buttonText: '',
+                                    onPressed: () async {
+                                      foundPokemon = null;
+                                      Global.isSearchingPokemon = false;
+                                      setState(() {});
+                                    },
+                                  ),
+                                ),
+                                Spacer(),
+                                Container(
+                                  margin: EdgeInsets.only(right: setWidth(32)),
+                                  height: setHeight(100),
+                                  width: setHeight(100),
+                                  child: CustomButton(
+                                    buttonImage: SvgPicture.asset(
+                                      'assets/svgs/Pokeball.svg',
+                                      color: Global.pokebetColors.whiteColor,
+                                    ),
+                                    buttonText: '',
+                                    onPressed: () async {
+                                      await UserPokemon.InsertPokemonDatabase(
+                                          foundPokemon!);
+                                      Global.userPokemons.add(foundPokemon!);
+                                      print('Capturou um pokemon');
+                                      Global.userData!.money += 25;
+                                      Global.userData!.experience += 25;
+                                      await UserData.UpdateUserDatabase();
+                                      foundPokemon = null;
+                                      Global.isSearchingPokemon = false;
+                                      setState(() {});
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                          if (Global.isSearchingPokemon &&
+                              foundPokemon == null) ...[
+                            Container(
+                                // color: Colors.pink,
+                                margin: EdgeInsets.all(setHeight(32)),
+                                child: Image.asset('assets/imgs/search.gif')),
+                            SimpleText(
+                                'Procurando um Pokemon pelas redondezas...'),
+                            Spacer(),
+                          ] else if (foundPokemon == null) ...[
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    margin: EdgeInsets.symmetric(
+                                        horizontal: setWidth(32)),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(35),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.black.withOpacity(0.25),
+                                          spreadRadius: 0,
+                                          blurRadius: 4,
+                                          offset: Offset(0, 0),
+                                        ),
+                                      ],
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(35),
+                                      child: Image.asset(
+                                        'assets/imgs/capture_places/${widget.fieldImageName}.jpg',
+                                        fit: BoxFit.cover,
+                                        height: setHeight(150),
+                                        // width: setHeight(300),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SimpleText(
+                                'Pokemons estão por perto, procure-os...'),
+                            Spacer(),
+                            SizedBox(height: setHeight(16)),
                             CustomButton(
-                              buttonText: 'Capturar Pokemon',
+                              buttonText: 'Procurar Pokemon',
                               onPressed: () async {
-                                await UserPokemon.InsertPokemonDatabase(
-                                    foundPokemon!);
-                                Global.userPokemons.add(foundPokemon!);
-                                print('Capturou um pokemon');
-                                Global.userData!.money += 25;
-                                Global.userData!.experience += 25;
-                                await UserData.UpdateUserDatabase();
+                                Global.isSearchingPokemon = true;
                                 foundPokemon = null;
-                                searchingPokemon = false;
+                                setState(() {});
+                                foundPokemon = await FilterPokemon(
+                                  filtrarResultados: widget.filtrarResultados,
+                                  shinyChances: widget.shinyChances,
+                                  canBeLegendary: widget.canBeLegendary,
+                                  maxStats: widget.maxStats,
+                                  commonTypes: widget.commonTypes,
+                                  rareTypes: widget.rareTypes,
+                                  pokemonMinimumQuantity:
+                                      widget.pokemonMinimumQuantity,
+                                  pokemonMaximumQuantity:
+                                      widget.pokemonMaximumQuantity,
+                                  evolutionChainLimit:
+                                      widget.evolutionChainLimit,
+                                );
+                                print('Gerou um pokemon');
                                 setState(() {});
                               },
                             ),
                           ],
-                          if (searchingPokemon && foundPokemon == null) ...[
-                            Container(
-                              // color: Colors.pink,
-                                margin: EdgeInsets.all(setHeight(32)),
-                                child: Image.asset('assets/imgs/search.gif')),
-                                SimpleText('Procurando um Pokemon pelas redondezas...'),
-                                Spacer(),
-                          ] else if (foundPokemon == null) ...[
-                            SimpleText(
-                                'Pokemons estão por perto, procure-os...')
-                          ],
-                          SizedBox(height: setHeight(16)),
-                          CustomButton(
-                            buttonText: 'Procurar Pokemon',
-                            onPressed: () async {
-                              searchingPokemon = true;
-                              foundPokemon = null;
-                              setState(() {});
-                              foundPokemon = await FilterPokemon(
-                                filtrarResultados: widget.filtrarResultados,
-                                shinyChances: widget.shinyChances,
-                                canBeLegendary: widget.canBeLegendary,
-                                maxStats: widget.maxStats,
-                                commonTypes: widget.commonTypes,
-                                rareTypes: widget.rareTypes,
-                                pokemonMinimumQuantity:
-                                    widget.pokemonMinimumQuantity,
-                                pokemonMaximumQuantity:
-                                    widget.pokemonMaximumQuantity,
-                                evolutionChainLimit: widget.evolutionChainLimit,
-                              );
-                              print('Gerou um pokemon');
-                              setState(() {});
-                            },
-                          ),
                         ],
                       ),
                     ),

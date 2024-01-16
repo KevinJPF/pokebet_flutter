@@ -11,6 +11,7 @@ class Global {
   static PokebetColors pokebetColors = PokebetColors();
   static ValueNotifier<bool> isLogged = ValueNotifier(false);
   static bool canPopLogout = false;
+  static bool isSearchingPokemon = false;
 
   // User data
   static UserData? userData;
