@@ -116,7 +116,7 @@ class _LoginViewState extends State<LoginView> {
                                 children: [
                                   Container(
                                     margin: EdgeInsets.only(
-                                        top: setHeight(60),
+                                        top: setHeight(32),
                                         bottom: setHeight(16)),
                                     child: MeowthLogo(
                                       onTap: () {

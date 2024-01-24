@@ -44,7 +44,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         children: [
                           Container(
                             margin: EdgeInsets.only(
-                                top: setHeight(60), bottom: setHeight(16)),
+                                top: setHeight(32), bottom: setHeight(16)),
                             child: MeowthLogo(
                               onTap: () {
                                 setState(() {});

@@ -56,18 +56,18 @@ class _MeowthLogoState extends State<MeowthLogo>
                 transform: Matrix4.rotationY(rotateValue.value),
                 alignment: Alignment.center,
                 child: Container(
-                  height: setHeight(130),
-                  width: setWidth(164),
+                  // color: Colors.white,
+                  height: setHeight(160),
+                  width: setWidth(180),
                   child: Image.asset(
                     'assets/imgs/meowth_${Global.appOptions.theme}.png',
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fitWidth,
                   ),
                 ),
               );
             },
           ),
         ),
-        SizedBox(height: 16),
         Container(
           // color: Colors.pink,
           child: Text(

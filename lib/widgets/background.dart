@@ -9,7 +9,7 @@ class Background extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(
-          top: hasLogo ? 150 : 16, bottom: 16, right: 16, left: 16),
+          top: hasLogo ? setHeight(150) : setHeight(16), bottom: setHeight(16), right: setWidth(16), left: setWidth(16)),
       decoration: BoxDecoration(
         color: Global.pokebetColors.frameColor,
         borderRadius:
