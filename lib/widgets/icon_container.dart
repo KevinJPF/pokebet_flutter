@@ -13,6 +13,7 @@ class IconContainer extends StatelessWidget {
   final String? svgName;
   final String? iconPNGName;
   final String? assetImageName;
+  final String? assetRightIconName;
   final String? rightText;
   final String? rightFirstType;
   final String? rightSecondType;
@@ -31,6 +32,7 @@ class IconContainer extends StatelessWidget {
     this.showRightIcon = false,
     this.iconPNGName,
     this.assetImageName,
+    this.assetRightIconName,
     this.spriteUrl,
     this.onClick,
     this.rightText,
@@ -168,12 +170,16 @@ class IconContainer extends StatelessWidget {
                           SimpleTextWhiteBackground(rightText!),
                           SizedBox(width: setWidth(8)),
                         ],
-                        if (showRightIcon)
-                          Icon(
-                            Icons.circle_notifications_outlined,
-                            color:
-                                Global.pokebetColors.iconContainerIconBackColor,
-                          ),
+                        if (showRightIcon || assetRightIconName != null) ...[
+                          if (assetRightIconName == null)
+                            Icon(
+                              Icons.circle_notifications_outlined,
+                              color: Global
+                                  .pokebetColors.iconContainerIconBackColor,
+                            )
+                          else
+                            Image.asset('assets/imgs/icons/${assetRightIconName!}.png', width: setWidth(25),),
+                        ],
                         if (rightFirstType != null)
                           Stack(
                             children: [

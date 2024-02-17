@@ -2,6 +2,7 @@
 
 import 'package:PokeBet/views/profile/player_profile.dart';
 import 'package:PokeBet/widgets/custom_texts.dart';
+import 'package:PokeBet/widgets/icon_container.dart';
 import 'package:PokeBet/widgets/menu_bar.dart';
 import 'package:PokeBet/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
@@ -67,25 +68,91 @@ class _TournamentsState extends State<Tournaments> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: setWidth(32)),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(35),
-                                  child: Image.network(
-                                    'https://www.videogameschronicle.com/files/2022/11/2022111909505800_c.jpg',
-                                    fit: BoxFit
-                                        .cover, // Certifique-se de ajustar o BoxFit conforme necessário
-                                  ),
-                                ),
+                               IconContainer(
+                                icon: Icons.remove_circle_outlined,
+                                mainText: 'Iniciante',
+                                iconPNGName: 'beginner',
+                                assetRightIconName: 'lvl',
+                                rightText: '1',
+                                onClick: () async {
+                                  
+                                },
                               ),
-                              Container(
-                                alignment: Alignment.centerLeft,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: setWidth(32)),
-                                child: SimpleText(
-                                    'Torneios em construção!\nVolte em breve para aproveitar nossos eventos!'),
+                              SizedBox(height: setHeight(8)),
+                              IconContainer(
+                                icon: Icons.remove_circle_outlined,
+                                mainText: 'Amador',
+                                iconPNGName: 'amateur',
+                                assetRightIconName: 'lvl',
+                                rightText: '5',
+                                onClick: () async {
+                                 
+                                },
                               ),
+                              SizedBox(height: setHeight(8)),
+                              IconContainer(
+                                icon: Icons.remove_circle_outlined,
+                                mainText: 'Experiente',
+                                iconPNGName: 'experient',
+                                assetRightIconName: 'lvl',
+                                rightText: '10',
+                                onClick: () async {
+                                  
+                                },
+                              ),
+                              SizedBox(height: setHeight(8)),
+                              IconContainer(
+                                icon: Icons.remove_circle_outlined,
+                                mainText: 'Veterano',
+                                iconPNGName: 'veteran',
+                                assetRightIconName: 'lvl',
+                                rightText: '15',
+                                onClick: () async {
+                                  
+                                },
+                              ),
+                              SizedBox(height: setHeight(8)),
+                              IconContainer(
+                                icon: Icons.remove_circle_outlined,
+                                mainText: 'Profissional',
+                                iconPNGName: 'professional',
+                                assetRightIconName: 'lvl',
+                                rightText: '20',
+                                onClick: () async {
+                                  
+                                },
+                              ),
+                              SizedBox(height: setHeight(8)),
+                              IconContainer(
+                                icon: Icons.remove_circle_outlined,
+                                mainText: 'Mestre',
+                                iconPNGName: 'master',
+                                assetRightIconName: 'lvl',
+                                rightText: '30',
+                                onClick: () async {
+                                  
+                                },
+                              ),
+                              SizedBox(height: setHeight(8)),
+                              // Container(
+                              //   padding: EdgeInsets.symmetric(
+                              //       horizontal: setWidth(32)),
+                              //   child: ClipRRect(
+                              //     borderRadius: BorderRadius.circular(35),
+                              //     child: Image.network(
+                              //       'https://www.videogameschronicle.com/files/2022/11/2022111909505800_c.jpg',
+                              //       fit: BoxFit
+                              //           .cover, // Certifique-se de ajustar o BoxFit conforme necessário
+                              //     ),
+                              //   ),
+                              // ),
+                              // Container(
+                              //   alignment: Alignment.centerLeft,
+                              //   padding: EdgeInsets.symmetric(
+                              //       horizontal: setWidth(32)),
+                              //   child: SimpleText(
+                              //       'Torneios em construção!\nVolte em breve para aproveitar nossos eventos!'),
+                              // ),
                             ],
                           ),
                         ),
