@@ -83,6 +83,8 @@ class _CaptureState extends State<Capture> {
                                 icon: Icons.remove_circle_outlined,
                                 mainText: 'Campos Verdes',
                                 assetImageName: 'plains',
+                                assetRightIconName: 'lvl',
+                                rightText: '1',
                                 onClick: () async {
                                   await Navigator.of(context).push(
                                     MaterialPageRoute(
@@ -104,6 +106,8 @@ class _CaptureState extends State<Capture> {
                                 icon: Icons.remove_circle_outlined,
                                 mainText: 'Floresta Abeto',
                                 assetImageName: 'forest',
+                                assetRightIconName: 'lvl',
+                                rightText: '2',
                                 onClick: () async {
                                   await Navigator.of(context).push(
                                     MaterialPageRoute(
@@ -125,6 +129,8 @@ class _CaptureState extends State<Capture> {
                                 icon: Icons.remove_circle_outlined,
                                 mainText: 'Lago de Pesca',
                                 assetImageName: 'lake',
+                                assetRightIconName: 'lvl',
+                                rightText: '3',
                                 onClick: () async {
                                   await Navigator.of(context).push(
                                     MaterialPageRoute(
@@ -146,6 +152,8 @@ class _CaptureState extends State<Capture> {
                                 icon: Icons.remove_circle_outlined,
                                 mainText: 'Caverna Obscura',
                                 assetImageName: 'cavern',
+                                assetRightIconName: 'lvl',
+                                rightText: '5',
                                 onClick: () async {
                                   await Navigator.of(context).push(
                                     MaterialPageRoute(
@@ -167,6 +175,8 @@ class _CaptureState extends State<Capture> {
                                 icon: Icons.remove_circle_outlined,
                                 mainText: 'Deserto Escaldante',
                                 assetImageName: 'desert',
+                                assetRightIconName: 'lvl',
+                                rightText: '7',
                                 onClick: () async {
                                   await Navigator.of(context).push(
                                     MaterialPageRoute(
@@ -188,6 +198,8 @@ class _CaptureState extends State<Capture> {
                                 icon: Icons.remove_circle_outlined,
                                 mainText: 'Floresta Mítica',
                                 assetImageName: 'mystic_forest',
+                                assetRightIconName: 'lvl',
+                                rightText: '8',
                                 onClick: () async {
                                   await Navigator.of(context).push(
                                     MaterialPageRoute(
@@ -213,6 +225,8 @@ class _CaptureState extends State<Capture> {
                                 icon: Icons.remove_circle_outlined,
                                 mainText: 'Caverna Congelada',
                                 assetImageName: 'snow_cave',
+                                assetRightIconName: 'lvl',
+                                rightText: '10',
                                 onClick: () async {
                                   await Navigator.of(context).push(
                                     MaterialPageRoute(
@@ -234,6 +248,8 @@ class _CaptureState extends State<Capture> {
                                 icon: Icons.remove_circle_outlined,
                                 mainText: 'Cidade Abandonada',
                                 assetImageName: 'city',
+                                assetRightIconName: 'lvl',
+                                rightText: '12',
                                 onClick: () async {
                                   await Navigator.of(context).push(
                                     MaterialPageRoute(
@@ -255,6 +271,8 @@ class _CaptureState extends State<Capture> {
                                 icon: Icons.remove_circle_outlined,
                                 mainText: 'Montanha Rochosa',
                                 assetImageName: 'rock_mountain',
+                                assetRightIconName: 'lvl',
+                                rightText: '15',
                                 onClick: () async {
                                   await Navigator.of(context).push(
                                     MaterialPageRoute(
@@ -280,6 +298,8 @@ class _CaptureState extends State<Capture> {
                                 icon: Icons.remove_circle_outlined,
                                 mainText: 'Pico da Montanha',
                                 assetImageName: 'mountain_peak',
+                                assetRightIconName: 'lvl',
+                                rightText: '18',
                                 onClick: () async {
                                   await Navigator.of(context).push(
                                     MaterialPageRoute(
@@ -301,6 +321,8 @@ class _CaptureState extends State<Capture> {
                                 icon: Icons.remove_circle_outlined,
                                 mainText: 'Pé do Vulcão',
                                 assetImageName: 'volcano',
+                                assetRightIconName: 'lvl',
+                                rightText: '22',
                                 onClick: () async {
                                   await Navigator.of(context).push(
                                     MaterialPageRoute(
@@ -309,6 +331,29 @@ class _CaptureState extends State<Capture> {
                                         fieldDescription: vulcaoDescription,
                                         fieldImageName: 'volcano',
                                         commonTypes: ['fire'],
+                                        rareTypes: ['dragon'],
+                                      ),
+                                    ),
+                                  );
+                                  setState(() {});
+                                },
+                              ),
+                              SizedBox(height: setHeight(8)),
+                              IconContainer(
+                                icon: Icons.remove_circle_outlined,
+                                mainText: 'Portal Lendário',
+                                assetImageName: 'legendary_portal',
+                                assetRightIconName: 'lvl',
+                                rightText: '25',
+                                onClick: () async {
+                                  await Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => CaptureField(
+                                        fieldName: 'Portal Lendário',
+                                        fieldDescription: vulcaoDescription,
+                                        fieldImageName: 'legendary_portal',
+                                        canBeLegendary: true,
+                                        commonTypes: ['fire', 'water', 'grass'],
                                         rareTypes: ['dragon'],
                                       ),
                                     ),

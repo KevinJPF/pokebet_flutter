@@ -13,6 +13,7 @@ class CaptureField extends StatefulWidget {
   final String fieldName;
   final String fieldDescription;
   final String fieldImageName;
+  final bool canBeLegendary;
   final List<String> commonTypes;
   final List<String> rareTypes;
   const CaptureField({
@@ -22,6 +23,7 @@ class CaptureField extends StatefulWidget {
     required this.fieldImageName,
     required this.commonTypes,
     required this.rareTypes,
+    this.canBeLegendary = false,
   });
 
   @override
@@ -157,8 +159,8 @@ class _CaptureFieldState extends State<CaptureField> {
                                     fieldImageName: widget.fieldImageName,
                                     filtrarResultados: true,
                                     shinyChances: 100,
-                                    canBeLegendary: false,
-                                    maxStats: 200,
+                                    canBeLegendary: widget.canBeLegendary,
+                                    maxStats: 400,
                                     commonTypes: widget.commonTypes,
                                     rareTypes: widget.rareTypes,
                                     evolutionChainLimit: 0,
