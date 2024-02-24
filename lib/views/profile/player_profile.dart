@@ -1,16 +1,14 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
-import 'package:PokeBet/views/profile/player_stats.dart';
-import 'package:PokeBet/views/profile/multiple_list.dart';
-import 'package:PokeBet/views/profile/settings.dart';
-import 'package:PokeBet/widgets/custom_popup.dart';
-import 'package:PokeBet/widgets/custom_texts.dart';
-import 'package:PokeBet/widgets/icon_container.dart';
-import 'package:PokeBet/widgets/menu_bar.dart';
-import 'package:PokeBet/widgets/top_bar.dart';
+import 'package:pokebet/views/profile/player_stats.dart';
+import 'package:pokebet/views/profile/multiple_list.dart';
+import 'package:pokebet/views/profile/settings.dart';
+import 'package:pokebet/widgets/custom_popup.dart';
+import 'package:pokebet/widgets/custom_texts.dart';
+import 'package:pokebet/widgets/icon_container.dart';
+import 'package:pokebet/widgets/menu_bar.dart';
+import 'package:pokebet/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:PokeBet/global.dart';
-import 'package:PokeBet/widgets/background.dart';
+import 'package:pokebet/global.dart';
+import 'package:pokebet/widgets/background.dart';
 import 'package:flutter/services.dart';
 
 class PlayerProfile extends StatefulWidget {
@@ -37,7 +35,7 @@ class _PlayerProfileState extends State<PlayerProfile> {
             context: context,
             builder: (context) => CustomPopup(
               popupTitle: 'Sair',
-              popupMessage: 'Tem certeza que deseja sair do PokeBet?',
+              popupMessage: 'Tem certeza que deseja sair do pokebet?',
               firstButtonText: 'Voltar',
               secondButtonText: 'Sair',
               onPressedSecondButton: () {

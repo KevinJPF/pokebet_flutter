@@ -1,7 +1,5 @@
-// ignore_for_file: prefer_const_constructors
-
-import 'package:PokeBet/database/db_connection.dart';
-import 'package:PokeBet/models/database_models.dart';
+import 'package:pokebet/database/db_connection.dart';
+import 'package:pokebet/models/database_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -25,7 +23,7 @@ class Global {
           Global.appOptions.theme == 'dark' ? 'light' : 'dark';
     }
     pokebetColors = PokebetColors();
-    AppOptions.UpdateAppOptionsDatabase();
+    AppOptions.updateAppOptionsDatabase();
   }
 
   static Future<bool> loadInitialData({

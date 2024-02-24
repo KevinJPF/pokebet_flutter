@@ -1,14 +1,12 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
-import 'package:PokeBet/models/database_models.dart';
-import 'package:PokeBet/views/capture/capture_field.dart';
-import 'package:PokeBet/views/profile/player_profile.dart';
-import 'package:PokeBet/widgets/icon_container.dart';
-import 'package:PokeBet/widgets/menu_bar.dart';
-import 'package:PokeBet/widgets/top_bar.dart';
+import 'package:pokebet/models/database_models.dart';
+import 'package:pokebet/views/capture/capture_field.dart';
+import 'package:pokebet/views/profile/player_profile.dart';
+import 'package:pokebet/widgets/icon_container.dart';
+import 'package:pokebet/widgets/menu_bar.dart';
+import 'package:pokebet/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:PokeBet/global.dart';
-import 'package:PokeBet/widgets/background.dart';
+import 'package:pokebet/global.dart';
+import 'package:pokebet/widgets/background.dart';
 
 class Capture extends StatefulWidget {
   const Capture({super.key});

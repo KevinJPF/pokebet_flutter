@@ -1,14 +1,12 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
-import 'package:PokeBet/database/db_connection.dart';
-import 'package:PokeBet/models/database_models.dart';
-import 'package:PokeBet/widgets/custom_button.dart';
-import 'package:PokeBet/widgets/custom_popup.dart';
-import 'package:PokeBet/widgets/meowth_logo.dart';
-import 'package:PokeBet/widgets/top_bar.dart';
+import 'package:pokebet/database/db_connection.dart';
+import 'package:pokebet/models/database_models.dart';
+import 'package:pokebet/widgets/custom_button.dart';
+import 'package:pokebet/widgets/custom_popup.dart';
+import 'package:pokebet/widgets/meowth_logo.dart';
+import 'package:pokebet/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:PokeBet/global.dart';
-import 'package:PokeBet/widgets/background.dart';
+import 'package:pokebet/global.dart';
+import 'package:pokebet/widgets/background.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -123,7 +121,7 @@ class _SettingsState extends State<Settings> {
                                       });
                                       Global.isLogged.value = false;
                                       Global.userData!.rememberMe = 0;
-                                      UserData.UpdateUserDatabase();
+                                      UserData.updateUserDatabase();
                                       Navigator.of(context).pop();
                                       Navigator.of(context).pop();
                                       Navigator.of(context).pop();

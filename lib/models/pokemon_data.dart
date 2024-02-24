@@ -1,10 +1,8 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
-import 'package:PokeBet/global.dart';
-import 'package:PokeBet/models/database_models.dart';
+import 'package:pokebet/global.dart';
+import 'package:pokebet/models/database_models.dart';
 import 'package:http/http.dart' as http;
 
 class PokemonData {
@@ -40,7 +38,7 @@ class Stats {
   double totalStats = 0;
 }
 
-Future<UserPokemon?> FilterPokemon({
+Future<UserPokemon?> filterPokemon({
   bool filtrarResultados = false,
   int shinyChances = 100,
   bool canBeLegendary = false,

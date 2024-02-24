@@ -1,16 +1,14 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:PokeBet/global.dart';
+import 'package:pokebet/global.dart';
 
 class MeowthLogo extends StatefulWidget {
   final VoidCallback onTap;
   const MeowthLogo({super.key, required this.onTap});
 
   @override
-  _MeowthLogoState createState() => _MeowthLogoState();
+  State<MeowthLogo> createState() => _MeowthLogoState();
 }
 
 class _MeowthLogoState extends State<MeowthLogo>
@@ -68,16 +66,13 @@ class _MeowthLogoState extends State<MeowthLogo>
             },
           ),
         ),
-        Container(
-          // color: Colors.pink,
-          child: Text(
-            "PokeBet",
-            style: TextStyle(
-              color: Global.pokebetColors.highlightColor,
-              fontSize: 24,
-              fontFamily: 'Chakra',
-              fontWeight: FontWeight.bold,
-            ),
+        Text(
+          "Pokebet",
+          style: TextStyle(
+            color: Global.pokebetColors.highlightColor,
+            fontSize: 24,
+            fontFamily: 'Chakra',
+            fontWeight: FontWeight.bold,
           ),
         ),
       ],

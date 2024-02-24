@@ -1,15 +1,13 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace, use_build_context_synchronously
-
-import 'package:PokeBet/database/db_connection.dart';
-import 'package:PokeBet/models/database_models.dart';
+import 'package:pokebet/database/db_connection.dart';
+import 'package:pokebet/models/database_models.dart';
 import 'package:flutter/material.dart';
-import 'package:PokeBet/global.dart';
-import 'package:PokeBet/widgets/background.dart';
-import 'package:PokeBet/widgets/custom_button.dart';
-import 'package:PokeBet/widgets/custom_text_field.dart';
-import 'package:PokeBet/widgets/custom_texts.dart';
-import 'package:PokeBet/widgets/meowth_logo.dart';
-import 'package:PokeBet/widgets/custom_popup.dart';
+import 'package:pokebet/global.dart';
+import 'package:pokebet/widgets/background.dart';
+import 'package:pokebet/widgets/custom_button.dart';
+import 'package:pokebet/widgets/custom_text_field.dart';
+import 'package:pokebet/widgets/custom_texts.dart';
+import 'package:pokebet/widgets/meowth_logo.dart';
+import 'package:pokebet/widgets/custom_popup.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});

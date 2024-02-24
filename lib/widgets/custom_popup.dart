@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:PokeBet/global.dart';
-import 'package:PokeBet/widgets/custom_texts.dart';
+import 'package:pokebet/global.dart';
+import 'package:pokebet/widgets/custom_texts.dart';
 
 class CustomPopup extends StatelessWidget {
   final String popupTitle;

@@ -1,12 +1,10 @@
-// ignore_for_file: prefer_const_constructors
-
-import 'package:PokeBet/global.dart';
-import 'package:PokeBet/views/capture/capture.dart';
-import 'package:PokeBet/views/profile/player_profile.dart';
-import 'package:PokeBet/views/shop/shop.dart';
-import 'package:PokeBet/views/tournament/tournament.dart';
-import 'package:PokeBet/views/trade/trade.dart';
-import 'package:PokeBet/widgets/custom_texts.dart';
+import 'package:pokebet/global.dart';
+import 'package:pokebet/views/capture/capture.dart';
+import 'package:pokebet/views/profile/player_profile.dart';
+import 'package:pokebet/views/shop/shop.dart';
+import 'package:pokebet/views/tournament/tournament.dart';
+import 'package:pokebet/views/trade/trade.dart';
+import 'package:pokebet/widgets/custom_texts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -116,9 +114,11 @@ class MontaItem extends StatelessWidget {
                 child: SvgPicture.asset(
                   'assets/svgs/$svgName.svg',
                   fit: BoxFit.contain,
-                  color: highlight
-                      ? Global.pokebetColors.highlightColor
-                      : Global.pokebetColors.simpleTextColor,
+                  colorFilter: ColorFilter.mode(
+                      highlight
+                          ? Global.pokebetColors.highlightColor
+                          : Global.pokebetColors.simpleTextColor,
+                      BlendMode.srcIn),
                 ),
               ),
             ),

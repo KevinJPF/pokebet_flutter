@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:PokeBet/global.dart';
+import 'package:pokebet/global.dart';
 import 'package:flutter_svg/svg.dart';
 
 class CustomButton extends StatelessWidget {

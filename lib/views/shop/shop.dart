@@ -1,16 +1,14 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
-import 'package:PokeBet/models/database_models.dart';
-import 'package:PokeBet/views/profile/player_profile.dart';
-import 'package:PokeBet/widgets/custom_button.dart';
-import 'package:PokeBet/widgets/custom_popup.dart';
-import 'package:PokeBet/widgets/custom_texts.dart';
-import 'package:PokeBet/widgets/icon_container.dart';
-import 'package:PokeBet/widgets/menu_bar.dart';
-import 'package:PokeBet/widgets/top_bar.dart';
+import 'package:pokebet/models/database_models.dart';
+import 'package:pokebet/views/profile/player_profile.dart';
+import 'package:pokebet/widgets/custom_button.dart';
+import 'package:pokebet/widgets/custom_popup.dart';
+import 'package:pokebet/widgets/custom_texts.dart';
+import 'package:pokebet/widgets/icon_container.dart';
+import 'package:pokebet/widgets/menu_bar.dart';
+import 'package:pokebet/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:PokeBet/global.dart';
-import 'package:PokeBet/widgets/background.dart';
+import 'package:pokebet/global.dart';
+import 'package:pokebet/widgets/background.dart';
 
 class Shop extends StatefulWidget {
   const Shop({super.key});
@@ -166,21 +164,21 @@ class _ShopState extends State<Shop> {
                                     quantity: 10,
                                     userId: Global.userData!.id!,
                                   );
-                                  UserItem.InsertItemDatabase(pokeball);
+                                  UserItem.insertItemDatabase(pokeball);
 
                                   UserItem greatball = UserItem(
                                     name: 'Grande Bola',
                                     quantity: 5,
                                     userId: Global.userData!.id!,
                                   );
-                                  UserItem.InsertItemDatabase(greatball);
+                                  UserItem.insertItemDatabase(greatball);
 
                                   UserItem ultraball = UserItem(
                                     name: 'Master Bola',
                                     quantity: 1,
                                     userId: Global.userData!.id!,
                                   );
-                                  UserItem.InsertItemDatabase(ultraball);
+                                  UserItem.insertItemDatabase(ultraball);
 
                                   Global.userItems.addAll(
                                     [

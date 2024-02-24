@@ -1,8 +1,6 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
-import 'package:PokeBet/global.dart';
-import 'package:PokeBet/widgets/custom_texts.dart';
-import 'package:PokeBet/widgets/pokemon_type.dart';
+import 'package:pokebet/global.dart';
+import 'package:pokebet/widgets/custom_texts.dart';
+import 'package:pokebet/widgets/pokemon_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -115,12 +113,9 @@ class IconContainer extends StatelessWidget {
                                     ),
                                   );
                                 } else if (spriteUrl != null) {
-                                  return Container(
-                                    // color: Colors.pink,
-                                    child: Image.network(
-                                      spriteUrl!,
-                                      fit: BoxFit.contain,
-                                    ),
+                                  return Image.network(
+                                    spriteUrl!,
+                                    fit: BoxFit.contain,
                                   );
                                 } else {
                                   return Icon(
@@ -142,20 +137,13 @@ class IconContainer extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          child: Container(
-                            // color: Colors.blue,
-                            child: SimpleTextWhiteBackground(
-                                mainText.length > 20
-                                    ? mainText.substring(0, 19) + '...'
-                                    : mainText),
-                          ),
-                        ),
+                        SimpleTextWhiteBackground(
+                            mainText.length > 20
+                                ? '${mainText.substring(0, 19)}...'
+                                : mainText),
                         Visibility(
                           visible: secondaryText != '',
-                          child: Container(
-                              // color: Colors.blue,
-                              child: SimpleTextWhiteBackground(secondaryText)),
+                          child: SimpleTextWhiteBackground(secondaryText),
                         ),
                       ],
                     ),

@@ -1,17 +1,15 @@
-// ignore_for_file: prefer_const_constructors
-
-import 'package:PokeBet/models/database_models.dart';
-import 'package:PokeBet/models/pokemon_data.dart';
-import 'package:PokeBet/views/profile/player_profile.dart';
-import 'package:PokeBet/views/pokemon_profile.dart';
-import 'package:PokeBet/widgets/custom_texts.dart';
-import 'package:PokeBet/widgets/pokemon_type.dart';
-import 'package:PokeBet/widgets/custom_popup.dart';
+import 'package:pokebet/models/database_models.dart';
+import 'package:pokebet/models/pokemon_data.dart';
+import 'package:pokebet/views/profile/player_profile.dart';
+import 'package:pokebet/views/pokemon_profile.dart';
+import 'package:pokebet/widgets/custom_texts.dart';
+import 'package:pokebet/widgets/pokemon_type.dart';
+import 'package:pokebet/widgets/custom_popup.dart';
 import 'package:flutter/material.dart';
-import 'package:PokeBet/global.dart';
-import 'package:PokeBet/widgets/background.dart';
-import 'package:PokeBet/widgets/custom_button.dart';
-import 'package:PokeBet/widgets/top_bar.dart';
+import 'package:pokebet/global.dart';
+import 'package:pokebet/widgets/background.dart';
+import 'package:pokebet/widgets/custom_button.dart';
+import 'package:pokebet/widgets/top_bar.dart';
 
 class FirstPokemon extends StatefulWidget {
   const FirstPokemon({super.key});
@@ -47,7 +45,7 @@ class _FirstPokemonState extends State<FirstPokemon> {
 
   generatePokemon(int pokemonQuantity, int maxStats) async {
     if (Global.userPokemons.isEmpty) {
-      firstPokemon = await FilterPokemon(
+      firstPokemon = await filterPokemon(
         filtrarResultados: true,
         canBeLegendary: false,
         maxStats: 200,
@@ -56,7 +54,7 @@ class _FirstPokemonState extends State<FirstPokemon> {
       );
 
       do {
-        secondPokemon = await FilterPokemon(
+        secondPokemon = await filterPokemon(
           filtrarResultados: true,
           canBeLegendary: false,
           maxStats: 200,
@@ -66,7 +64,7 @@ class _FirstPokemonState extends State<FirstPokemon> {
       } while (secondPokemon == firstPokemon);
 
       do {
-        thirdPokemon = await FilterPokemon(
+        thirdPokemon = await filterPokemon(
           filtrarResultados: true,
           canBeLegendary: false,
           maxStats: 200,
@@ -76,9 +74,9 @@ class _FirstPokemonState extends State<FirstPokemon> {
       } while (thirdPokemon == secondPokemon || thirdPokemon == firstPokemon);
       setState(() {});
 
-      UserPokemon.InsertPokemonDatabase(firstPokemon!);
-      UserPokemon.InsertPokemonDatabase(secondPokemon!);
-      UserPokemon.InsertPokemonDatabase(thirdPokemon!);
+      UserPokemon.insertPokemonDatabase(firstPokemon!);
+      UserPokemon.insertPokemonDatabase(secondPokemon!);
+      UserPokemon.insertPokemonDatabase(thirdPokemon!);
     } else {
       firstPokemon = Global.userPokemons[0];
       secondPokemon = Global.userPokemons[1];
@@ -90,13 +88,13 @@ class _FirstPokemonState extends State<FirstPokemon> {
   }
 
   registerFirstPokemonIntoDb() {
-    UserPokemon.DeleteAllUserPokemonDatabase(Global.userData!.id!);
+    UserPokemon.deleteAllUserPokemonDatabase(Global.userData!.id!);
     Global.userPokemons.clear();
     Global.userPokemons.add(selectedPokemon!);
-    UserPokemon.InsertPokemonDatabase(selectedPokemon!);
+    UserPokemon.insertPokemonDatabase(selectedPokemon!);
     Global.userData!.firstLogin = 0;
     Global.userData!.rememberMe = 1;
-    UserData.UpdateUserDatabase();
+    UserData.updateUserDatabase();
   }
 
   @override

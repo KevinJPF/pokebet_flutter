@@ -1,13 +1,11 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
-import 'package:PokeBet/views/capture/search_pokemon.dart';
-import 'package:PokeBet/widgets/custom_button.dart';
-import 'package:PokeBet/widgets/custom_texts.dart';
-import 'package:PokeBet/widgets/pokemon_type.dart';
-import 'package:PokeBet/widgets/top_bar.dart';
+import 'package:pokebet/views/capture/search_pokemon.dart';
+import 'package:pokebet/widgets/custom_button.dart';
+import 'package:pokebet/widgets/custom_texts.dart';
+import 'package:pokebet/widgets/pokemon_type.dart';
+import 'package:pokebet/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:PokeBet/global.dart';
-import 'package:PokeBet/widgets/background.dart';
+import 'package:pokebet/global.dart';
+import 'package:pokebet/widgets/background.dart';
 
 class CaptureField extends StatefulWidget {
   final String fieldName;
@@ -160,7 +158,7 @@ class _CaptureFieldState extends State<CaptureField> {
                                     filtrarResultados: true,
                                     shinyChances: 100,
                                     canBeLegendary: widget.canBeLegendary,
-                                    maxStats: 400,
+                                    maxStats: 200,
                                     commonTypes: widget.commonTypes,
                                     rareTypes: widget.rareTypes,
                                     evolutionChainLimit: 0,

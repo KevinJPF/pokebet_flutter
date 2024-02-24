@@ -1,10 +1,8 @@
-// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors
-
-import 'package:PokeBet/database/db_connection.dart';
-import 'package:PokeBet/global.dart';
+import 'package:pokebet/database/db_connection.dart';
+import 'package:pokebet/global.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:PokeBet/views/login/login_view.dart';
+import 'package:pokebet/views/login/login_view.dart';
 
 main() {
   runApp(MyApp());

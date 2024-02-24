@@ -1,13 +1,11 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
-import 'package:PokeBet/models/database_models.dart';
-import 'package:PokeBet/models/pokemon_data.dart';
-import 'package:PokeBet/widgets/custom_button.dart';
-import 'package:PokeBet/widgets/custom_texts.dart';
-import 'package:PokeBet/widgets/top_bar.dart';
+import 'package:pokebet/models/database_models.dart';
+import 'package:pokebet/models/pokemon_data.dart';
+import 'package:pokebet/widgets/custom_button.dart';
+import 'package:pokebet/widgets/custom_texts.dart';
+import 'package:pokebet/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:PokeBet/global.dart';
-import 'package:PokeBet/widgets/background.dart';
+import 'package:pokebet/global.dart';
+import 'package:pokebet/widgets/background.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SearchPokemon extends StatefulWidget {
@@ -106,7 +104,7 @@ class _SearchPokemonState extends State<SearchPokemon> {
                                   child: CustomButton(
                                     buttonImage: SvgPicture.asset(
                                       'assets/svgs/run.svg',
-                                      color: Global.pokebetColors.whiteColor,
+                                      colorFilter: ColorFilter.mode(Global.pokebetColors.highlightColor, BlendMode.srcIn),
                                     ),
                                     buttonText: '',
                                     onPressed: () async {
@@ -124,17 +122,17 @@ class _SearchPokemonState extends State<SearchPokemon> {
                                   child: CustomButton(
                                     buttonImage: SvgPicture.asset(
                                       'assets/svgs/Pokeball.svg',
-                                      color: Global.pokebetColors.whiteColor,
+                                      colorFilter: ColorFilter.mode(Global.pokebetColors.highlightColor, BlendMode.srcIn),
                                     ),
                                     buttonText: '',
                                     onPressed: () async {
-                                      await UserPokemon.InsertPokemonDatabase(
+                                      await UserPokemon.insertPokemonDatabase(
                                           foundPokemon!);
                                       Global.userPokemons.add(foundPokemon!);
                                       print('Capturou um pokemon');
                                       Global.userData!.money += 25;
                                       Global.userData!.experience += 25;
-                                      await UserData.UpdateUserDatabase();
+                                      await UserData.updateUserDatabase();
                                       foundPokemon = null;
                                       Global.isSearchingPokemon = false;
                                       setState(() {});
@@ -194,7 +192,7 @@ class _SearchPokemonState extends State<SearchPokemon> {
                                 Global.isSearchingPokemon = true;
                                 foundPokemon = null;
                                 setState(() {});
-                                foundPokemon = await FilterPokemon(
+                                foundPokemon = await filterPokemon(
                                   filtrarResultados: widget.filtrarResultados,
                                   shinyChances: widget.shinyChances,
                                   canBeLegendary: widget.canBeLegendary,

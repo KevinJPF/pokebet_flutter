@@ -1,7 +1,5 @@
-// ignore_for_file: non_constant_identifier_names
-
-import 'package:PokeBet/database/db_connection.dart';
-import 'package:PokeBet/global.dart';
+import 'package:pokebet/database/db_connection.dart';
+import 'package:pokebet/global.dart';
 
 class UserData {
   final int? id;
@@ -74,17 +72,17 @@ class UserData {
     );
   }
 
-  static InsertUserDatabase(UserData newUser) {
+  static insertUserDatabase(UserData newUser) {
     DatabaseConnection().insertDatabaseData(
         object: newUser.toMap(), databaseTable: 'users');
   }
 
-  static UpdateUserDatabase() {
+  static updateUserDatabase() {
     DatabaseConnection().updateDatabaseData(
         object: Global.userData!.toMap(), databaseTable: 'users');
   }
 
-  static DeleteUserDatabase(int id) {
+  static deleteUserDatabase(int id) {
     DatabaseConnection()
         .deleteDatabaseData(objectId: id, databaseTable: 'users');
   }
@@ -201,22 +199,22 @@ class UserPokemon {
     );
   }
 
-  static InsertPokemonDatabase(UserPokemon newPokemon) {
+  static insertPokemonDatabase(UserPokemon newPokemon) {
     DatabaseConnection().insertDatabaseData(
         object: newPokemon.toMap(), databaseTable: 'user_pokemons');
   }
 
-  static UpdatePokemonDatabase(UserPokemon updatedPokemon) {
+  static updatePokemonDatabase(UserPokemon updatedPokemon) {
     DatabaseConnection().updateDatabaseData(
         object: updatedPokemon.toMap(), databaseTable: 'user_pokemons');
   }
 
-  static DeletePokemonDatabase(int id) {
+  static deletePokemonDatabase(int id) {
     DatabaseConnection()
         .deleteDatabaseData(objectId: id, databaseTable: 'user_pokemons');
   }
 
-  static DeleteAllUserPokemonDatabase(int userId) {
+  static deleteAllUserPokemonDatabase(int userId) {
     DatabaseConnection()
         .deleteEverythingFromUser(userId: userId, databaseTable: 'user_pokemons');
   }
@@ -257,22 +255,22 @@ class UserItem {
     return mapList.map((map) => fromMap(map)).toList();
   }
 
-  static InsertItemDatabase(UserItem newItem) {
+  static insertItemDatabase(UserItem newItem) {
     DatabaseConnection().insertDatabaseData(
         object: newItem.toMap(), databaseTable: 'user_items');
   }
 
-  static UpdateItemDatabase(UserItem updatedItem) {
+  static updateItemDatabase(UserItem updatedItem) {
     DatabaseConnection().updateDatabaseData(
         object: updatedItem.toMap(), databaseTable: 'user_items');
   }
 
-  static DeleteItemDatabase(int id) {
+  static deleteItemDatabase(int id) {
     DatabaseConnection()
         .deleteDatabaseData(objectId: id, databaseTable: 'user_items');
   }
 
-  static DeleteAllUserItemDatabase(int userId) {
+  static deleteAllUserItemDatabase(int userId) {
     DatabaseConnection()
         .deleteEverythingFromUser(userId: userId, databaseTable: 'user_items');
   }
@@ -301,7 +299,7 @@ class AppOptions {
     );
   }
 
-  static UpdateAppOptionsDatabase() {
+  static updateAppOptionsDatabase() {
     DatabaseConnection().updateDatabaseData(
         object: Global.appOptions.toMap(), databaseTable: 'app_options');
   }
