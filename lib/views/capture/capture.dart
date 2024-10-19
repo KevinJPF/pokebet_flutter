@@ -1,6 +1,7 @@
 import 'package:pokebet/models/database_models.dart';
 import 'package:pokebet/views/capture/capture_field.dart';
 import 'package:pokebet/views/profile/player_profile.dart';
+import 'package:pokebet/widgets/custom_popup.dart';
 import 'package:pokebet/widgets/icon_container.dart';
 import 'package:pokebet/widgets/menu_bar.dart';
 import 'package:pokebet/widgets/top_bar.dart';
@@ -33,6 +34,28 @@ class _CaptureState extends State<Capture> {
   bool canPop = false;
   bool searchingPokemon = false;
   UserPokemon? foundPokemon;
+
+  Future<bool> validateUserLevel(int minLevel) async {
+    if (Global.userData!.level < minLevel) {
+      await showDialog(
+        context: context,
+        builder: (context) => CustomPopup(
+          popupTitle: "Nível mínimo não alcançado!",
+          popupMessage:
+              "Parece que você ainda não atingiu o nível mínimo necessário para acessar esta área de captura. " +
+                  "Continue capturando pokemons e disputando torneios para conseguir mais experiência e atigir o nível necessário.\n\n" +
+                  "Nível mínimo: ${minLevel}\nNível atual: ${Global.userData!.level}",
+          firstButtonText: 'Fechar',
+          onPressedFirstButton: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      );
+      return false;
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -107,19 +130,25 @@ class _CaptureState extends State<Capture> {
                                 assetRightIconName: 'lvl',
                                 rightText: '2',
                                 onClick: () async {
-                                  await Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => CaptureField(
-                                        fieldName: 'Floresta Abeto',
-                                        fieldDescription:
-                                            florestaAbetoDescription,
-                                        fieldImageName: 'forest',
-                                        commonTypes: ['grass', 'bug', 'normal'],
-                                        rareTypes: ['flying', 'ground'],
+                                  if (await validateUserLevel(2)) {
+                                    await Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => CaptureField(
+                                          fieldName: 'Floresta Abeto',
+                                          fieldDescription:
+                                              florestaAbetoDescription,
+                                          fieldImageName: 'forest',
+                                          commonTypes: [
+                                            'grass',
+                                            'bug',
+                                            'normal'
+                                          ],
+                                          rareTypes: ['flying', 'ground'],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                  setState(() {});
+                                    );
+                                    setState(() {});
+                                  }
                                 },
                               ),
                               SizedBox(height: setHeight(8)),
@@ -130,19 +159,21 @@ class _CaptureState extends State<Capture> {
                                 assetRightIconName: 'lvl',
                                 rightText: '3',
                                 onClick: () async {
-                                  await Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => CaptureField(
-                                        fieldName: 'Lago de Pesca',
-                                        fieldDescription:
-                                            lagoDePescaDescription,
-                                        fieldImageName: 'lake',
-                                        commonTypes: ['water'],
-                                        rareTypes: ['flying', 'normal'],
+                                  if (await validateUserLevel(3)) {
+                                    await Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => CaptureField(
+                                          fieldName: 'Lago de Pesca',
+                                          fieldDescription:
+                                              lagoDePescaDescription,
+                                          fieldImageName: 'lake',
+                                          commonTypes: ['water'],
+                                          rareTypes: ['flying', 'normal'],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                  setState(() {});
+                                    );
+                                    setState(() {});
+                                  }
                                 },
                               ),
                               SizedBox(height: setHeight(8)),
@@ -153,19 +184,25 @@ class _CaptureState extends State<Capture> {
                                 assetRightIconName: 'lvl',
                                 rightText: '5',
                                 onClick: () async {
-                                  await Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => CaptureField(
-                                        fieldName: 'Caverna Obscura',
-                                        fieldDescription:
-                                            cavernaObscuraDescription,
-                                        fieldImageName: 'cavern',
-                                        commonTypes: ['rock', 'ground', 'dark'],
-                                        rareTypes: ['electric', 'fire'],
+                                  if (await validateUserLevel(5)) {
+                                    await Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => CaptureField(
+                                          fieldName: 'Caverna Obscura',
+                                          fieldDescription:
+                                              cavernaObscuraDescription,
+                                          fieldImageName: 'cavern',
+                                          commonTypes: [
+                                            'rock',
+                                            'ground',
+                                            'dark'
+                                          ],
+                                          rareTypes: ['electric', 'fire'],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                  setState(() {});
+                                    );
+                                    setState(() {});
+                                  }
                                 },
                               ),
                               SizedBox(height: setHeight(8)),
@@ -176,19 +213,21 @@ class _CaptureState extends State<Capture> {
                                 assetRightIconName: 'lvl',
                                 rightText: '7',
                                 onClick: () async {
-                                  await Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => CaptureField(
-                                        fieldName: 'Deserto Escaldante',
-                                        fieldDescription:
-                                            lagoDePescaDescription,
-                                        fieldImageName: 'desert',
-                                        commonTypes: ['ground'],
-                                        rareTypes: ['rock', 'fire'],
+                                  if (await validateUserLevel(7)) {
+                                    await Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => CaptureField(
+                                          fieldName: 'Deserto Escaldante',
+                                          fieldDescription:
+                                              lagoDePescaDescription,
+                                          fieldImageName: 'desert',
+                                          commonTypes: ['ground'],
+                                          rareTypes: ['rock', 'fire'],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                  setState(() {});
+                                    );
+                                    setState(() {});
+                                  }
                                 },
                               ),
                               SizedBox(height: setHeight(8)),
@@ -199,23 +238,25 @@ class _CaptureState extends State<Capture> {
                                 assetRightIconName: 'lvl',
                                 rightText: '8',
                                 onClick: () async {
-                                  await Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => CaptureField(
-                                        fieldName: 'Floresta Mítica',
-                                        fieldDescription:
-                                            lagoDePescaDescription,
-                                        fieldImageName: 'mystic_forest',
-                                        commonTypes: [
-                                          'fairy',
-                                          'psychic',
-                                          'grass'
-                                        ],
-                                        rareTypes: ['normal', 'water'],
+                                  if (await validateUserLevel(8)) {
+                                    await Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => CaptureField(
+                                          fieldName: 'Floresta Mítica',
+                                          fieldDescription:
+                                              lagoDePescaDescription,
+                                          fieldImageName: 'mystic_forest',
+                                          commonTypes: [
+                                            'fairy',
+                                            'psychic',
+                                            'grass'
+                                          ],
+                                          rareTypes: ['normal', 'water'],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                  setState(() {});
+                                    );
+                                    setState(() {});
+                                  }
                                 },
                               ),
                               SizedBox(height: setHeight(8)),
@@ -226,19 +267,21 @@ class _CaptureState extends State<Capture> {
                                 assetRightIconName: 'lvl',
                                 rightText: '10',
                                 onClick: () async {
-                                  await Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => CaptureField(
-                                        fieldName: 'Caverna Congelada',
-                                        fieldDescription:
-                                            cavernaCongeladaDescription,
-                                        fieldImageName: 'snow_cave',
-                                        commonTypes: ['ice'],
-                                        rareTypes: ['dark', 'ghost'],
+                                  if (await validateUserLevel(10)) {
+                                    await Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => CaptureField(
+                                          fieldName: 'Caverna Congelada',
+                                          fieldDescription:
+                                              cavernaCongeladaDescription,
+                                          fieldImageName: 'snow_cave',
+                                          commonTypes: ['ice'],
+                                          rareTypes: ['dark', 'ghost'],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                  setState(() {});
+                                    );
+                                    setState(() {});
+                                  }
                                 },
                               ),
                               SizedBox(height: setHeight(8)),
@@ -249,19 +292,21 @@ class _CaptureState extends State<Capture> {
                                 assetRightIconName: 'lvl',
                                 rightText: '12',
                                 onClick: () async {
-                                  await Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => CaptureField(
-                                        fieldName: 'Cidade Abandonada',
-                                        fieldDescription:
-                                            cidadeAbandonadaDescription,
-                                        fieldImageName: 'city',
-                                        commonTypes: ['ghost', 'poison'],
-                                        rareTypes: ['psychic'],
+                                  if (await validateUserLevel(12)) {
+                                    await Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => CaptureField(
+                                          fieldName: 'Cidade Abandonada',
+                                          fieldDescription:
+                                              cidadeAbandonadaDescription,
+                                          fieldImageName: 'city',
+                                          commonTypes: ['ghost', 'poison'],
+                                          rareTypes: ['psychic'],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                  setState(() {});
+                                    );
+                                    setState(() {});
+                                  }
                                 },
                               ),
                               SizedBox(height: setHeight(8)),
@@ -272,23 +317,25 @@ class _CaptureState extends State<Capture> {
                                 assetRightIconName: 'lvl',
                                 rightText: '15',
                                 onClick: () async {
-                                  await Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => CaptureField(
-                                        fieldName: 'Montanha Rochosa',
-                                        fieldDescription:
-                                            lagoDePescaDescription,
-                                        fieldImageName: 'rock_mountain',
-                                        commonTypes: [
-                                          'fighting',
-                                          'rock',
-                                          'flying',
-                                        ],
-                                        rareTypes: ['steel', 'ground'],
+                                  if (await validateUserLevel(15)) {
+                                    await Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => CaptureField(
+                                          fieldName: 'Montanha Rochosa',
+                                          fieldDescription:
+                                              lagoDePescaDescription,
+                                          fieldImageName: 'rock_mountain',
+                                          commonTypes: [
+                                            'fighting',
+                                            'rock',
+                                            'flying',
+                                          ],
+                                          rareTypes: ['steel', 'ground'],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                  setState(() {});
+                                    );
+                                    setState(() {});
+                                  }
                                 },
                               ),
                               SizedBox(height: setHeight(8)),
@@ -299,19 +346,21 @@ class _CaptureState extends State<Capture> {
                                 assetRightIconName: 'lvl',
                                 rightText: '18',
                                 onClick: () async {
-                                  await Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => CaptureField(
-                                        fieldName: 'Pico da Montanha',
-                                        fieldDescription:
-                                            lagoDePescaDescription,
-                                        fieldImageName: 'mountain_peak',
-                                        commonTypes: ['steel', 'flying'],
-                                        rareTypes: ['rock', 'ground'],
+                                  if (await validateUserLevel(18)) {
+                                    await Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => CaptureField(
+                                          fieldName: 'Pico da Montanha',
+                                          fieldDescription:
+                                              lagoDePescaDescription,
+                                          fieldImageName: 'mountain_peak',
+                                          commonTypes: ['steel', 'flying'],
+                                          rareTypes: ['rock', 'ground'],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                  setState(() {});
+                                    );
+                                    setState(() {});
+                                  }
                                 },
                               ),
                               SizedBox(height: setHeight(8)),
@@ -322,18 +371,20 @@ class _CaptureState extends State<Capture> {
                                 assetRightIconName: 'lvl',
                                 rightText: '22',
                                 onClick: () async {
-                                  await Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => CaptureField(
-                                        fieldName: 'Pé do Vulcão',
-                                        fieldDescription: vulcaoDescription,
-                                        fieldImageName: 'volcano',
-                                        commonTypes: ['fire'],
-                                        rareTypes: ['dragon'],
+                                  if (await validateUserLevel(22)) {
+                                    await Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => CaptureField(
+                                          fieldName: 'Pé do Vulcão',
+                                          fieldDescription: vulcaoDescription,
+                                          fieldImageName: 'volcano',
+                                          commonTypes: ['fire'],
+                                          rareTypes: ['dragon'],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                  setState(() {});
+                                    );
+                                    setState(() {});
+                                  }
                                 },
                               ),
                               SizedBox(height: setHeight(8)),
@@ -344,19 +395,25 @@ class _CaptureState extends State<Capture> {
                                 assetRightIconName: 'lvl',
                                 rightText: '25',
                                 onClick: () async {
-                                  await Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => CaptureField(
-                                        fieldName: 'Portal Lendário',
-                                        fieldDescription: vulcaoDescription,
-                                        fieldImageName: 'legendary_portal',
-                                        canBeLegendary: true,
-                                        commonTypes: ['fire', 'water', 'grass'],
-                                        rareTypes: ['dragon'],
+                                  if (await validateUserLevel(25)) {
+                                    await Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => CaptureField(
+                                          fieldName: 'Portal Lendário',
+                                          fieldDescription: vulcaoDescription,
+                                          fieldImageName: 'legendary_portal',
+                                          canBeLegendary: true,
+                                          commonTypes: [
+                                            'fire',
+                                            'water',
+                                            'grass'
+                                          ],
+                                          rareTypes: ['dragon'],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                  setState(() {});
+                                    );
+                                    setState(() {});
+                                  }
                                 },
                               ),
                             ],
