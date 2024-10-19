@@ -54,7 +54,9 @@ class _MultipleListState extends State<MultipleList> {
                     Column(
                       children: [
                         TopBar(
-                            showBackButton: true, pageTitle: widget.listName),
+                            showBackButton: true,
+                            pageTitle: widget.listName +
+                                " (${(_listOfPokemon != null ? _listOfPokemon!.length.toString() : _listOfItems!.length.toString())})"),
                       ],
                     ),
                     Container(

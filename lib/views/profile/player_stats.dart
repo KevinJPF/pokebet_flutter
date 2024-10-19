@@ -88,22 +88,20 @@ class _PlayerStatsState extends State<PlayerStats> {
                             SizedBox(height: setHeight(16)),
                             IconContainer(
                               icon: Icons.remove_circle_outlined,
-                              mainText: totalExp >
-                                      (Global.userData!.level + 1) * 100
+                              mainText: totalExp != Global.userData!.experience
                                   ? '${totalExp}'
                                   : '${Global.userData!.experience}/${(Global.userData!.level + 1) * 100}',
                               secondaryText:
-                                  totalExp > (Global.userData!.level + 1) * 100
+                                  totalExp != Global.userData!.experience
                                       ? "Experiência Total"
                                       : 'Experiência de Treinador',
                               iconPNGName: 'exp',
                               onClick: () {
-                                if (totalExp >
-                                    (Global.userData!.level + 1) * 100) {
+                                if (totalExp != Global.userData!.experience) {
                                   totalExp = Global.userData!.experience;
                                 } else {
                                   for (int level = Global.userData!.level;
-                                      level > 1;
+                                      level >= 2;
                                       level--) {
                                     totalExp += level * 100;
                                   }
@@ -114,7 +112,7 @@ class _PlayerStatsState extends State<PlayerStats> {
                             SizedBox(height: setHeight(8)),
                             IconContainer(
                               icon: Icons.backpack_rounded,
-                              mainText: '${Global.userPokemons.length}',
+                              mainText: '${Global.userData!.capturedPokemons}',
                               secondaryText: 'Pokemons Capturados',
                               iconPNGName: 'pokeball',
                             ),

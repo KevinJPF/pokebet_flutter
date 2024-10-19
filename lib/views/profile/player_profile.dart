@@ -119,7 +119,7 @@ class _PlayerProfileState extends State<PlayerProfile> {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) => MultipleList(
-                                          listName: 'Meus Pokemons',
+                                          listName: 'Pokemons',
                                           listOfPokemon: Global.userPokemons),
                                     ),
                                   );
@@ -134,7 +134,7 @@ class _PlayerProfileState extends State<PlayerProfile> {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) => MultipleList(
-                                          listName: 'Meus Itens',
+                                          listName: 'Itens',
                                           listOfItems: Global.userItems),
                                     ),
                                   );

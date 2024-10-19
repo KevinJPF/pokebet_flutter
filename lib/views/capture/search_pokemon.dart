@@ -104,7 +104,9 @@ class _SearchPokemonState extends State<SearchPokemon> {
                                   child: CustomButton(
                                     buttonImage: SvgPicture.asset(
                                       'assets/svgs/run.svg',
-                                      colorFilter: ColorFilter.mode(Global.pokebetColors.highlightColor, BlendMode.srcIn),
+                                      colorFilter: ColorFilter.mode(
+                                          Global.pokebetColors.highlightColor,
+                                          BlendMode.srcIn),
                                     ),
                                     buttonText: '',
                                     onPressed: () async {
@@ -122,7 +124,9 @@ class _SearchPokemonState extends State<SearchPokemon> {
                                   child: CustomButton(
                                     buttonImage: SvgPicture.asset(
                                       'assets/svgs/Pokeball.svg',
-                                      colorFilter: ColorFilter.mode(Global.pokebetColors.highlightColor, BlendMode.srcIn),
+                                      colorFilter: ColorFilter.mode(
+                                          Global.pokebetColors.highlightColor,
+                                          BlendMode.srcIn),
                                     ),
                                     buttonText: '',
                                     onPressed: () async {
@@ -132,6 +136,7 @@ class _SearchPokemonState extends State<SearchPokemon> {
                                       print('Capturou um pokemon');
                                       Global.userData!.money += 25;
                                       Global.userData!.experience += 25;
+                                      Global.userData!.capturedPokemons++;
                                       await UserData.updateUserDatabase();
                                       foundPokemon = null;
                                       Global.isSearchingPokemon = false;
