@@ -65,12 +65,15 @@ class DatabaseConnection {
     String? where,
     List<String>? whereArgs,
   }) async {
-    return await _database!.query(
-      databaseTable,
-      columns: columns,
-      where: where,
-      whereArgs: whereArgs,
-    );
+    if (_database != null) {
+      return await _database!.query(
+        databaseTable,
+        columns: columns,
+        where: where,
+        whereArgs: whereArgs,
+      );
+    }
+    return [];
   }
 
   // Método para atualizar um usuário no banco de dados

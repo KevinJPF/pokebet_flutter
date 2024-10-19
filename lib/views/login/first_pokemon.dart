@@ -19,7 +19,14 @@ class FirstPokemon extends StatefulWidget {
 }
 
 class _FirstPokemonState extends State<FirstPokemon> {
+  // Controllers
   final controllerText = TextEditingController();
+
+  // Constants
+  int _TOTALPKMGENERATE = 905;
+  int _MAXPKMSTATS = 200;
+
+  // Variables
   bool showPokeballs = false;
   bool triedToExploit = false;
   UserPokemon? firstPokemon;
@@ -35,7 +42,7 @@ class _FirstPokemonState extends State<FirstPokemon> {
   @override
   void initState() {
     super.initState();
-    generatePokemon(905, 200);
+    generatePokemon(_TOTALPKMGENERATE, _MAXPKMSTATS);
   }
 
   @override
@@ -48,7 +55,7 @@ class _FirstPokemonState extends State<FirstPokemon> {
       firstPokemon = await filterPokemon(
         filtrarResultados: true,
         canBeLegendary: false,
-        maxStats: 200,
+        maxStats: maxStats,
         shinyChances: 80,
         evolutionChainLimit: 0,
       );
@@ -57,7 +64,7 @@ class _FirstPokemonState extends State<FirstPokemon> {
         secondPokemon = await filterPokemon(
           filtrarResultados: true,
           canBeLegendary: false,
-          maxStats: 200,
+          maxStats: maxStats,
           shinyChances: 80,
           evolutionChainLimit: 0,
         );
@@ -67,7 +74,7 @@ class _FirstPokemonState extends State<FirstPokemon> {
         thirdPokemon = await filterPokemon(
           filtrarResultados: true,
           canBeLegendary: false,
-          maxStats: 200,
+          maxStats: maxStats,
           shinyChances: 80,
           evolutionChainLimit: 0,
         );

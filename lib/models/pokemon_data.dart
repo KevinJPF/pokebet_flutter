@@ -68,12 +68,17 @@ Future<UserPokemon?> filterPokemon({
       print('Buscou Pokemon Data;');
 
       if (filtrarResultados) {
-        List<String> sortedTypes =
-            ((Random().nextInt(100) + 1) <= 70) ? commonTypes! : rareTypes!;
-        if (pokemonData.stats.totalStats <= maxStats &&
-            (sortedTypes.contains(pokemonData.firstType.toLowerCase()) ||
+        if (pokemonData.stats.totalStats <= maxStats) {
+          if (commonTypes != null || rareTypes != null) {
+            List<String> sortedTypes =
+                ((Random().nextInt(100) + 1) <= 70) ? commonTypes! : rareTypes!;
+            if ((sortedTypes.contains(pokemonData.firstType.toLowerCase()) ||
                 sortedTypes.contains(pokemonData.secondType.toLowerCase()))) {
-          pokemonDataPass = true;
+              pokemonDataPass = true;
+            }
+          } else {
+            pokemonDataPass = true;
+          }
         }
       } else {
         pokemonDataPass = true;
