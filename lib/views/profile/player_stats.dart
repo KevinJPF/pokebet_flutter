@@ -13,6 +13,13 @@ class PlayerStats extends StatefulWidget {
 }
 
 class _PlayerStatsState extends State<PlayerStats> {
+  int totalExp = Global.userData!.experience;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -81,11 +88,28 @@ class _PlayerStatsState extends State<PlayerStats> {
                             SizedBox(height: setHeight(16)),
                             IconContainer(
                               icon: Icons.remove_circle_outlined,
-                              mainText:
-                                  '${Global.userData!.experience}/${(Global.userData!.level + 1) * 100}',
-                              secondaryText: 'Experiência de Treinador',
+                              mainText: totalExp >
+                                      (Global.userData!.level + 1) * 100
+                                  ? '${totalExp}'
+                                  : '${Global.userData!.experience}/${(Global.userData!.level + 1) * 100}',
+                              secondaryText:
+                                  totalExp > (Global.userData!.level + 1) * 100
+                                      ? "Experiência Total"
+                                      : 'Experiência de Treinador',
                               iconPNGName: 'exp',
-                              onClick: () {},
+                              onClick: () {
+                                if (totalExp >
+                                    (Global.userData!.level + 1) * 100) {
+                                  totalExp = Global.userData!.experience;
+                                } else {
+                                  for (int level = Global.userData!.level;
+                                      level > 1;
+                                      level--) {
+                                    totalExp += level * 100;
+                                  }
+                                }
+                                setState(() {});
+                              },
                             ),
                             SizedBox(height: setHeight(8)),
                             IconContainer(

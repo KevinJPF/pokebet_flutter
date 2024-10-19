@@ -73,11 +73,15 @@ class UserData {
   }
 
   static insertUserDatabase(UserData newUser) {
-    DatabaseConnection().insertDatabaseData(
-        object: newUser.toMap(), databaseTable: 'users');
+    DatabaseConnection()
+        .insertDatabaseData(object: newUser.toMap(), databaseTable: 'users');
   }
 
   static updateUserDatabase() {
+    if (Global.userData!.experience >= (Global.userData!.level + 1) * 100) {
+      Global.userData!.experience -= (Global.userData!.level + 1) * 100;
+      Global.userData!.level++;
+    }
     DatabaseConnection().updateDatabaseData(
         object: Global.userData!.toMap(), databaseTable: 'users');
   }
@@ -215,8 +219,8 @@ class UserPokemon {
   }
 
   static deleteAllUserPokemonDatabase(int userId) {
-    DatabaseConnection()
-        .deleteEverythingFromUser(userId: userId, databaseTable: 'user_pokemons');
+    DatabaseConnection().deleteEverythingFromUser(
+        userId: userId, databaseTable: 'user_pokemons');
   }
 }
 
