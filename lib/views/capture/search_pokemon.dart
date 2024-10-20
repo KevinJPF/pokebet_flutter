@@ -132,7 +132,8 @@ class _SearchPokemonState extends State<SearchPokemon> {
                                     onPressed: () async {
                                       await UserPokemon.insertPokemonDatabase(
                                           foundPokemon!);
-                                      Global.userPokemons.add(foundPokemon!);
+                                      Global.userPokemons =
+                                          await LoadDatabase.userPokemonData();
                                       print('Capturou um pokemon');
                                       Global.userData!.money += 25;
                                       Global.userData!.experience += 25;

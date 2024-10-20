@@ -88,8 +88,8 @@ class _MultipleListState extends State<MultipleList> {
                                 rightSecondType: pokemon.secondType != ''
                                     ? pokemon.secondType
                                     : null,
-                                onClick: () {
-                                  Navigator.of(context).push(
+                                onClick: () async {
+                                  await Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) => PokemonProfile(
                                         pokemonData: pokemon,
@@ -97,6 +97,7 @@ class _MultipleListState extends State<MultipleList> {
                                       ),
                                     ),
                                   );
+                                  setState(() {});
                                 },
                               ),
                             );

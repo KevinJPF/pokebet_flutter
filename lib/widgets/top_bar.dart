@@ -6,7 +6,13 @@ class TopBar extends StatelessWidget {
   final bool showBackButton;
   final bool showOptionsButton;
   final String pageTitle;
-  const TopBar({super.key, this.showBackButton = true,  this.showOptionsButton = false, this.pageTitle = ''});
+  final VoidCallback? onPressedOptions;
+  const TopBar(
+      {super.key,
+      this.showBackButton = true,
+      this.showOptionsButton = false,
+      this.pageTitle = '',
+      this.onPressedOptions});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +43,10 @@ class TopBar extends StatelessWidget {
                             ),
                             color: Colors.transparent,
                           ),
-                          child: Icon(Icons.arrow_back_rounded, color: Global.pokebetColors.simpleTextColor,)),
+                          child: Icon(
+                            Icons.arrow_back_rounded,
+                            color: Global.pokebetColors.simpleTextColor,
+                          )),
                       onTap: () {
                         Navigator.of(context).pop();
                       },
@@ -54,6 +63,10 @@ class TopBar extends StatelessWidget {
                   child: Visibility(
                     visible: showOptionsButton,
                     child: GestureDetector(
+                      onTap: onPressedOptions ??
+                          () {
+                            Navigator.of(context).pop();
+                          },
                       child: Container(
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
@@ -63,10 +76,10 @@ class TopBar extends StatelessWidget {
                             ),
                             color: Colors.transparent,
                           ),
-                          child: Icon(Icons.keyboard_control_rounded, color: Global.pokebetColors.simpleTextColor,)),
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
+                          child: Icon(
+                            Icons.keyboard_control_rounded,
+                            color: Global.pokebetColors.simpleTextColor,
+                          )),
                     ),
                   ),
                 ),

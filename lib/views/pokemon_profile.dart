@@ -1,5 +1,6 @@
 import 'package:pokebet/models/database_models.dart';
 import 'package:pokebet/widgets/custom_button.dart';
+import 'package:pokebet/widgets/custom_popup.dart';
 import 'package:pokebet/widgets/custom_texts.dart';
 import 'package:pokebet/widgets/icon_container.dart';
 import 'package:pokebet/widgets/pokemon_type.dart';
@@ -64,7 +65,47 @@ class _PokemonProfileState extends State<PokemonProfile> {
                       Background(hasLogo: false),
                       Column(
                         children: [
-                          TopBar(showBackButton: widget.showBackButton ?? true),
+                          TopBar(
+                            showBackButton: widget.showBackButton ?? true,
+                            showOptionsButton: widget.showBackButton ?? true,
+                            onPressedOptions: () async {
+                              await showDialog(
+                                context: context,
+                                builder: (context) => CustomPopup(
+                                  popupTitle: "Liberar Pokemon?",
+                                  popupMessage:
+                                      "Tem certeza que deseja liberar ${_pokemonData!.name}? Essa ação não tem volta!",
+                                  firstButtonText: 'Não',
+                                  onPressedFirstButton: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  secondButtonText: 'Sim',
+                                  onPressedSecondButton: () async {
+                                    print("ID PKM: ${_pokemonData!.id!}");
+                                    await UserPokemon.deletePokemonDatabase(
+                                        _pokemonData!.id!);
+                                    Global.userPokemons.removeWhere((pokemon) =>
+                                        pokemon.id == _pokemonData!.id);
+                                    Navigator.of(context).pop();
+                                    Navigator.of(context).pop();
+                                    await showDialog(
+                                      context: context,
+                                      builder: (context) => CustomPopup(
+                                        popupTitle:
+                                            "${_pokemonData!.name} liberado!",
+                                        popupMessage:
+                                            "Adeus ${_pokemonData!.name}, cuide-se!",
+                                        firstButtonText: 'Fechar',
+                                        onPressedFirstButton: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                          ),
                           Container(
                             height: MediaQuery.of(context).size.width * 0.5,
                             width: MediaQuery.of(context).size.width * 0.5,
@@ -96,7 +137,8 @@ class _PokemonProfileState extends State<PokemonProfile> {
                             icon: Icons.volcano_rounded,
                             mainText: 'Ataque',
                             svgName: 'Ataque',
-                            secondaryText: _pokemonData!.attack.round().toString(),
+                            secondaryText:
+                                _pokemonData!.attack.round().toString(),
                           ),
                           SizedBox(height: setHeight(8)),
                           IconContainer(
@@ -111,7 +153,8 @@ class _PokemonProfileState extends State<PokemonProfile> {
                             icon: Icons.run_circle_rounded,
                             mainText: 'Velocidade',
                             svgName: 'Velocidade',
-                            secondaryText: _pokemonData!.speed.round().toString(),
+                            secondaryText:
+                                _pokemonData!.speed.round().toString(),
                           ),
                           SizedBox(height: setHeight(8)),
                           Container(
